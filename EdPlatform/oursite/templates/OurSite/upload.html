@@ -1,0 +1,93 @@
+{% load static %}
+{% load embed_video_tags %}
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/upload.css' %}">
+    <title>Register</title>
+</head>
+<body class="bg">
+<div>
+    If you have an account: <a class="login_reg" href="{% url 'login' %}">login</a>
+</div>
+<header class="header">
+      <p class="name">Сайтик</p>
+      <p class="headerText1">Courses</p>
+      <p class="headerText2">Programs</p>
+      <p class="headerText3">Collaboration</p>
+      <p class="headerText4">About</p>
+      <form class="search-form">
+        <input type="search" value="" placeholder="Search" class="search-input">
+          <button type="submit" class="search-button">
+            <svg class="submit-button">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
+            </svg>
+          </button>
+      </form>
+      <div class="login">
+        <span class="inText1">Login</span>
+      </div>
+      <div class="register">
+        <span class="inText2">Register</span>
+      </div>
+      <img class="eye" src="{% static 'images/eye.png' %}" alt="">
+      <img class="profile" src="{% static 'images/jake.png' %}" alt="">
+    </header>
+
+    <div class="center">
+
+      <span class="auth">Авторизация на сайте</span>
+
+      <div class="logPassAuth" style="padding-top: 150px; padding-left: 60px;">
+           <div class="log-auth">
+               Логин:
+           </div>
+            <div> <img src="{% static 'images/loginPic.png' %}" alt="" style="width: 65px; vertical-align: top; border-radius: 10px;"><input type="login" size="19" style="font-size: 45px;font-weight: 550;"></div>
+          <div class="pass-auth">
+
+               Пароль:
+
+           </div>
+        <div style="padding-top: 60px;"><img src="{% static 'images/PassPic.png' %}" alt="" style="width: 65px; vertical-align: top;"><input type="password" size="19" style="font-size: 45px;font-weight: 550;"></div>
+
+          <div class="pass2-auth">
+               Ссылка на Ваш курс:
+           </div>
+
+<div style="padding-top: 60px;"><img src="{% static 'images/ssilka.png' %}" alt="" style="width: 65px; vertical-align: top;"><input type="password" size="19" style="font-size: 44px;font-weight: 550;"></div>
+
+<p class="input_button"><button class="inp" type="submit">Отправить курс</button></p>
+
+
+
+
+
+
+  </form>
+
+    </div>
+    </div>
+
+{% block page_content %}
+
+	<div>
+		<h1>{{ Vid.tutorial_Title }}</h1>
+		<p>{{ Vid.tutorial_Body | linebreaks }}</p>
+		<h3>Here is the video:</h3>
+
+		{% video Vid.vid_Video 'tiny' %}
+
+	</div>
+
+{%endblock%}
+
+
+<noscript>You need to enable JavaScript to run this app.</noscript>
+    <img src="{% static 'images/jake.png' %}" class="Spinhuyny" alt="logo" />
+
+
+
+</body>
+</html>

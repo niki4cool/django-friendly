@@ -1,0 +1,45 @@
+[
+{
+  "model": "OurSite.post",
+  "pk": 1,
+  "fields": {
+    "author": 1,
+    "title": "Example",
+    "text": "Чтобы залогиниться, тебе сначала нужно создать суперпользователя (англ. superuser) — пользователя, который имеет полный доступ к управлению сайтом. Вернись к командной строке, набери python manage.py createsuperuser, и нажми Enter.",
+    "created_date": "2021-10-12T11:01:31Z",
+    "published_date": "2021-10-12T11:01:48Z"
+  }
+},
+{
+  "model": "OurSite.subject",
+  "pk": 1,
+  "fields": {
+    "title": "Mathematics",
+    "slug": "mathematics"
+  }
+},
+{
+  "model": "OurSite.subject",
+  "pk": 2,
+  "fields": {
+    "title": "Physics",
+    "slug": "physics"
+  }
+},
+{
+  "model": "OurSite.subject",
+  "pk": 3,
+  "fields": {
+    "title": "Programmig",
+    "slug": "programmig"
+  }
+},
+{
+  "model": "OurSite.subject",
+  "pk": 4,
+  "fields": {
+    "title": "Music",
+    "slug": "music"
+  }
+}
+]
