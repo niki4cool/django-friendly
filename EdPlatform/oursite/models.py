@@ -29,7 +29,9 @@ class Post(models.Model):
 class vid(models.Model):
     vid_Title = models.CharField(max_length=200)
     vid_Body = models.TextField()
-    vid_Video = EmbedVideoField()
+    vid_Image = models.ImageField(upload_to='media/')
+    vid_Course = models.TextField()
+    vid_Media = models.FileField(upload_to='video/')
 
     class Meta:
         verbose_name_plural = "Vid"

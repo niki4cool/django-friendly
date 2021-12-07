@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load embed_video_tags %}
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -31,23 +31,41 @@
       <img class="profile" src="{% static 'images/jake.png' %}" alt="">
     </header>
 
-    <div class="center">
-      <span class="auth">Авторизация на сайте</span>
-      <div class="logPassAuth" style="padding-top: 150px; padding-left: 60px;">
-      <form action="handler.php">
-   <img src="{% static 'images/log.png' %}" alt="" style="width: 90px; vertical-align: top; border-radius: 10px;">
-    <input maxlength="25" size="90" name="login" style="height: 90px; padding-top: 35px; position: relative; vertical-align: top"></p>
-   <img src="{% static 'images/pass.png' %}" alt="" style="vertical-align: top; border-radius: 10px; height: 90px;" >
-    <input type="password" maxlength="25" size="90" name="password" style="height: 90px; padding-top: 35px; position: relative; vertical-align: top" ></p>
-  </form>
-    </div>
-      <div style="padding-left: 60px; padding-top: 50px;">
-        <form>
-          <button style="background: #00B8BA; border: 3px solid #FFFFFF; border-radius: 5px; width: 666px; height: 90px; color: #FFFFFF;
-    font-size: 30px;
-    font-weight: 550;">Авторизоваться</button>
-        </form>
+{% block page_content %}
+
+	<div class="video-block">
+        <a href="http://127.0.0.1:8000/course/"><img class="turtle" src="{{ Vid.vid_Image.url}}" alt="{{ Vid.vid_title }}"></a>
+		<a href="http://127.0.0.1:8000/course/"><p class="vid_title">{{ Vid.vid_Title }}</p></a>
+
+
+      <hr size="2" color="#000000">
+      <div class="tags">
+        <div class="tag1">
+      Математика
       </div>
-    </div>
+         <div class="tag2">
+      Черепаха
+      </div>
+      </div>
+
+        <div class="tags2">
+        <div class="tag3">
+      Математика
+      </div>
+         <div class="tag4">
+      Черепаха
+      </div>
+      </div>
+
+		<p class="vid_description">{{ Vid.vid_Body }}</p>
+
+<!--| linebreaks-->
+
+	</div>
+   <!-- <div class="video">
+		{% video Vid.vid_Video 'medium' %}
+        </div>-->
+
+{%endblock%}
 </body>
 </html>

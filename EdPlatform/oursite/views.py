@@ -13,14 +13,15 @@ from .models  import  vid
 # Create your views here.
 
 def post_list(request):
-    return render(request, 'oursite/index.html', {})
-
-def upload(request):
     Vid = vid.objects.get()
     context = {
         'Vid': Vid,
     }
-    return render(request, 'oursite/upload.html', context)
+    return render(request, 'oursite/index.html', context)
+
+def upload(request):
+
+    return render(request, 'oursite/upload.html')
 
 def courses(request):
     Vid = vid.objects.get()

@@ -8,7 +8,7 @@
 </head>
 <body class="bg">
     <header class="header">
-      <p class="name">Сайтик</p>
+      <img class="" src="{% static 'images/morfusha_sova.png' %}" alt="">
       <p class="headerText1">Courses</p>
       <p class="headerText2">Programs</p>
       <p class="headerText3">Collaboration</p>
@@ -31,18 +31,38 @@
       <img class="profile" src="{% static 'images/jake.png' %}" alt="">
     </header>
 
+
+
     {% block page_content %}
 
 	<div class="video-block">
-		<h1>{{ Vid.vid_Title }}</h1>
-		<p>{{ Vid.vid_Body | linebreaks }}</p>
+
+
 		<h3>Видос Топлеса😎:</h3>
+        <p>{{ Vid.vid_Course | linebreaks }}</p>
+<video class="embed-responsive embed-responsive-16by9" controls="controls">
+        <source src="{{ Vid.vid_Media.url }}" type="video/mp4">
+        </video>
+
+
+
+
+
+
 
 	</div>
-    <div class="video">
-		{% video Vid.vid_Video 'medium' %}
-        </div>
+
+<!--    <iframe width="640" height="360" src="https://radikal.ru/vf/3BathTDyr3P" frameborder="0" scrolling="no" allowfullscreen></iframe>-->
+
+<!--    <video width="400" height="300" controls="controls" poster="{% static 'images/jake.png' %}">-->
+<!--   <source src="https://drive.google.com/file/d/1QwcauIObJv5pPrJF4NH3kBrPyo9waKLL/view" type='video/mp4'>-->
+<!--    </video>-->
+<!--    <div class="video">-->
+<!--		{% video Vid.vid_Video 'medium' %}-->
+<!--        </div>-->
 
 {%endblock%}
+
+
 </body>
 </html>

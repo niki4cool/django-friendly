@@ -104,6 +104,11 @@ display: none;
   }
 }
 
+.submit-button{
+height: 100px;
+
+}
+
 .search-button {
   position: absolute;
   top: 10px;
@@ -290,7 +295,7 @@ animation: spin infinite 20s linear;
 }
 
 .video-block{
- width: 200px;position: relative; margin:0 auto; text-align: center;
+
 }
 .video{
 margin:0 auto; position: relative; padding-left: 33%;

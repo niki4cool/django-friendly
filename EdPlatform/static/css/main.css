@@ -288,3 +288,87 @@ animation: spin infinite 20s linear;
     transform: rotate(360deg);
   }
 }
+
+.video-block{
+background: #FFFFFF;
+border: solid 2px;
+width: 300px;
+height: 400px;
+border-radius: 20px;
+}
+
+.turtle{
+padding-left: 10px;
+padding-top: 10px;
+width: 280px;
+height: 160px;
+}
+
+.vid_title{
+text-align: center;
+font-weight: 800;
+}
+
+.vid_description{
+text-align: center;
+}
+
+.tags{
+margin-left: 25px;
+}
+
+.tag1{
+background: #F7ECFF;
+color: #FA00FF;
+font-weight: 600;
+width: 120px;
+height: 30px;
+border-radius: 20px;
+display:inline-block;
+vertical-align: middle;
+text-align: center;
+padding-top: 8px;
+}
+
+.tag2{
+background: #E3F3FF;
+color: #618DFF;
+font-weight: 600;
+width: 120px;
+height: 30px;
+border-radius: 20px;
+display:inline-block;
+text-align: center;
+padding-top: 8px;
+}
+
+.tags2{
+margin-left: 25px;
+margin-top: 5px;
+}
+
+.tag3{
+background: #FFF3E9;
+color: #DF6B00;
+font-weight: 600;
+width: 120px;
+height: 30px;
+border-radius: 20px;
+display:inline-block;
+vertical-align: middle;
+text-align: center;
+padding-top: 8px;
+}
+
+.tag4{
+background: #FDE8F2;
+color: #FF166A;
+font-weight: 600;
+width: 120px;
+height: 30px;
+border-radius: 20px;
+display:inline-block;
+vertical-align: middle;
+text-align: center;
+padding-top: 8px;
+}

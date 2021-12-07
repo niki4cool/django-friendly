@@ -61,27 +61,8 @@
 <p class="input_button"><button class="inp" type="submit">Отправить курс</button></p>
 
 
-
-
-
-
-  </form>
-
     </div>
     </div>
-
-{% block page_content %}
-
-	<div>
-		<h1>{{ Vid.tutorial_Title }}</h1>
-		<p>{{ Vid.tutorial_Body | linebreaks }}</p>
-		<h3>Here is the video:</h3>
-
-		{% video Vid.vid_Video 'tiny' %}
-
-	</div>
-
-{%endblock%}
 
 
 <noscript>You need to enable JavaScript to run this app.</noscript>
