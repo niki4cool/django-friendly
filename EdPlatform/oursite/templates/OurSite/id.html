@@ -1,0 +1,45 @@
+{% load static %}
+{% load embed_video_tags %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+  <link rel="stylesheet" href="{% static 'css/video.css' %}">
+</head>
+<body class="bg">
+    <header class="header">
+      <a href="http://127.0.0.1:8000"><img class="" src="{% static 'images/morfusha_sova.png' %}" alt=""></a>
+      <p class="headerText1">Courses</p>
+      <p class="headerText2">Programs</p>
+      <p class="headerText3">Collaboration</p>
+      <p class="headerText4">About</p>
+      <form class="search-form">
+        <input type="search" value="" placeholder="Search" class="search-input">
+          <button type="submit" class="search-button">
+            <svg class="submit-button">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
+            </svg>
+          </button>
+      </form>
+      <div class="login">
+        <span class="inText1">Login</span>
+      </div>
+      <div class="register">
+        <span class="inText2">Register</span>
+      </div>
+      <img class="eye" src="{% static 'images/eye.png' %}" alt="">
+      <img class="profile" src="{% static 'images/jake.png' %}" alt="">
+    </header>
+    {% block page_content %}
+	<div class="video-block">
+	</div>
+    <div class="vidos">
+        {{ Vid.caption }}
+<video class="embed-responsive embed-responsive-16by9" controls="controls">
+        <source src="{{Vid.video.url}}" type="video/mp4">
+        </video>
+        </div>
+
+{%endblock%}
+</body>
+</html>
