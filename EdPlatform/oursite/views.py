@@ -5,30 +5,35 @@ from rest_framework.response import Response
 from . import models
 from django.shortcuts import render
 from taggit.models import Tag
-from django.http import request
+from django.http import request, HttpResponse
 from cart.forms import CartAddProductForm
 from oursite.models import Course
-from .models  import  vid
+from .models  import  Video
 
 # Create your views here.
 
 def post_list(request):
-    Vid = vid.objects.get()
+    video = Video.objects.all()
+    return render(request, 'oursite/index.html', {'Vid': video})
+
+
+def show_course(request, course_id):
+    video = Video.objects.get(pk=course_id)
+    id = course_id
     context = {
-        'Vid': Vid,
+        'id':id,
+        'Vid': video
     }
-    return render(request, 'oursite/index.html', context)
+    return render(request, 'oursite/id.html', context)
+
 
 def upload(request):
 
     return render(request, 'oursite/upload.html')
 
 def courses(request):
-    Vid = vid.objects.get()
-    context = {
-        'Vid': Vid,
-    }
-    return render(request, 'oursite/courses.html', context)
+    video = Video.objects.all()
+    return render(request, 'oursite/courses.html', {'Vid': video})
 
 def index(request):
     try:

@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.http import HttpResponse
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
@@ -26,18 +27,14 @@ class Post(models.Model):
         return self.title
 
 
-class vid(models.Model):
-    vid_Title = models.CharField(max_length=200)
-    vid_Body = models.TextField()
-    vid_Image = models.ImageField(upload_to='media/')
-    vid_Course = models.TextField()
-    vid_Media = models.FileField(upload_to='video/')
-
-    class Meta:
-        verbose_name_plural = "Vid"
-
+class Video(models.Model):
+    caption=models.CharField(max_length=100)
+    video=models.FileField(upload_to='video/')
+    preview=models.ImageField(upload_to='media/')
+    description=models.TextField()
     def __str__(self):
-        return str(self.vid_Title) if self.vid_Title else " "
+        return self.caption
+
 
 
 

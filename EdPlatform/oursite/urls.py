@@ -2,6 +2,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
+
 from django.views.generic import RedirectView
 
 urlpatterns = [
@@ -9,7 +10,8 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('accounts/profile/', RedirectView.as_view(pattern_name="index")),
     path('upload/', views.upload, name='upload'),
-    path('course/', views.courses, name='course')
+    path('course/', views.courses, name='course'),
+    path('course/<int:course_id>/', views.show_course, name='show'),
 
 ]
 

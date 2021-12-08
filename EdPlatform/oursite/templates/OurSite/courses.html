@@ -39,10 +39,7 @@
 
 
 		<h3>Видос Топлеса😎:</h3>
-        <p>{{ Vid.vid_Course | linebreaks }}</p>
-<video class="embed-responsive embed-responsive-16by9" controls="controls">
-        <source src="{{ Vid.vid_Media.url }}" type="video/mp4">
-        </video>
+
 
 
 
@@ -51,6 +48,15 @@
 
 
 	</div>
+
+    <div class="vidos">
+        {% for x in Vid %}
+        {{ x.caption }}
+<video class="embed-responsive embed-responsive-16by9" controls="controls">
+        <source src="{{x.video.url}}" type="video/mp4">
+        </video>
+        {% endfor %}
+        </div>
 
 <!--    <iframe width="640" height="360" src="https://radikal.ru/vf/3BathTDyr3P" frameborder="0" scrolling="no" allowfullscreen></iframe>-->
 

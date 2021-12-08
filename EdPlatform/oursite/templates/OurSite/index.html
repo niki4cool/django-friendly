@@ -32,10 +32,10 @@
     </header>
 
 {% block page_content %}
-
+{% for x in Vid %}
 	<div class="video-block">
-        <a href="http://127.0.0.1:8000/course/"><img class="turtle" src="{{ Vid.vid_Image.url}}" alt="{{ Vid.vid_title }}"></a>
-		<a href="http://127.0.0.1:8000/course/"><p class="vid_title">{{ Vid.vid_Title }}</p></a>
+        <a href="{% url 'show' x.pk %}"><img class="turtle" src="{{ x.preview.url }}" alt="{{ x.caption }}"></a>
+		<a href="{% url 'show' x.pk %}"><p class="vid_title">{{ x.caption }}</p></a>
 
 
       <hr size="2" color="#000000">
@@ -57,8 +57,8 @@
       </div>
       </div>
 
-		<p class="vid_description">{{ Vid.vid_Body }}</p>
-
+		<p class="vid_description">{{ x.description }}</p>
+{% endfor %}
 <!--| linebreaks-->
 
 	</div>
