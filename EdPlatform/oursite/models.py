@@ -29,9 +29,10 @@ class Post(models.Model):
 
 class Video(models.Model):
     caption=models.CharField(max_length=100)
+    description = models.TextField()
     video=models.FileField(upload_to='video/')
     preview=models.ImageField(upload_to='media/')
-    description=models.TextField()
+    tags=models.TextField()
     def __str__(self):
         return self.caption
 

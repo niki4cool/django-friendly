@@ -190,13 +190,12 @@ display: none;
 .center{
     width: 762px;
     height: 669px;
-    background: #40A6AD;
+    background: #FFFFFF;
     opacity: .8;
     position: relative;
-    margin-top: 100px;
     margin: 100px auto;
+    margin-top: 0px;
     border-radius: 30px;
-
 }
 
 .auth{
@@ -208,12 +207,6 @@ display: none;
     font-weight: 550;
 }
 
-.logPassAuth{
-padding-top: 100px !important;
-padding-left: 80px !important;
-
-}
-
 .log-auth{
     margin-bottom: 20px;
     color: #FFFFFF;
@@ -222,8 +215,44 @@ padding-left: 80px !important;
 
 }
 
+.logout{
+box-sizing: content-box;
+    width:85;
+    height: 30;
+    border: 1px solid black;
+    font-size: 16;
+    margin-left: auto;
+    margin-right: 0em;
+    border-radius: 3px;
+    text-align: center;
+}
+
 #id_username{
 height: 65px; width:509px; padding-top: 35px; position: relative; vertical-align: top; margin-bottom: 20px; margin-top: 0px; margin-left: 69px;
+}
+
+.frm1{
+width:300px; position: relative; vertical-align: middle; margin-bottom: 20px; margin-top: 21px; margin-left: 180px;
+}
+.frm2{
+height: 25px; width:300px; position: relative; vertical-align: middle; margin-bottom: 20px; margin-top: 21px; margin-left: 180px;
+}
+.frm3{
+height: 25px; width:260px; position: relative; vertical-align: middle; margin-bottom: 20px; margin-top: 21px; margin-left: 220px;
+}
+
+#upload-container {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
+     width: 400px;
+     height: 400px;
+     outline: 2px dashed #5d5d5d;
+     outline-offset: -12px;
+     background-color: #e0f2f7;
+     font-family: 'Segoe UI';
+     color: #1f3c44;
 }
 
 .log-img{
@@ -239,140 +268,27 @@ label{
 display: none;
 }
 
-.errorlist{
-display: none;
+._text{
+color: #378F95;
+    font-size: 30px;
+    font-weight: 600;
+    padding-left: 40px;
+    padding-top: 20px;
 }
 
-.pass-auth{
+._text2{
 position: absolute;
-padding-top: 80px;
-margin-bottom: 20px;
-    color: #FFFFFF;
-    font-size: 30px;
-    font-weight: 550;
+font-size: 20px;
+font-weight: 600;
+padding-left: 40px;
+
 }
 
-#id_password1{
-height: 65px; width:509px; padding-top: 35px; position: relative; vertical-align: top; margin-bottom: 20px; margin-top: 50px; margin-left: 69px;
-}
-
-.pass2-auth{
+._text3{
 position: absolute;
-padding-top: 210px;
-margin-bottom: 20px;
-    color: #FFFFFF;
-    font-size: 30px;
-    font-weight: 550;
-}
-
-#id_password2{
-height: 65px; width:509px; padding-top: 35px; position: relative; vertical-align: top; margin-bottom: 20px; margin-top: 40px; margin-left: 69px;
-}
-
-.inp{
-
-background: #FFD367; border: 3px solid #C79C34; border-radius: 20px; width: 580px; height: 90px; color: #9F7100;
-    font-size: 30px;
-    font-weight: 550;
-}
-
-.razrab{
-text-decoration: underline; color: #FFFFFF; padding-left: 180px; font-size: 25px; padding-bottom: -5px;
-}
-
-.Spinhuyny{
-animation: spin infinite 20s linear;
-}
-
-@keyframes spin{
- from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.video-block{
-background: #FFFFFF;
-border: solid 2px;
-width: 300px;
-height: 400px;
-border-radius: 20px;
-}
-
-.turtle{
-padding-left: 10px;
-padding-top: 10px;
-width: 280px;
-height: 160px;
-}
-
-.vid_title{
-text-align: center;
-font-weight: 800;
-}
-
-.vid_description{
-text-align: center;
-}
-
-.tags{
-margin-left: 25px;
-}
-
-.tag1{
-background: #F7ECFF;
-color: #FA00FF;
+font-size: 20px;
 font-weight: 600;
-width: 120px;
-height: 30px;
-border-radius: 20px;
-display:inline-block;
-vertical-align: middle;
-text-align: center;
-padding-top: 8px;
-}
+padding-left: 550px;
 
-.tag2{
-background: #E3F3FF;
-color: #618DFF;
-font-weight: 600;
-width: 120px;
-height: 30px;
-border-radius: 20px;
-display:inline-block;
-text-align: center;
-padding-top: 8px;
-}
 
-.tags2{
-margin-left: 25px;
-margin-top: 5px;
-}
-
-.tag3{
-background: #FFF3E9;
-color: #DF6B00;
-font-weight: 600;
-width: 120px;
-height: 30px;
-border-radius: 20px;
-display:inline-block;
-vertical-align: middle;
-text-align: center;
-padding-top: 8px;
-}
-
-.tag4{
-background: #FDE8F2;
-color: #FF166A;
-font-weight: 600;
-width: 120px;
-height: 30px;
-border-radius: 20px;
-display:inline-block;
-vertical-align: middle;
-text-align: center;
-padding-top: 8px;
 }

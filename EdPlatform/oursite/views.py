@@ -1,14 +1,18 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from . import models
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from taggit.models import Tag
 from django.http import request, HttpResponse
 from cart.forms import CartAddProductForm
 from oursite.models import Course
 from .models  import  Video
+from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import VideoForm
 
 # Create your views here.
 
@@ -31,41 +35,74 @@ def upload(request):
 
     return render(request, 'oursite/upload.html')
 
+@login_required(login_url='/register')
 def courses(request):
     video = Video.objects.all()
     return render(request, 'oursite/courses.html', {'Vid': video})
 
+@login_required(login_url='/register')
+def profile(request):
+    user = User.objects.filter(id=request.user.id).first()
+    if user == None:
+        return redirect('register')
+    if request.user.is_staff or request.user.is_superuser:
+        error = ''
+        if request.method == 'POST':
+            form = VideoForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                return redirect('course')
+        else:
+            form = VideoForm()
+
+        form = VideoForm()
+
+        data = {
+            'form': form,
+            'error': error
+        }
+        return render(request, 'oursite/profile_admin.html', data)
+    else:
+        return render(request, 'oursite/profile.html')
+@login_required(login_url='/register')
+def profile_admin(request):
+    error = ''
+    if request.method == 'POST':
+        form = VideoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('course')
+    else:
+        form = VideoForm()
+
+    form = VideoForm()
+
+    data = {
+        'form': form,
+        'error': error
+    }
+
+    return render(request, 'oursite/profile_admin.html', data)
+
+
 def index(request):
-    try:
-        user = models.User.objects.get(id=request.user.id)
-    except:
-        form = UserCreationForm(request.POST)
-        return render(request, 'registration/register.html', {'form': form})
-        quit()
-    maincycle = models.MainCycle.objects.get(user=request.user)
+    user = User.objects.filter(id=request.user.id).first()
+    if user == None:
+        return redirect('login')
 
-    return render(request, 'oursite/index.html', {
-        'maincycle': maincycle,
-        'boosts': boosts,
-    })
-
+    return render(request, 'oursite/index.html')
+    raise_exception = True
 
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-
         if form.is_valid():
             user = form.save()
             return redirect('login')
         else:
             return render(request, 'registration/register.html', {'form': form})
-
     form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
-
-
-def index_(request):
-    return render(request, 'index.html')
 
 
 def product_detail(request, id, slug):

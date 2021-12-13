@@ -1,0 +1,136 @@
+{% load static %}
+{% load embed_video_tags %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+</head>
+<body class="bg">
+    <header class="header">
+      <p class="name">Сайтик</p>
+      <p class="headerText1">Courses</p>
+      <p class="headerText2">Programs</p>
+      <p class="headerText3">Collaboration</p>
+      <p class="headerText4">About</p>
+      <form class="search-form">
+        <input type="search" value="" placeholder="Search" class="search-input">
+          <button type="submit" class="search-button">
+            <svg class="submit-button">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
+            </svg>
+          </button>
+      </form>
+      <div class="login">
+          <p class="login_"><a href="{% url 'login' }">Войти</a></p>
+      </div>
+      <div class="register">
+
+          <p class="register_"><a href="{% url 'register' }">Регистрация</a></p>
+      </div>
+      <img class="eye" src="{% static 'images/eye.png' %}" alt="">
+      <img class="profile" src="{% static 'images/jake.png' %}" alt="">
+    </header>
+<body>
+<div class="center">
+    <p class="_text">Создание курса</p>
+<div class="create">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p class="_text3">Аватар урока</p><div class="opacity"> <img class="upload_image" src="{% static 'images/upImage.png' %}" alt=""></div>
+            <div class="imagecss">{{ form.preview }}</div><br>
+            <p class="_text2">1. Название:</p> {{ form.caption }} <br>
+            <p class="_text2">2. Описание:</p>{{ form.description }}<br>
+            <p class="_text2">3. Тема/Хэштеги:</p>{{ form.tags }}<br>
+            <p class="_text2">4. Добавить видео:</p><div class="opacity"> <img class="upload_video" src="{% static 'images/upload.png' %}" alt=""></div>
+            <div class="videocss">{{ form.video }}</div><br>
+
+
+
+
+
+            <span>{{ error }}</span>
+            <button class="buttona" type="submit">Добавить курс</button>
+        </form>
+
+    </div>
+
+<!--            <div>{{user.username}}</div>-->
+<!--        <div class="logout">-->
+<!--            <a class="logout_" href="{% url 'logout' %}">logout</a>-->
+
+    </div>
+<style>
+    .buttona{
+    width: 300px;
+    height: 50px;
+    margin-top: 30px;
+    margin-left: 40px;
+    color: #9F7100;
+    font-size: 23px;
+    font-weight: 600;
+    background-color: #FFF3E9;
+    border: 2px solid #C79C34;
+    border-radius: 20px;
+    }
+
+    .upload_image{
+    width: 180px;
+    position: absolute; pointer-events: none;
+    padding-left: 535px;
+    padding-top: 60px;
+    }
+    .imagecss{
+    width: 180px;
+    position: absolute;
+    padding-left: 535px;
+    padding-top: 60px;
+    }
+    .imagecss input[type=file] {
+    position: absolute;
+    background-color: #000000;
+     width: 180px;
+     height: 180px;
+     opacity: 0;
+    padding-top: -100px;
+
+
+</style>
+<style>
+.upload_video{
+width: 60px;
+position: absolute; pointer-events: none;
+padding-left: 250;
+}
+    .videocss{
+    display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
+     width: 60px;
+     height: 60px;
+     padding-left: 250;
+    }
+    .videocss input[type=file] {
+     width: 60px;
+     height: 60px;
+     opacity: 0;
+     position: absolute;
+
+}
+
+</style>
+
+
+
+
+</body>
+<!--| linebreaks-->
+
+
+   <!-- <div class="video">
+		{% video Vid.vid_Video 'medium' %}
+        </div>-->
+
+</body>
+</html>

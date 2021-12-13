@@ -53,20 +53,18 @@
           <div class="pass2-auth">
                Повторите пароль:
            </div>
-      <form action="handler.php">
+
+
+          <img src="{% static 'images/loginPic.png' %}" alt="" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px;">
           <img src="{% static 'images/PassPic.png' %}" alt="" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; padding-top: 135px;">
           <img src="{% static 'images/PassPic.png' %}" alt="" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; padding-top: 260px;">
-          <img src="{% static 'images/loginPic.png' %}" alt="" style="width: 65px; vertical-align: top; border-radius: 10px;">
+
 
     <form method='POST' action="{% url 'register' %}">
-
         {% csrf_token %}
-
         {{form}}
-
         <p class="input_button"><input class="inp" type="submit"></p>
     </form>
-  </form>
           <a href="URL" class="razrab">Вы разработчик?</a>
     </div>
     </div>

@@ -8,7 +8,9 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path('', views.post_list, name='post_list'),
     path('register/', views.register, name='register'),
-    path('accounts/profile/', RedirectView.as_view(pattern_name="index")),
+    path('accounts/profile/', views.profile, name='profile'),
+    path('accounts/profile_admin/', views.profile_admin, name='profile_admin'),
+    # path('accounts/profile/', RedirectView.as_view(pattern_name="index")),
     path('upload/', views.upload, name='upload'),
     path('course/', views.courses, name='course'),
     path('course/<int:course_id>/', views.show_course, name='show'),
