@@ -1,3 +1,5 @@
+import uuid
+
 from django.conf import settings
 from django.db import models
 from django.http import HttpResponse
@@ -6,6 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from taggit.managers import TaggableManager
+from django.shortcuts import reverse
 from embed_video.fields import EmbedVideoField
 
 class MainCycle(models.Model):
@@ -36,9 +39,6 @@ class Video(models.Model):
     def __str__(self):
         return self.caption
 
-
-
-
 class Subject(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
@@ -57,6 +57,9 @@ class Course(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     overview = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
+    def get_absolute_url(self):
+        return reverse('shop:product_list_by_category',
+                       args=[self.slug])
 
     class Meta:
         ordering = ('-created',)
@@ -69,10 +72,13 @@ class Module(models.Model):
     course = models.ForeignKey(Course, related_name='modules',on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
+    video = models.FileField(upload_to='video/')
 
     def __str__(self):
         return self.title
-
+    def get_absolute_url(self):
+        return reverse('shop:product_detail',
+                       args=[self.id, self.slug])
 
 class Content(models.Model):
     module = models.ForeignKey(Module, related_name='contents',on_delete=models.CASCADE)

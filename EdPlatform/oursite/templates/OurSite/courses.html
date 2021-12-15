@@ -51,6 +51,7 @@
 
     <div class="vidos">
         {% for x in Vid %}
+
         {{ x.caption }}
 <video class="embed-responsive embed-responsive-16by9" controls="controls">
         <source src="{{x.video.url}}" type="video/mp4">

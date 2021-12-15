@@ -136,14 +136,23 @@ display: none;
     bottom: 0;
     margin: auto 0;
     border-radius: 3px;
+    text-align: center;
+    color: #FFFFFF;
+}
 
-
+.login_{
+text-align: center;
+padding-top: 10px;
+margin-top: 10px;
+color: #FFFFFF;
+    alink: #FFFFFF;
+    text-decoration: none;
 }
 
 .register{
     box-sizing: content-box;
     background: #4799CB;
-    width:85;
+    width:130;
     height: 30;
     border: 1px solid white;
     font-size: 16;
@@ -154,7 +163,15 @@ display: none;
     margin: auto 0;
     border-radius: 3px;
     text-align: center;
+    color: #FFFFFF;
+    alink: #FFFFFF;
 }
+
+.register_{
+color: #FFFFFF;
+    alink: #FFFFFF;
+    text-decoration: none;
+    }
 
 .inText1{
     color: #FFFFFF;

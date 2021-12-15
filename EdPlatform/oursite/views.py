@@ -8,11 +8,12 @@ from django.shortcuts import render, redirect
 from taggit.models import Tag
 from django.http import request, HttpResponse
 from cart.forms import CartAddProductForm
-from oursite.models import Course
+from oursite.models import Course, Module
 from .models  import  Video
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import VideoForm
+from .forms import CoursesForm
 
 # Create your views here.
 
@@ -64,6 +65,32 @@ def profile(request):
         return render(request, 'oursite/profile_admin.html', data)
     else:
         return render(request, 'oursite/profile.html')
+
+@login_required(login_url='/register')
+def newCourses(request):
+    user = User.objects.filter(id=request.user.id).first()
+    if user == None:
+        return redirect('register')
+    if request.user.is_staff or request.user.is_superuser:
+        error = ''
+
+        form = CoursesForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('course')
+        else:
+            form = CoursesForm()
+
+        form = CoursesForm()
+
+        data = {
+            'form': form,
+            'error': error
+        }
+        return render(request, 'oursite/test.html', data)
+    else:
+        return render(request, 'oursite/test.html')
+
 @login_required(login_url='/register')
 def profile_admin(request):
     error = ''
@@ -93,6 +120,7 @@ def index(request):
     return render(request, 'oursite/index.html')
     raise_exception = True
 
+
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -105,11 +133,24 @@ def register(request):
     return render(request, 'registration/register.html', {'form': form})
 
 
+def product_list(request, category_slug=None):
+    category = None
+    categories = Module.objects.all()
+    products = Course.objects.all()
+    if category_slug:
+        category = get_object_or_404(Module, slug=category_slug)
+        products = products.filter(category=category)
+    return render(request,
+                  'oursite/list.html',
+                  {'category': category,
+                   'categories': categories,
+                   'products': products})
+
 def product_detail(request, id, slug):
     product = get_object_or_404(Course,
                                 id=id,
                                 slug=slug,
-                                available=True)
+                                )
     cart_product_form = CartAddProductForm()
     return render(request, 'OurSite/detail.html', {'product': product,
                                                         'cart_product_form': cart_product_form})
