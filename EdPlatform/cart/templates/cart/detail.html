@@ -1,3 +1,4 @@
+{% extends "oursite/index.html" %}
 {% load static %}
 {% block title %}
     Your shopping cart
@@ -29,7 +30,7 @@
                                 {% endif %}">
                         </a>
                     </td>
-                    <td>{{ product.name }}</td>
+                    <td>{{ product.title }}</td>
                     <td>{{ item.quantity }}</td>
                     <td><a href="{% url "cart:cart_remove" product.id%}">Remove</a></td>
                     <td class="num">${{ item.price }}</td>
@@ -45,7 +46,9 @@
         </tbody>
     </table>
     <p class="text-right">
-
-        <a href="#" class="button">Checkout</a>
+        <a href="{% url "oursite:product_list" %}" class="button light">Continue shopping</a>
+        <a href="{% url "orders:order_create" %}" class="button">
+    Checkout
+        </a>
     </p>
 {% endblock %}

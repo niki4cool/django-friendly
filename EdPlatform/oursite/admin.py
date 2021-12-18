@@ -1,11 +1,10 @@
 from django.contrib import admin
-from .models import Post, Subject, Course, Module, Video
+from .models import Subject, Course, Module, Video
 from  embed_video.admin  import  AdminVideoMixin
 
 admin.site.register(Video)
 
 
-admin.site.register(Post)
 
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
@@ -18,12 +17,10 @@ class ModuleInline(admin.StackedInline):
 
 
 
-
-
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ['title', 'subject', 'created']
-    list_filter = ['created', 'subject']
+    list_display = ['title', 'category', 'created']
+    list_filter = ['created', 'category']
     search_fields = ['title', 'overview']
     prepopulated_fields = {'slug': ('title',)}
     inlines = [ModuleInline]

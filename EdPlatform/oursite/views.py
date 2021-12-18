@@ -8,12 +8,13 @@ from django.shortcuts import render, redirect
 from taggit.models import Tag
 from django.http import request, HttpResponse
 from cart.forms import CartAddProductForm
-from oursite.models import Course, Module
-from .models  import  Video
+from .models import Course, Module
+from .models import Video, Subject
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import VideoForm
 from .forms import CoursesForm
+from django.db.models import Q
 
 # Create your views here.
 
@@ -113,9 +114,12 @@ def profile_admin(request):
 
 
 def index(request):
-    user = User.objects.filter(id=request.user.id).first()
-    if user == None:
-        return redirect('login')
+    try:
+        user = models.User.objects.get(id=request.user.id)
+    except:
+        form = UserCreationForm(request.POST)
+        return render(request, 'registration/register.html', {'form': form})
+        quit()
 
     return render(request, 'oursite/index.html')
     raise_exception = True
@@ -133,12 +137,14 @@ def register(request):
     return render(request, 'registration/register.html', {'form': form})
 
 
+
+
 def product_list(request, category_slug=None):
     category = None
-    categories = Module.objects.all()
-    products = Course.objects.all()
+    categories = Subject.objects.all()
+    products = Course.objects.filter(available=True)
     if category_slug:
-        category = get_object_or_404(Module, slug=category_slug)
+        category = get_object_or_404(Subject, slug=category_slug)
         products = products.filter(category=category)
     return render(request,
                   'oursite/list.html',
@@ -146,12 +152,12 @@ def product_list(request, category_slug=None):
                    'categories': categories,
                    'products': products})
 
+
 def product_detail(request, id, slug):
     product = get_object_or_404(Course,
                                 id=id,
                                 slug=slug,
-                                )
+                                available=True)
     cart_product_form = CartAddProductForm()
-    return render(request, 'OurSite/detail.html', {'product': product,
+    return render(request, 'oursite/detail.html', {'product': product,
                                                         'cart_product_form': cart_product_form})
-

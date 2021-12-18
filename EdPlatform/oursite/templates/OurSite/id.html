@@ -5,6 +5,9 @@
   <meta charset="UTF-8">
   <title>Home</title>
   <link rel="stylesheet" href="{% static 'css/video.css' %}">
+    <script src="{% static 'node_modules/video.js/dist/video.js' %} "></script>
+    <script src="{% static 'node_modules/videojs-playlist/dist/videojs-playlist.js' %}"></script>
+   <link href="https://vjs.zencdn.net/7.17.0/video-js.css" rel="stylesheet" />
 </head>
 <body class="bg">
     <header class="header">
@@ -30,16 +33,45 @@
       <img class="eye" src="{% static 'images/eye.png' %}" alt="">
       <img class="profile" src="{% static 'images/jake.png' %}" alt="">
     </header>
-    {% block page_content %}
-	<div class="video-block">
-	</div>
-    <div class="vidos">
-        {{ Vid.caption }}
-<video class="embed-responsive embed-responsive-16by9" controls="controls">
-        <source src="{{Vid.video.url}}" type="video/mp4">
-        </video>
-        </div>
 
-{%endblock%}
+	<video class="video-js" id="video" preload="auto" controls width="720" height=480">
+    <source src="{{Vid.video.url}}" type="video/mp4">
+</video>
+
+<script> var player = videojs('video');
+player.playlist([{
+  sources: [{
+    src: '{{Vid.video.url}}',
+    type: 'video/mp4'
+  }],
+  poster: 'http://media.w3.org/2010/05/sintel/poster.png'
+}, {
+  sources: [{
+    src: '{{Vid.video.url}}',
+    type: 'video/mp4'
+  }],
+  poster: 'http://media.w3.org/2010/05/bunny/poster.png'
+}, {
+  sources: [{
+    src: '{{Vid.video.url}}',
+    type: 'video/mp4'
+  }],
+  poster: 'http://www.videojs.com/img/poster.jpg'
+}, {
+  sources: [{
+    src: '{{Vid.video.url}}',
+    type: 'video/mp4'
+  }],
+  poster: 'http://media.w3.org/2010/05/bunny/poster.png'
+}, {
+  sources: [{
+    src: '{{Vid.video.url}}',
+    type: 'video/mp4'
+  }],
+  poster: 'http://media.w3.org/2010/05/video/poster.png'
+}]);
+
+// Play through the playlist automatically.
+player.playlist.autoadvance(0);</script>
 </body>
 </html>

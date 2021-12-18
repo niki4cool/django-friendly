@@ -11,23 +11,6 @@ from taggit.managers import TaggableManager
 from django.shortcuts import reverse
 from embed_video.fields import EmbedVideoField
 
-class MainCycle(models.Model):
-    user = models.OneToOneField(User, null=False, on_delete=models.CASCADE)
-
-class Post(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
-    text = models.TextField()
-    created_date = models.DateTimeField(default=timezone.now)
-    published_date = models.DateTimeField(blank=True, null=True)
-    tags = TaggableManager()
-
-    def publish(self):
-        self.published_date = timezone.now()
-        self.save()
-
-    def __str__(self):
-        return self.title
 
 
 class Video(models.Model):
@@ -49,36 +32,42 @@ class Subject(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('oursite:product_list_by_category',
+                       args=[self.slug])
 
 class Course(models.Model):
     owner = models.ForeignKey(User, related_name='courses_created',on_delete=models.CASCADE)
-    subject = models.ForeignKey(Subject, related_name='courses',on_delete=models.CASCADE)
+    category = models.ForeignKey(Subject, related_name='courses',on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
     overview = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
-    def get_absolute_url(self):
-        return reverse('shop:product_list_by_category',
-                       args=[self.slug])
+    available = models.BooleanField(default=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True)
 
     class Meta:
-        ordering = ('-created',)
+        ordering = ('title',)
+        index_together = (('id', 'slug'),)
 
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('oursite:product_detail',
+                       args=[self.id, self.slug])
 
 class Module(models.Model):
     course = models.ForeignKey(Course, related_name='modules',on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     video = models.FileField(upload_to='video/')
-
+    slug = models.SlugField(max_length=200, unique=True, default=uuid.uuid1)
     def __str__(self):
         return self.title
-    def get_absolute_url(self):
-        return reverse('shop:product_detail',
-                       args=[self.id, self.slug])
+
+
 
 class Content(models.Model):
     module = models.ForeignKey(Module, related_name='contents',on_delete=models.CASCADE)

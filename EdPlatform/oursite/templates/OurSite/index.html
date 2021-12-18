@@ -34,44 +34,27 @@
 
     <aside class="menu-container">
             <div>hello, {{user.username}}</div>
-            <a href="{% url 'logout' %}">logout</a>
-        </aside>
 
-{% block page_content %}
-{% for x in Vid %}
-	<div class="video-block">
-        <a href="{% url 'show' x.pk %}"><img class="turtle" src="{{ x.preview.url }}" alt="{{ x.caption }}"></a>
-		<a href="{% url 'show' x.pk %}"><p class="vid_title">{{ x.caption }}</p></a>
+    </aside>
+
+<div class="cart">
+    {% with total_items=cart|length %}
+        {% if cart|length > 0 %}
+            Your cart:
+            <a href="{% url "cart:cart_detail" %}">
+                {{ total_items }} item{{ total_items|pluralize }},
+                ${{ cart.get_total_price }}
+            </a>
+        {% else %}
+            Your cart is empty.
+        {% endif %}
+    {% endwith %}
+</div>
 
 
-      <hr size="2" color="#000000">
-      <div class="tags">
-        <div class="tag1">
-      Математика
-      </div>
-         <div class="tag2">
-      Черепаха
-      </div>
-      </div>
-
-        <div class="tags2">
-        <div class="tag3">
-      Математика
-      </div>
-         <div class="tag4">
-      Черепаха
-      </div>
-      </div>
-
-		<p class="vid_description">{{ x.description }}</p>
-{% endfor %}
-<!--| linebreaks-->
-
-	</div>
-   <!-- <div class="video">
-		{% video Vid.vid_Video 'medium' %}
-        </div>-->
-
-{%endblock%}
+<div id="content">
+    {% block content %}
+    {% endblock %}
+</div>
 </body>
 </html>

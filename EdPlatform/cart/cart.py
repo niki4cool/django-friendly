@@ -1,7 +1,7 @@
 from decimal import Decimal
 from django.conf import settings
 from oursite.models import Course
-from orders.models import Order
+
 
 
 class Cart(object):
