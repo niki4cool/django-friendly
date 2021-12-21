@@ -13,6 +13,21 @@ from embed_video.fields import EmbedVideoField
 
 
 
+class Post(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    text = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    published_date = models.DateTimeField(blank=True, null=True)
+    tags = TaggableManager()
+
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return self.title
+
 class Video(models.Model):
     caption=models.CharField(max_length=100)
     description = models.TextField()
@@ -57,6 +72,11 @@ class Course(models.Model):
     def get_absolute_url(self):
         return reverse('oursite:product_detail',
                        args=[self.id, self.slug])
+
+    def url_to_course(self):
+        return reverse('oursite:show',
+                       args=[self.slug])
+
 
 class Module(models.Model):
     course = models.ForeignKey(Course, related_name='modules',on_delete=models.CASCADE)

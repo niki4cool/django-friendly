@@ -60,7 +60,7 @@
           <img src="{% static 'images/PassPic.png' %}" alt="" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; padding-top: 260px;">
 
 
-    <form method='POST' action="{% url 'register' %}">
+    <form method='POST' action="{% url 'oursite:register' %}">
         {% csrf_token %}
         {{form}}
         <p class="input_button"><input class="inp" type="submit"></p>

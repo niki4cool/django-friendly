@@ -16,7 +16,7 @@ urlpatterns = [
     # # path('accounts/profile/', RedirectView.as_view(pattern_name="index")),
     # path('upload/', views.upload, name='upload'),
     # path('course/', views.courses, name='course'),
-    # path('course/<int:course_id>/', views.show_course, name='show'),
+    path('course/<slug>/', views.show_course, name='show'),
 
     url(r'^$', views.product_list, name='product_list'),
     url(r'^(?P<category_slug>[-\w]+)/$',

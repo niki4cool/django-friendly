@@ -35,43 +35,11 @@
     </header>
 
 	<video class="video-js" id="video" preload="auto" controls width="720" height=480">
-    <source src="{{Vid.video.url}}" type="video/mp4">
+    <source src="{{Mod.video.url}}" type="video/mp4">
 </video>
 
-<script> var player = videojs('video');
-player.playlist([{
-  sources: [{
-    src: '{{Vid.video.url}}',
-    type: 'video/mp4'
-  }],
-  poster: 'http://media.w3.org/2010/05/sintel/poster.png'
-}, {
-  sources: [{
-    src: '{{Vid.video.url}}',
-    type: 'video/mp4'
-  }],
-  poster: 'http://media.w3.org/2010/05/bunny/poster.png'
-}, {
-  sources: [{
-    src: '{{Vid.video.url}}',
-    type: 'video/mp4'
-  }],
-  poster: 'http://www.videojs.com/img/poster.jpg'
-}, {
-  sources: [{
-    src: '{{Vid.video.url}}',
-    type: 'video/mp4'
-  }],
-  poster: 'http://media.w3.org/2010/05/bunny/poster.png'
-}, {
-  sources: [{
-    src: '{{Vid.video.url}}',
-    type: 'video/mp4'
-  }],
-  poster: 'http://media.w3.org/2010/05/video/poster.png'
-}]);
 
-// Play through the playlist automatically.
-player.playlist.autoadvance(0);</script>
+{{Cour}}
+
 </body>
 </html>

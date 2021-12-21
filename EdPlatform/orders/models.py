@@ -1,6 +1,6 @@
 from django.db import models
 from oursite.models import Course
-
+from django.shortcuts import reverse
 
 
 class Order(models.Model):
@@ -22,8 +22,13 @@ class Order(models.Model):
     def __str__(self):
         return 'Order {}'.format(self.id)
 
+    def url_to(self):
+        return reverse('oursite:profile',
+                       args=[self.first_name])
+
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
+
 
 
 class OrderItem(models.Model):

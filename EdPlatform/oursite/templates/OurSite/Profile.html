@@ -33,6 +33,13 @@
     </header>
 <body><div class="center">
             <div>{{user.username}}</div>
+            <div id="sidebar">
+            {% for o in Ord %}
+
+                    {{ o }}
+
+            {% endfor %}
+            </div>
         <div class="logout">
             <a class="logout_" href="{% url 'logout' %}">logout</a>
 

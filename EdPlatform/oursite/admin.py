@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Subject, Course, Module, Video
+from .models import Subject, Course, Module, Video, Post
 from  embed_video.admin  import  AdminVideoMixin
 
-admin.site.register(Video)
+admin.site.register(Post)
 
 
 

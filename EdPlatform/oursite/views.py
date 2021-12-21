@@ -9,12 +9,14 @@ from taggit.models import Tag
 from django.http import request, HttpResponse
 from cart.forms import CartAddProductForm
 from .models import Course, Module
+from orders.models import Order, OrderItem
 from .models import Video, Subject
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import VideoForm
 from .forms import CoursesForm
 from django.db.models import Q
+
 
 # Create your views here.
 
@@ -23,30 +25,39 @@ def post_list(request):
     return render(request, 'oursite/index.html', {'Vid': video})
 
 
-def show_course(request, course_id):
-    video = Video.objects.get(pk=course_id)
-    id = course_id
+def show_course(request, slug):
+    course = Course.objects.get(slug=slug)
+    module = Module.objects.get(course=course)
+    id = slug
     context = {
-        'id':id,
-        'Vid': video
+        'id': id,
+        'Cour': course,
+        'Mod': module
     }
     return render(request, 'oursite/id.html', context)
 
 
 def upload(request):
-
     return render(request, 'oursite/upload.html')
+
 
 @login_required(login_url='/register')
 def courses(request):
     video = Video.objects.all()
     return render(request, 'oursite/courses.html', {'Vid': video})
 
+
 @login_required(login_url='/register')
 def profile(request):
     user = User.objects.filter(id=request.user.id).first()
     if user == None:
         return redirect('register')
+    orders = Order.objects.all()
+    item = OrderItem.objects.all()
+    content = {
+        'Ord': orders,
+        'Item': item
+    }
     if request.user.is_staff or request.user.is_superuser:
         error = ''
         if request.method == 'POST':
@@ -61,11 +72,14 @@ def profile(request):
 
         data = {
             'form': form,
-            'error': error
+            'error': error,
+            'Ord': orders,
+            'Item': item
         }
         return render(request, 'oursite/profile_admin.html', data)
     else:
-        return render(request, 'oursite/profile.html')
+        return render(request, 'oursite/profile.html', content)
+
 
 @login_required(login_url='/register')
 def newCourses(request):
@@ -91,6 +105,7 @@ def newCourses(request):
         return render(request, 'oursite/test.html', data)
     else:
         return render(request, 'oursite/test.html')
+
 
 @login_required(login_url='/register')
 def profile_admin(request):
@@ -128,17 +143,18 @@ def index(request):
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
+
         if form.is_valid():
             user = form.save()
             return redirect('login')
         else:
             return render(request, 'registration/register.html', {'form': form})
+
     form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
 
-
-
+@login_required(login_url='/register')
 def product_list(request, category_slug=None):
     category = None
     categories = Subject.objects.all()
@@ -153,6 +169,7 @@ def product_list(request, category_slug=None):
                    'products': products})
 
 
+@login_required(login_url='/register')
 def product_detail(request, id, slug):
     product = get_object_or_404(Course,
                                 id=id,
@@ -160,4 +177,4 @@ def product_detail(request, id, slug):
                                 available=True)
     cart_product_form = CartAddProductForm()
     return render(request, 'oursite/detail.html', {'product': product,
-                                                        'cart_product_form': cart_product_form})
+                                                   'cart_product_form': cart_product_form})

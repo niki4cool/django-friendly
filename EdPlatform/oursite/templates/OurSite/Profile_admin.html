@@ -54,10 +54,20 @@
         </form>
 
     </div>
+        {% for o in Ord %}
+            {% for i in Item %}
+            {% if o.first_name == user.username %}
+            <a href="{{ i.product.url_to_course }}"> {{ i.product }} </a>
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
 
-<!--            <div>{{user.username}}</div>-->
-<!--        <div class="logout">-->
-<!--            <a class="logout_" href="{% url 'logout' %}">logout</a>-->
+
+
+
+            <div>{{user.username}}</div>
+        <div class="logout">
+            <a class="logout_" href="{% url 'logout' %}">logout</a>
 
     </div>
 <style>
