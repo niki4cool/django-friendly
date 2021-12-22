@@ -1,4 +1,4 @@
-from .models import Video
+from .models import Video, UrlCheck
 from django.forms import ModelForm, TextInput, Textarea, FileField
 from django import forms
 
@@ -30,3 +30,8 @@ class CoursesForm(forms.ModelForm):
         model = Video
         fields =('video',)
         video: forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
+class CheckForm(forms.ModelForm):
+    class Meta:
+        model = UrlCheck
+        fields =['user','url']

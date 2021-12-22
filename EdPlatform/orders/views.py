@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
+from django.contrib.auth.models import User
 
 
 def order_create(request):
@@ -11,7 +12,8 @@ def order_create(request):
         if form.is_valid():
             order = form.save()
             for item in cart:
-                OrderItem.objects.create(order=order,
+                OrderItem.objects.create(first_name=User.objects.filter(id=request.user.id).first(),
+                                         order=order,
                                          product=item['product'],
                                          price=item['price'],
                                          quantity=item['quantity'])

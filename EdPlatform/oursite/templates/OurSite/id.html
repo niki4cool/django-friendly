@@ -27,6 +27,7 @@
       <div class="login">
         <span class="inText1">Login</span>
       </div>
+
       <div class="register">
         <span class="inText2">Register</span>
       </div>
@@ -34,12 +35,72 @@
       <img class="profile" src="{% static 'images/jake.png' %}" alt="">
     </header>
 
-	<video class="video-js" id="video" preload="auto" controls width="720" height=480">
-    <source src="{{Mod.video.url}}" type="video/mp4">
+
+
+<div class="video_center">
+   <div class="buttona">
+<a href="id/playlist" class="buttona_">Стандартный просмотр</a>
+</div>
+    {% for m in Mod %}
+	<video class="video-js" id="video" preload="auto" controls width="762" height=480">
+    {% endfor %}
+<script>
+    var player = videojs('video');
+
+player.playlist([
+
+ {% for m in Mod %}
+ {sources: [{
+    src: '{{m.video.url}}',
+    type: 'video/mp4'
+  }],
+  poster: 'http://media.w3.org/2010/05/sintel/poster.png'
+}, {% endfor %} ])
+
+// Play through the playlist automatically.
+player.playlist.autoadvance(0);
+</script>
 </video>
+</div>
 
 
-{{Cour}}
 
+<style>
+
+  .video_center{
+  width: 762px;
+    height: 669px;
+    position: relative;
+    margin-top: 100px;
+    margin: 100px auto;
+    border-radius: 30px;
+  }
+  .buttona{
+    width: 300px;
+    height: 50px;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    color: #9F7100;
+    font-size: 23px;
+    font-weight: 600;
+    background-color: #FFF3E9;
+    border: 2px solid #C79C34;
+    border-radius: 20px;
+    text-align: center;
+    vertical-align: middle;
+    }
+
+    .buttona_{
+vertical-align: middle;
+padding-top: 10px;
+margin-top: 10px;
+color: #9F7100;
+    alink: #9F7100;
+    text-decoration: none;
+    }
+
+</style>
 </body>
 </html>

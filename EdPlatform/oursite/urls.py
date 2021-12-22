@@ -10,6 +10,7 @@ app_name = 'oursite'
 urlpatterns = [
     # path('', views.index, name='index'),
     path('register/', views.register, name='register'),
+    path('razrab/', views.razrab, name='razrab'),
     path('accounts/profile/', views.profile, name='profile'),
     path('accounts/profile_admin/', views.profile_admin, name='profile_admin'),
     # path('test', views.newCourses, name='newCourses'),
@@ -17,6 +18,7 @@ urlpatterns = [
     # path('upload/', views.upload, name='upload'),
     # path('course/', views.courses, name='course'),
     path('course/<slug>/', views.show_course, name='show'),
+    path('course/<slug>/id/playlist', views.show_course_playlist, name='show_playlist'),
 
     url(r'^$', views.product_list, name='product_list'),
     url(r'^(?P<category_slug>[-\w]+)/$',

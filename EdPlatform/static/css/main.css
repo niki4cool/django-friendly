@@ -208,6 +208,16 @@ display: none;
     font-weight: 550;
 }
 
+.ssilka{
+position: absolute;
+    margin-top: 40px;
+    margin-left: 24%;
+    margin-right: auto;
+    color: #FFFFFF;
+    font-size: 30px;
+    font-weight: 550;
+}
+
 .logPassAuth{
 padding-top: 100px !important;
 padding-left: 80px !important;
@@ -221,6 +231,8 @@ padding-left: 80px !important;
     font-weight: 550;
 
 }
+
+
 
 #id_username{
 height: 65px; width:509px; padding-top: 35px; position: relative; vertical-align: top; margin-bottom: 20px; margin-top: 0px; margin-left: 69px;
@@ -280,9 +292,7 @@ background: #FFD367; border: 3px solid #C79C34; border-radius: 20px; width: 580p
 text-decoration: underline; color: #FFFFFF; padding-left: 180px; font-size: 25px; padding-bottom: -5px;
 }
 
-.Spinhuyny{
-animation: spin infinite 20s linear;
-}
+
 
 @keyframes spin{
  from {

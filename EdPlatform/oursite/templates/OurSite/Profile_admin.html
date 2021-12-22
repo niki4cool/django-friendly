@@ -55,12 +55,15 @@
 
     </div>
         {% for o in Ord %}
-            {% for i in Item %}
             {% if o.first_name == user.username %}
+            {% for i in Item %}
+                {% if i.first_name == user.username %}
             <a href="{{ i.product.url_to_course }}"> {{ i.product }} </a>
-            {% endif %}
+                {% endif %}
             {% endfor %}
+         {% endif %}
             {% endfor %}
+
 
 
 

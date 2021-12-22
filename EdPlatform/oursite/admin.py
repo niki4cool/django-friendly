@@ -1,8 +1,12 @@
 from django.contrib import admin
-from .models import Subject, Course, Module, Video, Post
+from .models import Subject, Course, Module, Video, Post, UrlCheck
 from  embed_video.admin  import  AdminVideoMixin
 
 admin.site.register(Post)
+
+admin.site.register(UrlCheck)
+class UrlCheckAdmin(admin.ModelAdmin):
+    list_display = ['user', 'title']
 
 
 

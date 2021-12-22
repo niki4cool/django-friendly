@@ -15,6 +15,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import VideoForm
 from .forms import CoursesForm
+from .forms import CheckForm
 from django.db.models import Q
 
 
@@ -27,7 +28,7 @@ def post_list(request):
 
 def show_course(request, slug):
     course = Course.objects.get(slug=slug)
-    module = Module.objects.get(course=course)
+    module = Module.objects.filter(course=course)
     id = slug
     context = {
         'id': id,
@@ -35,6 +36,17 @@ def show_course(request, slug):
         'Mod': module
     }
     return render(request, 'oursite/id.html', context)
+
+def show_course_playlist(request, slug):
+    course = Course.objects.get(slug=slug)
+    module = Module.objects.filter(course=course)
+    id = slug
+    context = {
+        'id': id,
+        'Cour': course,
+        'Mod': module
+    }
+    return render(request, 'oursite/id_playlist.html', context)
 
 
 def upload(request):
@@ -114,6 +126,7 @@ def profile_admin(request):
         form = VideoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+
             return redirect('course')
     else:
         form = VideoForm()
@@ -143,7 +156,6 @@ def index(request):
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-
         if form.is_valid():
             user = form.save()
             return redirect('login')
@@ -152,6 +164,30 @@ def register(request):
 
     form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
+
+def razrab(request):
+    error=""
+    user = models.User.objects.get(id=request.user.id)
+    if request.method == 'POST':
+        form = CheckForm(request.POST)
+        if form.is_valid():
+            newform = form.save(commit=False)
+            form.instance.user = request.user
+            newform.save()
+            return redirect('oursite:profile')
+    else:
+        form = CheckForm()
+
+    form = CheckForm()
+
+    data = {
+        'form': form,
+        'error': error,
+        'user': user
+    }
+
+    return render(request, 'oursite/razrab.html', data)
+
 
 
 @login_required(login_url='/register')

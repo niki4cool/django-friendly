@@ -31,19 +31,23 @@
       <img class="eye" src="{% static 'images/eye.png' %}" alt="">
       <img class="profile" src="{% static 'images/jake.png' %}" alt="">
     </header>
-<body><div class="center">
+<body>
+<div class="center">
+
             <div>{{user.username}}</div>
-            <div id="sidebar">
+    <div class="razrab">
+            <a class="razrab_" href="{% url 'oursite:razrab' %}">Стать разработчиком</a>
+        </div>
             {% for o in Ord %}
-
-                    {{ o }}
-
+            {% if o.first_name == user.username %}
+            {% for i in Item %}
+                {% if i.first_name == user.username %}
+            <a href="{{ i.product.url_to_course }}"> {{ i.product }} </a>
+                {% endif %}
             {% endfor %}
-            </div>
-        <div class="logout">
-            <a class="logout_" href="{% url 'logout' %}">logout</a>
+         {% endif %}
+            {% endfor %}
 
-    </div>
 hfdhfdghfgd
 
 </div>
