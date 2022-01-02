@@ -62,6 +62,7 @@ class Course(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True)
 
+
     class Meta:
         ordering = ('title',)
         index_together = (('id', 'slug'),)
@@ -99,6 +100,20 @@ class UrlCheck(models.Model):
     def __str__(self):
         return self.title
 
+class Homework(models.Model):
+    course = models.ForeignKey(Course, related_name='homework', on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    user = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True)
+    homework_file = models.FileField(upload_to='homework/')
+    approved = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ('title',)
+        index_together = (('id', 'slug'),)
+
+    def __str__(self):
+        return self.title
 
 class Content(models.Model):
     module = models.ForeignKey(Module, related_name='contents',on_delete=models.CASCADE)

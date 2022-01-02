@@ -8,14 +8,15 @@ from django.shortcuts import render, redirect
 from taggit.models import Tag
 from django.http import request, HttpResponse
 from cart.forms import CartAddProductForm
-from .models import Course, Module
+from .models import Course, Module, Homework
 from orders.models import Order, OrderItem
 from .models import Video, Subject
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import VideoForm
+from .forms import VideoForm, HomeworkForm, CourseForm, ModuleForm
 from .forms import CoursesForm
 from .forms import CheckForm
+from . import forms
 from django.db.models import Q
 
 
@@ -29,8 +30,16 @@ def post_list(request):
 def show_course(request, slug):
     course = Course.objects.get(slug=slug)
     module = Module.objects.filter(course=course)
+    form = HomeworkForm(request.POST, request.FILES)
+    if form.is_valid():
+        response = form.save(commit=False)
+        response.user = request.user
+        response.save()
+
+    form = HomeworkForm()
     id = slug
     context = {
+        'form': form,
         'id': id,
         'Cour': course,
         'Mod': module
@@ -40,13 +49,25 @@ def show_course(request, slug):
 def show_course_playlist(request, slug):
     course = Course.objects.get(slug=slug)
     module = Module.objects.filter(course=course)
+    homework = Homework.objects.filter(course=course)
+
+    form = HomeworkForm(request.POST, request.FILES)
+    if form.is_valid():
+        response = form.save(commit=False)
+        response.user = request.user
+        response.save()
+
+    form = HomeworkForm()
     id = slug
     context = {
+        'form': form,
         'id': id,
         'Cour': course,
-        'Mod': module
+        'Mod': module,
+        'Home': Homework
     }
     return render(request, 'oursite/id_playlist.html', context)
+
 
 
 def upload(request):
@@ -73,23 +94,34 @@ def profile(request):
     if request.user.is_staff or request.user.is_superuser:
         error = ''
         if request.method == 'POST':
-            form = VideoForm(request.POST, request.FILES)
-            if form.is_valid():
+            form = CourseForm(request.POST, request.FILES)
+            form_homework = HomeworkForm(request.POST, request.FILES)
+            form_module = ModuleForm(request.POST, request.FILES)
+            if form.is_valid() and form_homework.is_valid() and form_module.is_valid():
                 form.save()
-                return redirect('course')
+                form_homework.save()
+                form_module.save()
+                return redirect('oursite:profile')
         else:
-            form = VideoForm()
+            form = CourseForm()
+            form_homework = HomeworkForm()
+            form_module = ModuleForm()
 
-        form = VideoForm()
+        form = CourseForm()
+        form_homework = HomeworkForm()
+        form_module = ModuleForm()
 
         data = {
             'form': form,
+            'form_homework': form_homework,
+            'form_module': form_module,
             'error': error,
             'Ord': orders,
             'Item': item
         }
         return render(request, 'oursite/profile_admin.html', data)
     else:
+
         return render(request, 'oursite/profile.html', content)
 
 
@@ -123,15 +155,15 @@ def newCourses(request):
 def profile_admin(request):
     error = ''
     if request.method == 'POST':
-        form = VideoForm(request.POST, request.FILES)
+        form = CourseForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
 
             return redirect('course')
     else:
-        form = VideoForm()
+        form = CourseForm()
 
-    form = VideoForm()
+    form = CourseForm()
 
     data = {
         'form': form,

@@ -38,12 +38,17 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <p class="_text3">Аватар урока</p><div class="opacity"> <img class="upload_image" src="{% static 'images/upImage.png' %}" alt=""></div>
-            <div class="imagecss">{{ form.preview }}</div><br>
-            <p class="_text2">1. Название:</p> {{ form.caption }} <br>
-            <p class="_text2">2. Описание:</p>{{ form.description }}<br>
-            <p class="_text2">3. Тема/Хэштеги:</p>{{ form.tags }}<br>
+            <div class="imagecss">{{ form_homework.homework_file }}</div><br>
+            <div class="">{{ form.image }}</div><br>
+            <p class="_text2">1. Название:</p> {{ form.title }} <br>
+            <p class="_text2">Цена:</p> {{ form.price }} <br>
+            <p class="_text2">Slug:</p> {{ form.slug }} <br>
+            <p class="_text2">owner:</p> {{ form.owner }} <br>
+
+            <p class="_text2">2. Описание:</p>{{ form.overview }}<br>
+            <p class="_text2">3. Тема/Хэштеги:</p>{{ form.category }}<br>
             <p class="_text2">4. Добавить видео:</p><div class="opacity"> <img class="upload_video" src="{% static 'images/upload.png' %}" alt=""></div>
-            <div class="videocss">{{ form.video }}</div><br>
+            <div class="videocss">{{ form_module.video }}</div><br>
 
 
 

@@ -1,8 +1,10 @@
 from django.contrib import admin
-from .models import Subject, Course, Module, Video, Post, UrlCheck
+from .models import Subject, Course, Module, Video, Post, UrlCheck, Homework
 from  embed_video.admin  import  AdminVideoMixin
 
 admin.site.register(Post)
+
+admin.site.register(Video)
 
 admin.site.register(UrlCheck)
 class UrlCheckAdmin(admin.ModelAdmin):
@@ -21,10 +23,16 @@ class ModuleInline(admin.StackedInline):
 
 
 
-@admin.register(Course)
+class HomeworkInLine(admin.StackedInline):
+    model = Homework
+
+
+
 class CourseAdmin(admin.ModelAdmin):
     list_display = ['title', 'category', 'created']
     list_filter = ['created', 'category']
     search_fields = ['title', 'overview']
     prepopulated_fields = {'slug': ('title',)}
-    inlines = [ModuleInline]
+    inlines = [ModuleInline, HomeworkInLine]
+
+admin.site.register(Course, CourseAdmin)

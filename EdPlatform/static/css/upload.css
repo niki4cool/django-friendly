@@ -276,9 +276,7 @@ background: #FFD367; border: 3px solid #C79C34; border-radius: 20px; width: 580p
 text-decoration: underline; color: #FFFFFF; padding-left: 180px; font-size: 25px; padding-bottom: -5px;
 }
 
-.Spinhuyny{
-animation: spin infinite 20s linear;
-}
+
 
 @keyframes spin{
  from {

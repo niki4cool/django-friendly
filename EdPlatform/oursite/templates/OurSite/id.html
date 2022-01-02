@@ -54,7 +54,7 @@ player.playlist([
     src: '{{m.video.url}}',
     type: 'video/mp4'
   }],
-  poster: 'http://media.w3.org/2010/05/sintel/poster.png'
+  poster: 'https://avatars.mds.yandex.net/get-zen_doc/3725294/pub_5f5cd52bd709247317a7fd55_5f5cd946d709247317ad7335/scale_1200'
 }, {% endfor %} ])
 
 // Play through the playlist automatically.
@@ -62,10 +62,28 @@ player.playlist.autoadvance(0);
 </script>
 </video>
 </div>
-
+<div class="homework">
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <p class="_text2">Название:</p> {{ form.title }} <br>
+  <p class="_text2">Пользователь:</p> {{ form.user }} <br>
+  <div class="videocss">{{ form.homework_file }}</div><br>
+  <span>{{ error }}</span>
+            <button class="buttona" type="submit">Отправить ДЗ</button>
+</form>
+</div>
 
 
 <style>
+
+.homework{
+width: 762px;
+    height: 669px;
+    position: relative;
+    margin-top: 100px;
+    margin: 100px auto;
+    border-radius: 30px;
+}
 
   .video_center{
   width: 762px;
