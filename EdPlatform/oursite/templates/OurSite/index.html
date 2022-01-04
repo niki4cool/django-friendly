@@ -13,13 +13,8 @@
       <p class="headerText2">Programs</p>
       <p class="headerText3">Collaboration</p>
       <p class="headerText4">About</p>
-      <form class="search-form">
-        <input type="search" value="" placeholder="Search" class="search-input">
-          <button type="submit" class="search-button">
-            <svg class="submit-button">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
-            </svg>
-          </button>
+      <form action="{% url 'oursite:search' %}" method="get">
+          <input name="q" type="text" placeholder="Search...">
       </form>
       <div class="login">
           <p class="login_"><a href="{% url 'login' }">Войти</a></p>

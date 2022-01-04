@@ -37,7 +37,7 @@ class CoursesForm(forms.ModelForm):
 class CheckForm(forms.ModelForm):
     class Meta:
         model = UrlCheck
-        fields = ['user', 'url']
+        fields = ['title', 'url']
 
 
 class CourseForm(forms.ModelForm):
@@ -57,4 +57,5 @@ class HomeworkForm(forms.ModelForm):
         model = Homework
         fields = ('homework_file', 'title')
         homework_file: forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
 

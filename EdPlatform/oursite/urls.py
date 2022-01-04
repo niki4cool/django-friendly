@@ -13,6 +13,7 @@ urlpatterns = [
     path('razrab/', views.razrab, name='razrab'),
     path('accounts/profile/', views.profile, name='profile'),
     path('accounts/profile_admin/', views.profile_admin, name='profile_admin'),
+    path('search/', views.Search, name='search'),
     # path('test', views.newCourses, name='newCourses'),
     # # path('accounts/profile/', RedirectView.as_view(pattern_name="index")),
     # path('upload/', views.upload, name='upload'),

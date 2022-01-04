@@ -1,0 +1,303 @@
+*{
+    font-family: Mont;
+
+}
+
+
+
+.header{
+    width: 100%;
+    background: #00A6A3;
+    height: 100px;
+    position: relative;
+
+}
+
+.name{
+    color: #FFFFFF;
+    font-weight: 550;
+    font-size: 36;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    left: 368;
+    bottom: 0;
+    margin: auto 0;
+}
+
+.helptext{
+display: none;
+}
+
+.headerText1{
+    color: #FFFFFF;
+    font-size: 18;
+    height: 50px;
+    position: absolute;
+    top: 29%;
+    left: 549;
+    bottom: 0;
+    margin: auto 0;
+}
+
+.headerText2{
+    color: #FFFFFF;
+    font-size: 18;
+    height: 50px;
+    position: absolute;
+    top: 29%;
+    left: 640;
+    bottom: 0;
+    margin: auto 0;
+}
+
+.headerText3{
+    color: #FFFFFF;
+    font-size: 18;
+    height: 50px;
+    position: absolute;
+    top: 29%;
+    left: 751;
+    bottom: 0;
+    margin: auto 0;
+}
+
+.headerText4{
+    color: #FFFFFF;
+    font-size: 18;
+    height: 50px;
+    position: absolute;
+    top: 29%;
+    left: 896;
+    bottom: 0;
+    margin: auto 0;
+}
+
+.search-form {
+  position: absolute;
+  top: 52%;
+  left: 1090;
+  width: 198px;
+  height: 30px;
+  border-radius: 40px;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  transform: translate(-50%, -50%);
+  background: #fff;
+  transition: all 0.3s ease;
+}
+
+.search-input {
+  position: absolute;
+  top: 5px;
+  left: 20px;
+  font-size: 14px;
+  background: none;
+  color: #5a6674;
+  width: 195px;
+  height: 20px;
+  border: none;
+  appearance: none;
+  outline: none;
+
+  &::-webkit-search-cancel-button {
+    appearance: none;
+  }
+}
+
+.submit-button{
+height: 100px;
+
+}
+
+.search-button {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  height: 20px;
+  width: 20px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  outline: none!important;
+  cursor: pointer;
+
+  & svg {
+    width: 20px;
+    height: 20px;
+    fill: #5a6674;
+  }
+}
+
+.login{
+    box-sizing: content-box;
+    width:85;
+    height: 30;
+    border: 1px solid white;
+    font-size: 16;
+    position: absolute;
+    top: 5%;
+    left: 1232;
+    bottom: 0;
+    margin: auto 0;
+    border-radius: 3px;
+
+
+}
+
+.register{
+    box-sizing: content-box;
+    background: #4799CB;
+    width:85;
+    height: 30;
+    border: 1px solid white;
+    font-size: 16;
+    position: absolute;
+    top: 5%;
+    left: 1330;
+    bottom: 0;
+    margin: auto 0;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.inText1{
+    color: #FFFFFF;
+    padding: 20px;
+    margin-top: 80px;
+}
+
+.inText2{
+    color: #FFFFFF;
+
+}
+
+.profile{
+    height: 50px;
+    position: absolute;
+    top: 0;
+    left: 1489;
+    bottom: 0;
+    margin: auto 20;
+}
+
+.eye{
+    height: 50 px;
+    position: absolute;
+    top: 10;
+    left: 1427;
+    bottom: 0;
+    margin: auto 20;
+    width: 30px;
+
+}
+
+.center{
+    width: 762px;
+    height: 669px;
+    position: relative;
+    margin-top: 100px;
+    margin: 100px auto;
+    border-radius: 30px;
+
+}
+
+.auth{
+    position: absolute;
+    margin-top: 40px;
+    margin-left: 202px;
+    color: #FFFFFF;
+    font-size: 30px;
+    font-weight: 550;
+}
+
+.logPassAuth{
+padding-top: 100px !important;
+padding-left: 80px !important;
+
+}
+
+.log-auth{
+    margin-bottom: 20px;
+    color: #FFFFFF;
+    font-size: 30px;
+    font-weight: 550;
+
+}
+
+#id_username{
+height: 65px; width:509px; padding-top: 40px; position: relative; vertical-align: top; margin-bottom: 20px; margin-top: 1px;
+}
+
+.log-img{
+    border-radius: 10px;
+}
+
+.bg{
+    background: url(../images/b1.png);
+
+}
+
+
+label{
+display: none;
+}
+
+.pass-auth{
+position: absolute;
+padding-top: 80px;
+margin-bottom: 20px;
+    color: #FFFFFF;
+    font-size: 30px;
+    font-weight: 550;
+}
+
+#id_password1{
+height: 65px; width:509px; padding-top: 35px; position: relative; vertical-align: top; margin-bottom: 20px; margin-top: 50px; margin-left: 69px;
+}
+
+.pass2-auth{
+position: absolute;
+padding-top: 210px;
+margin-bottom: 20px;
+    color: #FFFFFF;
+    font-size: 30px;
+    font-weight: 550;
+}
+
+#id_password2{
+height: 65px; width:509px; padding-top: 35px; position: relative; vertical-align: top; margin-bottom: 20px; margin-top: 40px; margin-left: 69px;
+}
+
+.inp{
+
+background: #FFD367; border: 3px solid #C79C34; border-radius: 20px; width: 580px; height: 90px; color: #9F7100;
+    font-size: 30px;
+    font-weight: 550;
+}
+
+.razrab{
+text-decoration: underline; color: #FFFFFF; padding-left: 180px; font-size: 25px; padding-bottom: -5px;
+}
+
+
+
+@keyframes spin{
+ from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.video-block{
+
+}
+.video{
+margin:0 auto; position: relative; padding-left: 33%;
+}
+
+.vidos{
+margin:0 auto; position: relative; padding-left: 33%;
+}

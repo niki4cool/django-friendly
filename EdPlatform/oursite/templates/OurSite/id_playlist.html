@@ -1,0 +1,86 @@
+{% load static %}
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+  <link rel="stylesheet" href="{% static 'css/id.css' %}">
+    <script src="{% static 'node_modules/video.js/dist/video.js' %} "></script>
+    <script src="{% static 'node_modules/videojs-playlist/dist/videojs-playlist.js' %}"></script>
+   <link href="https://vjs.zencdn.net/7.17.0/video-js.css" rel="stylesheet" />
+</head>
+<body class="bg">
+    <header class="header">
+      <a href="http://127.0.0.1:8000"><img class="" src="{% static 'images/morfusha_sova.png' %}" alt=""></a>
+      <p class="headerText1">Courses</p>
+      <p class="headerText2">Programs</p>
+      <p class="headerText3">Collaboration</p>
+      <p class="headerText4">About</p>
+      <form class="search-form">
+        <input type="search" value="" placeholder="Search" class="search-input">
+          <button type="submit" class="search-button">
+            <svg class="submit-button">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
+            </svg>
+          </button>
+      </form>
+      <div class="login">
+        <span class="inText1">Login</span>
+      </div>
+      <div class="register">
+        <span class="inText2">Register</span>
+      </div>
+      <img class="eye" src="{% static 'images/eye.png' %}" alt="">
+      <img class="profile" src="{% static 'images/jake.png' %}" alt="">
+    </header>
+    <div class="center">
+        <div class="perehod">
+            <a href="../" class="buttona_">Режим конструктора</a>
+        </div>
+<div class="move_video">
+    {% for m in Mod %}
+	<video class="" id="" preload="auto" controls width="800" height="600">
+
+    <source src="{{m.video.url}}" type="video/mp4">
+
+</video>
+    <br>
+    {% endfor %}
+</div>
+</div>
+
+<style>
+    .move_video{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+    .perehod{
+    width: 300px;
+    height: 50px;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    color: #9F7100;
+    font-size: 23px;
+    font-weight: 600;
+    background-color: #FFF3E9;
+    border: 2px solid #C79C34;
+    border-radius: 20px;
+    text-align: center;
+    vertical-align: middle;
+    }
+
+    .buttona_{
+vertical-align: middle;
+padding-top: 10px;
+margin-top: 10px;
+color: #9F7100;
+    alink: #9F7100;
+    text-decoration: none;
+    }
+</style>
+</body>
+</html>

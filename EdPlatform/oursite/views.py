@@ -11,7 +11,7 @@ from django.shortcuts import render, redirect
 from taggit.models import Tag
 from django.http import request, HttpResponse, Http404
 from cart.forms import CartAddProductForm
-from .models import Course, Module, Homework
+from .models import Course, Module, Homework, UrlCheck
 from orders.models import Order, OrderItem
 from .models import Video, Subject
 from django.contrib.auth.models import User
@@ -24,18 +24,19 @@ from django.db.models import Q
 
 
 # Create your views here.
-
+def Search(request):
+    query = request.GET.get('q')
+    object_list = Course.objects.filter(title__icontains=query)
+    return render(request, 'oursite/search.html', {"list":object_list})
 def post_list(request):
-    video = Video.objects.all()
-    return render(request, 'oursite/index.html', {'Vid': video})
+
+    return render(request, 'oursite/index.html')
 
 
 def show_course(request, slug):
     course = Course.objects.get(slug=slug)
     module = Module.objects.filter(course=course)
     dz = course.work
-
-
     if request.method == 'POST':
         form = HomeworkForm(request.POST, request.FILES)
         if form.is_valid():
@@ -224,23 +225,23 @@ def register(request):
 
 def razrab(request):
     error=""
-    user = models.User.objects.get(id=request.user.id)
+    check = UrlCheck.objects.all()
     if request.method == 'POST':
         form = CheckForm(request.POST)
         if form.is_valid():
             newform = form.save(commit=False)
-            form.instance.user = request.user
+            newform.user = User.objects.filter(id=request.user.id).first()
             newform.save()
             return redirect('oursite:profile')
     else:
-        form = CheckForm()
+        newform = CheckForm()
 
-    form = CheckForm()
+    newform = CheckForm()
 
     data = {
-        'form': form,
+        'check': check,
+        'form': newform,
         'error': error,
-        'user': user
     }
 
     return render(request, 'oursite/razrab.html', data)
