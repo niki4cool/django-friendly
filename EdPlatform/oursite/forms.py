@@ -41,9 +41,10 @@ class CheckForm(forms.ModelForm):
 
 
 class CourseForm(forms.ModelForm):
+    video = forms.FileField()
     class Meta:
         model = Course
-        fields = ('owner', 'category', 'title', 'slug', 'overview', 'available', 'price', 'image')
+        fields = ('owner', 'category', 'title', 'slug', 'overview', 'available', 'price', 'image', 'video', 'work')
 
 class ModuleForm(forms.ModelForm):
     class Meta:
@@ -54,6 +55,6 @@ class ModuleForm(forms.ModelForm):
 class HomeworkForm(forms.ModelForm):
     class Meta:
         model = Homework
-        fields = ('title', 'user', 'slug', 'homework_file',)
+        fields = ('homework_file', 'title')
         homework_file: forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
 

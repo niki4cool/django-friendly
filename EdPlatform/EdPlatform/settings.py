@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'cart',
     'orders',
-    'embed_video',
     'imagekit'
 
 ]

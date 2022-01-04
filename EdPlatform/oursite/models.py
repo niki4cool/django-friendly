@@ -61,6 +61,7 @@ class Course(models.Model):
     available = models.BooleanField(default=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True)
+    work = models.FileField(upload_to='work/')
 
 
     class Meta:
@@ -96,7 +97,6 @@ class UrlCheck(models.Model):
     title = url = models.CharField(max_length=200)
     user = models.CharField(max_length=200)
     url = models.CharField(max_length=200)
-
     def __str__(self):
         return self.title
 
@@ -104,7 +104,7 @@ class Homework(models.Model):
     course = models.ForeignKey(Course, related_name='homework', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     user = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=200, unique=True)
+    slug = models.SlugField(max_length=200)
     homework_file = models.FileField(upload_to='homework/')
     approved = models.BooleanField(default=False)
 

@@ -1,5 +1,5 @@
 {% load static %}
-{% load embed_video_tags %}
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -62,11 +62,15 @@ player.playlist.autoadvance(0);
 </script>
 </video>
 </div>
+
+    <a href="{{ Cour.work.url }}" download="">ссылка</a>
+    <div class="">{{ Cour.work.url }}</div><br>
+
 <div class="homework">
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <p class="_text2">Название:</p> {{ form.title }} <br>
-  <p class="_text2">Пользователь:</p> {{ form.user }} <br>
+
   <div class="videocss">{{ form.homework_file }}</div><br>
   <span>{{ error }}</span>
             <button class="buttona" type="submit">Отправить ДЗ</button>

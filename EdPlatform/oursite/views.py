@@ -1,12 +1,15 @@
+import os
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
+from django.utils.http import urlquote
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from . import models
 from django.shortcuts import render, redirect
 from taggit.models import Tag
-from django.http import request, HttpResponse
+from django.http import request, HttpResponse, Http404
 from cart.forms import CartAddProductForm
 from .models import Course, Module, Homework
 from orders.models import Order, OrderItem
@@ -30,15 +33,27 @@ def post_list(request):
 def show_course(request, slug):
     course = Course.objects.get(slug=slug)
     module = Module.objects.filter(course=course)
-    form = HomeworkForm(request.POST, request.FILES)
-    if form.is_valid():
-        response = form.save(commit=False)
-        response.user = request.user
-        response.save()
+    dz = course.work
 
+
+    if request.method == 'POST':
+        form = HomeworkForm(request.POST, request.FILES)
+        if form.is_valid():
+            homework = form.save(commit=False)
+            homework.course = course
+            homework.user = User.objects.filter(id=request.user.id).first()
+            homework.slug = slug
+            course.save()
+            homework.save()
+            return redirect('oursite:show', slug)
+        else:
+            homework = HomeworkForm()
+
+    homework = HomeworkForm()
     form = HomeworkForm()
     id = slug
     context = {
+        'dz': dz,
         'form': form,
         'id': id,
         'Cour': course,
@@ -49,18 +64,23 @@ def show_course(request, slug):
 def show_course_playlist(request, slug):
     course = Course.objects.get(slug=slug)
     module = Module.objects.filter(course=course)
-    homework = Homework.objects.filter(course=course)
 
-    form = HomeworkForm(request.POST, request.FILES)
-    if form.is_valid():
-        response = form.save(commit=False)
-        response.user = request.user
-        response.save()
+    if request.method == 'POST':
+        form = HomeworkForm(request.POST, request.FILES)
+        if form.is_valid():
+            homework = form.save(commit=False)
+            homework.course = course
+            course.save()
+            homework.save()
 
-    form = HomeworkForm()
+            return redirect('oursite:show_playlist')
+        else:
+            homework = HomeworkForm()
+
+    homework = HomeworkForm()
     id = slug
     context = {
-        'form': form,
+        'form': homework,
         'id': id,
         'Cour': course,
         'Mod': module,
@@ -95,26 +115,31 @@ def profile(request):
         error = ''
         if request.method == 'POST':
             form = CourseForm(request.POST, request.FILES)
-            form_homework = HomeworkForm(request.POST, request.FILES)
             form_module = ModuleForm(request.POST, request.FILES)
-            if form.is_valid() and form_homework.is_valid() and form_module.is_valid():
-                form.save()
-                form_homework.save()
-                form_module.save()
+            if form.is_valid() and form_module.is_valid():
+                course = form.save(commit=False)
+                module = form_module.save(commit=False)
+                module.course = course
+                course.save()
+                module.save()
+
+
+
+                # Module.objects.create(title='test',
+                #                       course=course,
+                #                       video=course.video)
+
                 return redirect('oursite:profile')
         else:
-            form = CourseForm()
-            form_homework = HomeworkForm()
-            form_module = ModuleForm()
+            course = CourseForm()
+            module = ModuleForm()
 
-        form = CourseForm()
-        form_homework = HomeworkForm()
-        form_module = ModuleForm()
+        course = CourseForm()
+        module = ModuleForm()
 
         data = {
-            'form': form,
-            'form_homework': form_homework,
-            'form_module': form_module,
+            'form': course,
+            'form_module': module,
             'error': error,
             'Ord': orders,
             'Item': item
