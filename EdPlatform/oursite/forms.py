@@ -44,7 +44,18 @@ class CourseForm(forms.ModelForm):
     video = forms.FileField()
     class Meta:
         model = Course
-        fields = ('owner', 'category', 'title', 'slug', 'overview', 'available', 'price', 'image', 'video', 'work')
+        fields = ('category', 'title', 'overview', 'available', 'price', 'image', 'video', 'work')
+        widgets = {
+            'title': TextInput(attrs={
+                'class': 'title',
+
+            }),
+            'overview': Textarea(attrs={
+                'class': 'overview',
+
+            }),
+        }
+
 
 class ModuleForm(forms.ModelForm):
     class Meta:

@@ -19,6 +19,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import VideoForm, HomeworkForm, CourseForm, ModuleForm
 from .forms import CoursesForm
 from .forms import CheckForm
+from pytils.translit import slugify
 from . import forms
 from django.db.models import Q
 
@@ -120,9 +121,14 @@ def profile(request):
             if form.is_valid() and form_module.is_valid():
                 course = form.save(commit=False)
                 module = form_module.save(commit=False)
+                course.slug = slugify(course.title)
+                course.owner = User.objects.filter(id=request.user.id).first()
+                module.title = "Title"
+                module.description = "description"
                 module.course = course
                 course.save()
                 module.save()
+
 
 
 

@@ -1,9 +1,39 @@
 {% extends "oursite/index.html" %}
+{% load static %}
 {% block title %}Thank you{% endblock %}
 
 {% block content %}
-    <h1>Thank you</h1>
+    <div class="center">
+        <div class="centerr">
+        <h1 style="color: #FFFFFF; padding-top: 20px;">Спасибо!</h1>
+
+        <h1 style="color: #FFFFFF">Ваш заказ оформлен, ожидайте подтверждения оплаты</h1>
+
+            <img src="{% static 'images/payment.png' %}" style="width: 80%">
+        </div>
+
+
+    </div>
+
+<style>
+     .center{
+    margin-top: 50px !important;
+    height: 600px !important;
+    }
+
+     .centerr{
+    text-align: center;
+    }
+
+</style>
+{% endblock %}
+
+
+
+
+
+
+<h1>Thank you</h1>
     <p>Your order has been successfully completed. Your order number is
         <strong>{{ order.id }}</strong>.</p>
-{% endblock %}
 

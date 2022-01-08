@@ -73,6 +73,29 @@ display: none;
     margin: auto 0;
 }
 
+.headerText5{
+    color: #FFFFFF;
+    font-size: 18;
+    height: 50px;
+    position: absolute;
+    top: 29%;
+    left: 1000;
+    bottom: 0;
+    margin: auto 0;
+}
+
+.loopa{
+color: #FFFFFF;
+    font-size: 18;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 3%;
+    left: 1160;
+    bottom: 0;
+    margin: auto 0;
+}
+
 .search-form {
   position: absolute;
   top: 52%;
@@ -176,6 +199,16 @@ display: none;
     margin: auto 20;
 }
 
+.cartImg{
+height: 50px;
+    position: absolute;
+    top: 10;
+    left: 1570;
+    bottom: 0;
+    margin: auto 20;
+
+}
+
 .eye{
     height: 50 px;
     position: absolute;
@@ -243,7 +276,10 @@ height: 65px; width:509px; padding-top: 35px; position: relative; vertical-align
 }
 
 .bg{
-    background: url(../images/b1.png);
+    background: url(../images/backk.png);
+    background-size: 1920px auto;
+
+    repeat-y;
 }
 
 

@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from oursite.models import Course
 from django.shortcuts import reverse
@@ -7,9 +9,9 @@ class Order(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
-    address = models.CharField(max_length=250)
-    postal_code = models.CharField(max_length=20)
-    city = models.CharField(max_length=100)
+    address = models.CharField(max_length=250, default=uuid.uuid1())
+    postal_code = models.CharField(max_length=20, default=uuid.uuid1())
+    city = models.CharField(max_length=100, default=uuid.uuid1())
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)

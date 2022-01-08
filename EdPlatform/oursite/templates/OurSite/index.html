@@ -13,18 +13,23 @@
       <p class="headerText2">Programs</p>
       <p class="headerText3">Collaboration</p>
       <p class="headerText4">About</p>
+        <div class="headertext5">
       <form action="{% url 'oursite:search' %}" method="get">
           <input name="q" type="text" placeholder="Search...">
       </form>
+        </div>
+        <img class="loopa" src="{% static 'images/v20_10.png' %}" alt="">
       <div class="login">
           <p class="login_"><a href="{% url 'login' }">Войти</a></p>
       </div>
+
       <div class="register">
 
           <p class="register_"><a href="{% url 'register' }">Регистрация</a></p>
       </div>
       <img class="eye" src="{% static 'images/eye.png' %}" alt="">
       <img class="profile" src="{% static 'images/jake.png' %}" alt="">
+        <a href="{% url "cart:cart_detail" %}"><img class="cartImg" src="{% static 'images/cart.png' %}" alt=""></a>
     </header>
 
     <aside class="menu-container">
@@ -32,19 +37,19 @@
 
     </aside>
 
-<div class="cart">
-    {% with total_items=cart|length %}
-        {% if cart|length > 0 %}
-            Your cart:
-            <a href="{% url "cart:cart_detail" %}">
-                {{ total_items }} item{{ total_items|pluralize }},
-                ${{ cart.get_total_price }}
-            </a>
-        {% else %}
-            Your cart is empty.
-        {% endif %}
-    {% endwith %}
-</div>
+<!--<div class="cart">-->
+<!--    {% with total_items=cart|length %}-->
+<!--        {% if cart|length > 0 %}-->
+<!--            Your cart:-->
+<!--            <a href="{% url "cart:cart_detail" %}">-->
+<!--                {{ total_items }} item{{ total_items|pluralize }},-->
+<!--                ${{ cart.get_total_price }}-->
+<!--            </a>-->
+<!--        {% else %}-->
+<!--            Your cart is empty.-->
+<!--        {% endif %}-->
+<!--    {% endwith %}-->
+<!--</div>-->
 
 
 <div id="content">

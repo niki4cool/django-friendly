@@ -1,23 +1,105 @@
 {% extends "oursite/index.html" %}
+{% load static %}
 {% block title %}Checkout{% endblock %}
 
 {% block content %}
-    <h1>Checkout</h1>
-    <div class="order-info">
-        <h3>Your order</h3>
-        <ul>
-            {% for item in cart %}
-                <li>
-                    {{ item.quantity }}x {{ item.product.name }}
-                    <span>${{ item.total_price }}</span>
-                </li>
-            {% endfor %}
-        </ul>
-        <p>Total: ${{ cart.get_total_price }}</p>
-    </div>
+
+    <div class="center">
+        <div class="centerr">
+        <h1 style="color: #FFFFFF; padding-top: 20px;">Ваш заказ</h1>
+
+        <h1 style="color: #FFFFFF">Оплата на сумму: {{ cart.get_total_price }} ₽</h1>
+        </div>
+
     <form action="." method="post" class="order-form">
-        {{ form.as_p }}
-        <p><input type="submit" value="Place order"></p>
+        <div class="pole">
+            <h1 class="formm">Имя: </h1>
+            <div class="polee">
+            <img src="{% static 'images/loginPic.png' %}" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; margin-left: 90px;">
+            {{ form.first_name }}
+            </div>
+
+        </div>
+
+
+        <h1 class="formm" style="">Фамилия: </h1>
+        <div class="polee">
+        <img src="{% static 'images/loginPic.png' %}" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; margin-left: 90px;">
+        {{ form.last_name }}
+        </div>
+
+
+        <h1 class="formm">Почта: </h1>
+        <div class="polee">
+        <img src="{% static 'images/ssilka.png' %}" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; margin-left: 90px;">
+        {{ form.email }}
+        </div>
+        <p><button class="inp" type="submit">Оплатить</button></p>
         {% csrf_token %}
     </form>
-{% endblock %}</html>
+    </div>
+
+<style>
+
+    .inp{
+    margin-left: 12% !important;
+
+    }
+
+    .center{
+    margin-top: 50px !important;
+    height: 700px !important;
+    }
+
+    .first_name{
+    font-size: 20px;
+    margin-left: 160px;
+    height: 66px;
+    width: 500px;
+    }
+
+    .last_name{
+    font-size: 20px;
+    margin-left: 160px;
+    height: 66px;
+    width: 500px;
+
+    }
+
+    .email{
+    font-size: 20px;
+    margin-left: 160px;
+    height: 66px;
+    width: 500px;
+    }
+
+    .formm{
+    color: #FFFFFF;
+    font-size: 30px;
+    font-weight: 600;
+    padding-left: 12%;
+    }
+
+    .centerr{
+    text-align: center;
+    }
+
+    .center{
+    width: 762px;
+    height: 669px;
+    background: #40A6AD;
+    opacity: .8;
+    position: relative;
+    margin-top: 100px;
+    margin: 100px auto;
+    border-radius: 30px;
+    }
+
+
+</style>
+{% endblock %}
+
+
+
+
+</html>

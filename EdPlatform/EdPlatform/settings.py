@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'cart',
     'orders',
-    'imagekit'
+    'imagekit',
+    'pytils'
 
 ]
 

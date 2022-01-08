@@ -4,17 +4,171 @@
     {% if category %}{{ category.title }}{% else %}Products{% endif %}
 {% endblock %}
 {% block content %}
+<div class="headerr">
+        <h1 class="products">{% if category %}{{ category.title }}{% else %}Купить курс{% endif %}</h1>
+</div>
     <div class="product-detail">
-        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-        <h1>{{ product.title }}</h1>
-        <h2><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>
-        <p class="price">${{ product.price }}</p>
-        {{ product.description|linebreaks }}
+        <div class="titlee">
+        <h1 style="font-size: 40px;">{{ product.title }}</h1>
+        </div>
+        <img class="courseBack" src="{% static 'images/courseBack.jpg' %}" alt="">
+        <img class="imgItem" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+        <div class="category">
+        <h2><a class="courseCategory" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>
+        </div>
+        <div class="overvieww">
+        <h1 style="font-size: 40px;">{{ product.overview }}</h1>
+        </div>
     </div>
-<p class="price">${{ product.price }}</p>
+
+<div class="formCart">
+    <div class="pricee">
+    <p class="price">Стоимость: ${{ product.price }}</p>
+    </div>
 <form action="{% url "cart:cart_add" product.id %}" method="post">
     {{ cart_product_form }}
     {% csrf_token %}
-    <input type="submit" value="Add to cart">
+    <div class="button">
+    <input class="but" type="submit" value="Добавить в корзину">
+    </div>
 </form>
+</div>
+
+
+
+
+<style>
+
+.overvieww{
+width: 700px;
+position: absolute;
+top: 60%;
+margin-left: 15%;
+}
+
+
+#id_quantity{
+visibility: hidden;
+}
+
+pricee{
+width: 500px;
+text-align: center;
+margin-left: 12%;
+}
+
+.courseCategory{
+    font-size: 24px;
+    text-decoration: none;
+    color: #618DFF;
+    font-weight: 600;
+    }
+
+.category{
+width: 200px;
+    position: absolute;
+    top: 70%;
+    left: 73%;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 30px;
+    border: 2px solid transparent;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    background-color: #E3F3FF;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+
+    }
+
+    .but{
+    margin-bottom: 15px;
+    font-family: "Tahoma", serif;
+    font-size: 1.3rem;
+}
+input[placeholder].but{
+    width: 200px;
+    height: 5vh;
+    outline: none;
+    border: 3px solid rgba(11, 168, 35, 0.75);
+    background-color: #ffffff;
+    border-radius: 7px;
+    color: rgba(11, 168, 35, 0.75);
+}
+
+input[type="button"]{
+
+    border-radius: 6px;
+    border: 3px solid #fff;
+    background-color: rgba(11, 168, 35, 0.75);
+    color: #fff;
+
+    transition: 0.5s All ease;
+}
+input[type="button"]:hover{
+    border: 3px solid rgba(11, 168, 35, 0.75);
+    background-color: #fff;
+    color: rgba(11, 168, 35, 0.75);
+    border-radius: 10px;
+}
+
+    .formCart{
+    width: 500px;
+    position: absolute;
+    top: 40%;
+    margin-left: 21%;
+    font-size: 35px;
+    text-align: center;
+    }
+
+    .titlee{
+    width: 700px;
+    z-index: 9;
+    position: absolute;
+    margin-left: 15.5%;
+    text-align: center;
+    margin-top: 50px;
+    }
+
+    .headerr{
+    padding-left: 18px;
+    background: #FFFFFF;
+    width: 98,5%;
+    height: 75px;
+    margin-bottom: 20px;
+    border: 2px solid transparent;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .courseBack{
+    width: 99%;
+    height: 600px;
+    opacity: 30%;
+    }
+
+    .product-detail{
+    padding-top: 10px;
+     float: left;
+     background: #FFFFFF;
+     background-color: #FFFFFF;
+     width: 99%;
+     height: 70%;
+     margin-right: 35px;
+     text-align: center;
+     margin-bottom: 55px;
+     border: 8px solid transparent;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .imgItem{
+    position: absolute;
+    left: 1150px;
+    margin-top: 50px;
+    width: 660px;
+    background: #FFFFFF;
+    border: 8px solid transparent;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+</style>
 {% endblock %}

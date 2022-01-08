@@ -1,3 +1,4 @@
+
 {% load static %}
 
 <html lang="en">
@@ -38,16 +39,15 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <p class="_text3">Аватар урока</p><div class="opacity"> <img class="upload_image" src="{% static 'images/upImage.png' %}" alt=""></div>
-            <div class="imagecss">{{ form.image }}</div><br>
-            <p class="_text2">1. Название:</p> {{ form.title }} <br>
-            <p class="_text2">Цена:</p> {{ form.price }} <br>
-            <p class="_text2">Slug:</p> {{ form.slug }} <br>
-            <p class="_text2">owner:</p> {{ form.owner }} <br>
-            <p class="_text2">2. Описание:</p>{{ form.overview }}<br>
-            <p class="_text2">3. Тема/Хэштеги:</p>{{ form.category }}<br>
-            <p class="_text2">4. Добавить видео:</p><div class="opacity"> <img class="upload_video" src="{% static 'images/upload.png' %}" alt=""></div>
-            <div class="videocss">{{ form_module.video }}</div><br>
-            <p>ДЗ</p><div class="">{{ form.work }}</div><br>
+            <div class="imagecss">{{ form.image }}</div>
+            <p class="textt">1. Название:</p> <div class="titlee">{{ form.title }}</div>
+            <p class="textt">2. Цена:</p> <div class="titlee" style="top: 150px; margin-left: 24%;">{{ form.price }}</div>
+            <p class="textt" style="padding-top: 15px;">3. Описание:</p> <div class="titlee" style="top: 196px; ">{{ form.overview }}</div>
+            <p class="textt" style="padding-top: 30px;">4. Категория:</p> <div class="titlee" style="top: 292px; margin-left: 24%;">{{ form.category }}</div>
+            <p class="_text2">5. Добавить видео:</p><div class="opacity"> <img class="upload_video" src="{% static 'images/upload.png' %}" alt=""></div>
+            <div class="videocss">{{ form_module.video }}</div>
+             <p class="textt">6. Добавить домашнее задание:</p><div class="opacity"><img style="top: 402px; margin-left: 140px;" class="upload_video" src="{% static 'images/upload.png' %}" alt=""></div>
+            <div class="homework">{{ form.work }}</div>
 
 
 
@@ -58,6 +58,10 @@
         </form>
 
     </div>
+</div>
+
+<div class="centerr">
+    <p  class="coursesAdmin">Курсы</p>
         {% for o in Ord %}
             {% if o.first_name == user.username %}
             {% for i in Item %}
@@ -70,7 +74,7 @@
 
 
 
-
+</div>
 
             <div>{{user.username}}</div>
         <div class="logout">
@@ -78,6 +82,50 @@
 
     </div>
 <style>
+
+
+
+    .centerr{
+    width: 762px;
+    height: 669px;
+    background: #FFFFFF;
+    position: relative;
+    margin: 100px auto;
+    border-radius: 30px;
+    border: 2px solid transparent;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    }
+
+    .textt{
+    font-size: 20px;
+    font-weight: 600;
+    padding-left: 5%;
+
+    }
+
+    .overview{
+    font-size: 20px;
+    margin-left: 160px;
+    height: 60px;
+    width: 300px;
+
+    }
+
+    .titlee{
+    position: absolute;
+    top: 100px;
+    margin-left: 3%;
+
+    }
+
+    .title{
+    font-size: 20px;
+    margin-left: 160px;
+    height: 30px;
+    width: 300px;
+    }
+
     .buttona{
     width: 300px;
     height: 50px;
@@ -97,6 +145,7 @@
     padding-left: 535px;
     padding-top: 60px;
     }
+
     .imagecss{
     width: 180px;
     position: absolute;
@@ -119,6 +168,25 @@ width: 60px;
 position: absolute; pointer-events: none;
 padding-left: 250;
 }
+
+    .homework{
+    display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
+     width: 60px;
+     height: 60px;
+     margin-top: -65px;
+     padding-left: 390;
+    }
+
+     .homework input[type=file] {
+     width: 60px;
+     height: 60px;
+     opacity: 0;
+     position: absolute;
+}
+
     .videocss{
     display: flex;
      justify-content: center;
