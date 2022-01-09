@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Subject, Course, Module, Video, Post, UrlCheck, Homework
+from .models import Subject, Course, Module, Video, Post, UrlCheck, Homework, Constructor, VideoForConstructor
 from  embed_video.admin  import  AdminVideoMixin
 
 admin.site.register(Post)
@@ -27,6 +27,14 @@ class HomeworkInLine(admin.StackedInline):
     model = Homework
 
 
+
+class VideoForConstructorAdmin(admin.StackedInline):
+    model = VideoForConstructor
+
+@admin.register(Constructor)
+class ConstructorAdmin(admin.ModelAdmin):
+    list_display = ['owner', 'title', 'description', 'slug']
+    inlines = [VideoForConstructorAdmin]
 
 class CourseAdmin(admin.ModelAdmin):
     list_display = ['title', 'category', 'created']

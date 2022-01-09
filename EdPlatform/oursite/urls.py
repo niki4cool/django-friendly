@@ -11,6 +11,7 @@ urlpatterns = [
     # path('', views.index, name='index'),
     path('register/', views.register, name='register'),
     path('razrab/', views.razrab, name='razrab'),
+    path('constructor/', views.constructor, name='constructor'),
     path('accounts/profile/', views.profile, name='profile'),
     path('accounts/profile_admin/', views.profile_admin, name='profile_admin'),
     path('search/', views.Search, name='search'),

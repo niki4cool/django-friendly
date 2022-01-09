@@ -115,8 +115,18 @@ class Homework(models.Model):
     def __str__(self):
         return self.title
 
+class Constructor(models.Model):
+    owner = models.ForeignKey(User, related_name='constructor_created',on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    slug = models.SlugField(max_length=200, default=uuid.uuid1())
+
+class VideoForConstructor(models.Model):
+    constructor = models.ForeignKey(Constructor, related_name='constr', on_delete=models.CASCADE)
+    video = models.CharField(max_length=200)
+
 class Content(models.Model):
-    module = models.ForeignKey(Module, related_name='contents',on_delete=models.CASCADE)
+    module = models.ForeignKey(Module, related_name='contents', on_delete=models.CASCADE)
     content_type = models.ForeignKey(ContentType, limit_choices_to={'model__in': ('text',
                                                                                   'video',
                                                                                   'image',

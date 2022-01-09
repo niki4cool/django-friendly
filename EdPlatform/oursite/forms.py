@@ -1,4 +1,4 @@
-from .models import Video, UrlCheck, Homework, Course, Module
+from .models import Video, UrlCheck, Homework, Course, Module, Constructor, VideoForConstructor
 from django.forms import ModelForm, TextInput, Textarea, FileField
 from django import forms
 from django.forms.models import inlineformset_factory
@@ -55,6 +55,8 @@ class CourseForm(forms.ModelForm):
 
             }),
         }
+
+
 
 
 class ModuleForm(forms.ModelForm):

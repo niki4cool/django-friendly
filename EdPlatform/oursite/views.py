@@ -11,9 +11,9 @@ from django.shortcuts import render, redirect
 from taggit.models import Tag
 from django.http import request, HttpResponse, Http404
 from cart.forms import CartAddProductForm
-from .models import Course, Module, Homework, UrlCheck
+from .models import Course, Module, Homework, UrlCheck, Constructor
 from orders.models import Order, OrderItem
-from .models import Video, Subject
+from .models import Video, Subject, VideoForConstructor
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import VideoForm, HomeworkForm, CourseForm, ModuleForm
@@ -67,28 +67,43 @@ def show_course_playlist(request, slug):
     course = Course.objects.get(slug=slug)
     module = Module.objects.filter(course=course)
 
-    if request.method == 'POST':
-        form = HomeworkForm(request.POST, request.FILES)
-        if form.is_valid():
-            homework = form.save(commit=False)
-            homework.course = course
-            course.save()
-            homework.save()
 
-            return redirect('oursite:show_playlist')
-        else:
-            homework = HomeworkForm()
-
-    homework = HomeworkForm()
     id = slug
     context = {
-        'form': homework,
         'id': id,
         'Cour': course,
         'Mod': module,
         'Home': Homework
     }
+    if request.method == 'POST':
+        var = request.POST.get("videoConstruct", "")
+        try:
+            if Constructor.objects.get(owner=request.user).owner == User.objects.filter(id=request.user.id).first():
+                constructor = Constructor.objects.get(owner=request.user)
+                vids = VideoForConstructor.objects.create(constructor=constructor,
+                                                          video=var)
+                return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+        except:
+            const = Constructor.objects.create(owner=User.objects.filter(id=request.user.id).first(),
+                                              title='Test',
+                                              description='Description',
+                                              )
+            vids = VideoForConstructor(video=var, constructor_id=const.id)
+            vids.save()
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
     return render(request, 'oursite/id_playlist.html', context)
+
+def constructor(request):
+    constructor = Constructor.objects.filter(owner=request.user.id).first()
+    vids = VideoForConstructor.objects.filter(constructor=constructor)
+    if request.method == 'POST':
+        var = request.POST.get("delete", "")
+        videoDelete = VideoForConstructor(id=var).delete()
+    context = {
+    'vids': vids,
+    'const': constructor
+    }
+    return render(request, 'oursite/constructor.html', context)
 
 
 

@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -33,60 +34,20 @@
       <img class="eye" src="{% static 'images/eye.png' %}" alt="">
       <img class="profile" src="{% static 'images/jake.png' %}" alt="">
     </header>
-    <div class="center">
-        <div class="perehod">
-            <a href="../" class="buttona_">Режим конструктора</a>
-        </div>
-<div class="move_video">
-    {% for m in Mod %}
-	<video class="" id="" preload="auto" controls width="800" height="600">
-    <source src="{{m.video.url}}" type="video/mp4">
+<div>
+  {% for v in vids %}
+<video class="" id="" preload="auto" controls width="800" height="600">
+    <source src="{{v.video}}" type="video/mp4">
 
 </video>
-    <div class="forma">
+  <div class="forma">
 <form method="post">
         {% csrf_token %}
-    <input id="something" name="videoConstruct" type="submit" value="{{m.video.url}}">
+    <input id="something" name="delete" type="submit" value="{{v.id}}">
     </form>
     </div>
-    <br>
-    {% endfor %}
-</div>
+  {% endfor %}
 </div>
 
-
-<style>
-    .move_video{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    }
-
-    .perehod{
-    width: 300px;
-    height: 50px;
-    margin-top: 30px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 30px;
-    color: #9F7100;
-    font-size: 23px;
-    font-weight: 600;
-    background-color: #FFF3E9;
-    border: 2px solid #C79C34;
-    border-radius: 20px;
-    text-align: center;
-    vertical-align: middle;
-    }
-
-    .buttona_{
-vertical-align: middle;
-padding-top: 10px;
-margin-top: 10px;
-color: #9F7100;
-    alink: #9F7100;
-    text-decoration: none;
-    }
-</style>
 </body>
 </html>
