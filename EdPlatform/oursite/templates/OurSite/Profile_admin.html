@@ -1,6 +1,6 @@
-
+{% extends "oursite/index.html" %}
 {% load static %}
-
+{% block content %}
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -8,30 +8,7 @@
   <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 </head>
 <body class="bg">
-    <header class="header">
-      <p class="name">Сайтик</p>
-      <p class="headerText1">Courses</p>
-      <p class="headerText2">Programs</p>
-      <p class="headerText3">Collaboration</p>
-      <p class="headerText4">About</p>
-      <form class="search-form">
-        <input type="search" value="" placeholder="Search" class="search-input">
-          <button type="submit" class="search-button">
-            <svg class="submit-button">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
-            </svg>
-          </button>
-      </form>
-      <div class="login">
-          <a class="login_" href="{% url 'login' }">Войти</a>
-      </div>
-      <div class="register">
 
-          <a class="register_" href="{% url 'register' }">Регистрация</a>
-      </div>
-<!--      <img class="eye" src="{% static 'images/eye.png' %}" alt="">-->
-      <img class="profile" src="{% static 'images/jake.png' %}" alt="">
-    </header>
 <body>
 <div class="center">
     <p class="_text">Создание курса</p>
@@ -62,15 +39,12 @@
 
 <div class="centerr">
     <p  class="coursesAdmin">Курсы</p>
-        {% for o in Ord %}
-            {% if o.first_name == user.username %}
+
+
             {% for i in Item %}
-                {% if i.first_name == user.username %}
             <a href="{{ i.product.url_to_course }}"> {{ i.product }} </a>
-                {% endif %}
             {% endfor %}
-         {% endif %}
-            {% endfor %}
+
 
 
 
@@ -213,4 +187,5 @@ padding-left: 250;
 
 
 </body>
+{% endblock %}
 </html>

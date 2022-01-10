@@ -23,8 +23,9 @@
 
 <div class="formCart">
     <div class="pricee">
-    <p class="price">Стоимость: ${{ product.price }}</p>
+    <p class="price">Стоимость: {{ product.price }} ₽</p>
     </div>
+    {% if request.user.is_authenticated %}
 <form action="{% url "cart:cart_add" product.id %}" method="post">
     {{ cart_product_form }}
     {% csrf_token %}
@@ -32,6 +33,9 @@
     <input class="but" type="submit" value="Добавить в корзину">
     </div>
 </form>
+    {% else %}
+
+    {% endif %}
 </div>
 
 
@@ -161,6 +165,8 @@ input[type="button"]:hover{
     }
 
     .imgItem{
+    width: 675px;
+    height: 330px;
     position: absolute;
     left: 1150px;
     margin-top: 50px;

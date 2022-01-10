@@ -85,7 +85,7 @@ class Module(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     video = models.FileField(upload_to='video/')
-    slug = models.SlugField(max_length=200, unique=True, default=uuid.uuid1())
+    slug = models.SlugField(max_length=200, default=uuid.uuid1())
     class Meta:
         ordering = ('title',)
         index_together = (('id', 'slug'),)

@@ -1,3 +1,4 @@
+
 {% load static %}
 
 <html lang="en">
@@ -8,27 +9,32 @@
 </head>
 <body class="bg">
     <header class="header">
-      <p class="name">Сайтик</p>
-      <p class="headerText1">Courses</p>
-      <p class="headerText2">Programs</p>
-      <p class="headerText3">Collaboration</p>
-      <p class="headerText4">About</p>
+        <a href="{% url "oursite:product_list" %}"><img class="logotip-sova" src="{% static 'images/logotip-sova.png' %}" alt=""></a>
+        <a href="{% url "oursite:product_list" %}"><img class="logotip-nazvanie" src="{% static 'images/logotip-nazvanie.png' %}" alt=""></a>
+      <a class="" href="{% url "oursite:product_list" %}"><p class="headerText1">Курсы</p></a>
+      <a class="" href="{% url "oursite:collaboration" %}"><p class="headerText3">Сотрудничество</p></a>
+      <a class="" href="{% url "oursite:contacts" %}"><p class="headerText4">Контакты</p></a>
         <div class="headertext5">
       <form action="{% url 'oursite:search' %}" method="get">
-          <input name="q" type="text" placeholder="Search...">
+          <input name="q" type="text" placeholder="Search..." style="width: 200px; margin-left: -25px;">
       </form>
         </div>
         <img class="loopa" src="{% static 'images/v20_10.png' %}" alt="">
+        {% if request.user.is_authenticated %}
       <div class="login">
-          <p class="login_"><a href="{% url 'login' }">Войти</a></p>
+          <a class="login_" href="{% url "oursite:logout" %}">Выйти</a>
       </div>
+        {% else %}
+        <div class="login">
+          <a class="login_" href="{% url "oursite:register" %}">Войти</a>
+      </div>
+        {% endif %}
 
       <div class="register">
-
-          <p class="register_"><a href="{% url 'register' }">Регистрация</a></p>
+          <a class="register_" href="{% url "oursite:razrab" %}">Стать профи</a>
       </div>
-      <img class="eye" src="{% static 'images/eye.png' %}" alt="">
-      <img class="profile" src="{% static 'images/jake.png' %}" alt="">
+
+      <a class="" href="{% url "oursite:profile" %}"> <img class="profile" src="{% static 'images/jake.png' %}" alt=""></a>
         <a href="{% url "cart:cart_detail" %}"><img class="cartImg" src="{% static 'images/cart.png' %}" alt=""></a>
     </header>
 
@@ -36,22 +42,6 @@
             <div>hello, {{user.username}}</div>
 
     </aside>
-
-<!--<div class="cart">-->
-<!--    {% with total_items=cart|length %}-->
-<!--        {% if cart|length > 0 %}-->
-<!--            Your cart:-->
-<!--            <a href="{% url "cart:cart_detail" %}">-->
-<!--                {{ total_items }} item{{ total_items|pluralize }},-->
-<!--                ${{ cart.get_total_price }}-->
-<!--            </a>-->
-<!--        {% else %}-->
-<!--            Your cart is empty.-->
-<!--        {% endif %}-->
-<!--    {% endwith %}-->
-<!--</div>-->
-
-
 <div id="content">
     {% block content %}
     {% endblock %}

@@ -174,7 +174,50 @@ color: #9F7100;
     alink: #9F7100;
     text-decoration: none;
 }
+.headerText1{
+    color: #FFFFFF;
+    font-size: 25;
+    height: 50px;
+    position: absolute;
+    top: 18%;
+    left: 23%;
+    bottom: 0;
+    margin: auto 0;
+}
 
+
+.headerText3{
+    color: #FFFFFF;
+    font-size: 25;
+    height: 50px;
+    position: absolute;
+    top: 18%;
+    left: 29.6%;
+    bottom: 0;
+    margin: auto 0;
+}
+
+.headerText4{
+    color: #FFFFFF;
+    font-size: 25;
+    height: 50px;
+    position: absolute;
+    top: 18%;
+    left: 43.5%;
+    bottom: 0;
+    margin: auto 0;
+}
+
+.headerText5{
+    color: #FFFFFF;
+    font-size: 18;
+    height: 50px;
+    position: absolute;
+    top: 29%;
+    left: 1000;
+    bottom: 0;
+    margin: auto 0;
+}
 .register{
     box-sizing: content-box;
     background: #4799CB;
@@ -305,7 +348,7 @@ height: 25px; width:260px; position: relative; vertical-align: middle; margin-bo
 }
 
 .bg{
-    background: url(../images/b1.png);
+
 }
 
 

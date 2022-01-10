@@ -6,23 +6,16 @@
 
     <div class="center">
         <div class="centerr">
-        <h1 style="color: #FFFFFF; padding-top: 20px;">Ваш заказ</h1>
+        <h1 style="color: #FFFFFF; padding-top: 50px;">Ваш заказ</h1>
 
         <h1 style="color: #FFFFFF">Оплата на сумму: {{ cart.get_total_price }} ₽</h1>
         </div>
 
     <form action="." method="post" class="order-form">
-        <div class="pole">
-            <h1 class="formm">Имя: </h1>
-            <div class="polee">
-            <img src="{% static 'images/loginPic.png' %}" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; margin-left: 90px;">
-            {{ form.first_name }}
-            </div>
-
-        </div>
 
 
-        <h1 class="formm" style="">Фамилия: </h1>
+
+        <h1 class="formm" style="">Введите ФИО: </h1>
         <div class="polee">
         <img src="{% static 'images/loginPic.png' %}" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; margin-left: 90px;">
         {{ form.last_name }}
@@ -31,10 +24,10 @@
 
         <h1 class="formm">Почта: </h1>
         <div class="polee">
-        <img src="{% static 'images/ssilka.png' %}" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; margin-left: 90px;">
+        <img src="{% static 'images/ssilka.png' %}" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; margin-left: 90px; ">
         {{ form.email }}
         </div>
-        <p><button class="inp" type="submit">Оплатить</button></p>
+        <p><button class="inp" type="submit" style="margin-top: 50px;">Оплатить</button></p>
         {% csrf_token %}
     </form>
     </div>
@@ -74,6 +67,7 @@
     }
 
     .formm{
+    padding-top: 20px;
     color: #FFFFFF;
     font-size: 30px;
     font-weight: 600;

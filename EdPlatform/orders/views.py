@@ -11,6 +11,7 @@ def order_create(request):
         form = OrderCreateForm(request.POST)
         if form.is_valid():
             order = form.save()
+            order.first_name = str(User.objects.filter(id=request.user.id).first())
             order.address = 'EKB'
             order.postal_code = '623070'
             order.city = 'EKB'

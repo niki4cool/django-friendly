@@ -1,63 +1,94 @@
+{% extends "oursite/index.html" %}
 {% load static %}
+{% block title %}Checkout{% endblock %}
 
-<html lang="en">
-<head>
- <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <title>Register</title>
-</head>
-<body class="bg">
-<div>
-    If you have an account: <a class="login_reg" href="{% url 'login' %}">login</a>
-</div>
-<header class="header">
-      <p class="name">Сайтик</p>
-      <p class="headerText1">Courses</p>
-      <p class="headerText2">Programs</p>
-      <p class="headerText3">Collaboration</p>
-      <p class="headerText4">About</p>
-      <form class="search-form">
-        <input type="search" value="" placeholder="Search" class="search-input">
-          <button type="submit" class="search-button">
-            <svg class="submit-button">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
-            </svg>
-          </button>
-      </form>
-      <div class="login">
-        <span class="inText1">Login</span>
-      </div>
-      <div class="register">
-        <span class="inText2">Register</span>
-      </div>
-      <img class="eye" src="{% static 'images/eye.png' %}" alt="">
-      <img class="profile" src="{% static 'images/jake.png' %}" alt="">
-    </header>
+{% block content %}
 
     <div class="center">
+        <div class="centerr">
+        <h1 style="color: #FFFFFF; padding-top: 50px;">Стать преподавателем</h1>
 
-      <span class="ssilka">Вставьте ссылку на курс</span>
+        </div>
 
-      <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <p class="_text2">Название курса:</p> {{ form.title }} <br>
-            <p class="_text2">Ссылка на курс:</p>{{ form.url }}<br>
-            <span>{{ error }}</span>
-            <button class="buttona" type="submit">Отправить курс</button>
-        </form>
+    <form action="." method="post" class="order-form">
 
-
-          <img src="{% static 'images/loginPic.png' %}" alt="" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px;">
-          <img src="{% static 'images/PassPic.png' %}" alt="" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; padding-top: 135px;">
-          <img src="{% static 'images/PassPic.png' %}" alt="" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; padding-top: 260px;">
+        <h1 class="formm" style="">Название курса: </h1>
+        <div class="polee">
+        <img src="{% static 'images/loginPic.png' %}" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; margin-left: 90px;">
+        {{ form.title }}
+        </div>
 
 
-
+        <h1 class="formm">Вставьте ссылку на курс: </h1>
+        <div class="polee">
+        <img src="{% static 'images/ssilka.png' %}" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; margin-left: 90px; ">
+        {{ form.url }}
+        </div>
+        <p><button class="inp" type="submit" style="margin-top: 100px;">Отправить</button></p>
+        {% csrf_token %}
+    </form>
     </div>
+<style>
+
+    .inp{
+    margin-left: 12% !important;
+
+    }
+
+    .center{
+    margin-top: 50px !important;
+    height: 700px !important;
+    }
+
+    .first_name{
+    font-size: 20px;
+    margin-left: 160px;
+    height: 66px;
+    width: 500px;
+    }
+
+    .last_name{
+    font-size: 20px;
+    margin-left: 160px;
+    height: 66px;
+    width: 500px;
+
+    }
+
+    .email{
+    font-size: 20px;
+    margin-left: 160px;
+    height: 66px;
+    width: 500px;
+    }
+
+    .formm{
+    padding-top: 40px;
+    color: #FFFFFF;
+    font-size: 30px;
+    font-weight: 600;
+    padding-left: 12%;
+    }
+
+    .centerr{
+    text-align: center;
+    }
+
+    .center{
+    width: 762px;
+    height: 669px;
+    background: #40A6AD;
+    opacity: .8;
+    position: relative;
+    margin-top: 100px;
+    margin: 100px auto;
+    border-radius: 30px;
+    }
+
+
+</style>
 
 
 
-</body>
-</html>
+
+{% endblock %}

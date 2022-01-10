@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.http import urlquote
+from requests import Session
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from . import models
@@ -110,6 +111,11 @@ def constructor(request):
 def upload(request):
     return render(request, 'oursite/upload.html')
 
+def collaboration(request):
+    return render(request, 'oursite/collaboration.html')
+
+def contacts(request):
+    return render(request, 'oursite/contacts.html')
 
 @login_required(login_url='/register')
 def courses(request):
@@ -122,8 +128,8 @@ def profile(request):
     user = User.objects.filter(id=request.user.id).first()
     if user == None:
         return redirect('register')
-    orders = Order.objects.all()
-    item = OrderItem.objects.all()
+    orders = Order.objects.filter(first_name=request.user)
+    item = OrderItem.objects.filter(order__in=orders)
     content = {
         'Ord': orders,
         'Item': item
@@ -138,11 +144,10 @@ def profile(request):
                 module = form_module.save(commit=False)
                 course.slug = slugify(course.title)
                 course.owner = User.objects.filter(id=request.user.id).first()
-                module.title = "Title"
-                module.description = "description"
-                module.course = course
                 course.save()
-                module.save()
+                for video in request.FILES.getlist('video'):
+                    vids = Module(title="title", description="description",video=video, course=course)
+                    vids.save()
 
 
 
@@ -244,6 +249,11 @@ def register(request):
     form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
+
+def logout(request):
+    user = User.objects.filter(id=request.user.id).first()
+    return redirect('oursite:register')
+
 def razrab(request):
     error=""
     check = UrlCheck.objects.all()
@@ -253,7 +263,7 @@ def razrab(request):
             newform = form.save(commit=False)
             newform.user = User.objects.filter(id=request.user.id).first()
             newform.save()
-            return redirect('oursite:profile')
+            return redirect('oursite:product_list')
     else:
         newform = CheckForm()
 
@@ -269,7 +279,7 @@ def razrab(request):
 
 
 
-@login_required(login_url='/register')
+
 def product_list(request, category_slug=None):
     category = None
     categories = Subject.objects.all()
@@ -284,7 +294,7 @@ def product_list(request, category_slug=None):
                    'products': products})
 
 
-@login_required(login_url='/register')
+
 def product_detail(request, id, slug):
     product = get_object_or_404(Course,
                                 id=id,

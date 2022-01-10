@@ -38,6 +38,10 @@ class CheckForm(forms.ModelForm):
     class Meta:
         model = UrlCheck
         fields = ['title', 'url']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'last_name'}),
+            'url': forms.TextInput(attrs={'class': 'email'}),
+        }
 
 
 class CourseForm(forms.ModelForm):
@@ -56,14 +60,11 @@ class CourseForm(forms.ModelForm):
             }),
         }
 
-
-
-
 class ModuleForm(forms.ModelForm):
     class Meta:
         model = Module
         fields = ('video',)
-        video: forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    video = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
 
 class HomeworkForm(forms.ModelForm):
     class Meta:
