@@ -171,10 +171,10 @@ def profile(request):
             'Ord': orders,
             'Item': item
         }
-        return render(request, 'oursite/profile_admin.html', data)
+        return render(request, 'oursite/Profile_admin.html', data)
     else:
 
-        return render(request, 'oursite/profile.html', content)
+        return render(request, 'oursite/Profile.html', content)
 
 
 @login_required(login_url='/register')
@@ -222,7 +222,7 @@ def profile_admin(request):
         'error': error
     }
 
-    return render(request, 'oursite/profile_admin.html', data)
+    return render(request, 'oursite/Profile_admin.html', data)
 
 
 def index(request):
