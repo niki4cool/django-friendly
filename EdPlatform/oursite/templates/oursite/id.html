@@ -1,5 +1,6 @@
+{% extends "oursite/index.html" %}
 {% load static %}
-
+{% block content %}
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -10,30 +11,7 @@
    <link href="https://vjs.zencdn.net/7.17.0/video-js.css" rel="stylesheet" />
 </head>
 <body class="bg">
-    <header class="header">
-      <a href="http://127.0.0.1:8000"><img class="" src="{% static 'images/morfusha_sova.png' %}" alt=""></a>
-      <p class="headerText1">Courses</p>
-      <p class="headerText2">Programs</p>
-      <p class="headerText3">Collaboration</p>
-      <p class="headerText4">About</p>
-      <form class="search-form">
-        <input type="search" value="" placeholder="Search" class="search-input">
-          <button type="submit" class="search-button">
-            <svg class="submit-button">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
-            </svg>
-          </button>
-      </form>
-      <div class="login">
-        <span class="inText1">Login</span>
-      </div>
 
-      <div class="register">
-        <span class="inText2">Register</span>
-      </div>
-      <img class="eye" src="{% static 'images/eye.png' %}" alt="">
-      <img class="profile" src="{% static 'images/jake.png' %}" alt="">
-    </header>
 
 
 
@@ -62,39 +40,60 @@ player.playlist.autoadvance(0);
 </script>
 </video>
 </div>
-
-    <a href="{{ Cour.work.url }}" download="">ссылка</a>
-    <div class="">{{ Cour.work.url }}</div><br>
+    <div class="downloadWork">
+        <button class="buttona">
+    <a style="text-decoration: none; color: #B08B31" href="{{ Cour.work.url }}" download="">Скачать домашнее задание</a></button>
+    </div>
 
 <div class="homework">
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <p class="_text2">Название:</p> {{ form.title }} <br>
+  <p class="_text2">Название:</p> {{ form.title }}
 
-  <div class="videocss">{{ form.homework_file }}</div><br>
+  <div class="videocss">{{ form.homework_file }}</div>
   <span>{{ error }}</span>
-            <button class="buttona" type="submit">Отправить ДЗ</button>
+    <button class="buttona" type="submit">Отправить ДЗ</button>
 </form>
 </div>
 
 
 <style>
 
+.text{
+width: 280px;
+margin-bottom: 20px;
+}
+
+.downloadWork{
+text-align: center;
+}
+
+.buttona{
+    width: 400px !important;
+    height: 50px;
+    color: #9F7100;
+    font-size: 23px;
+    font-weight: 600;
+    background-color: #FFF3E9;
+    border: 2px solid #C79C34;
+    border-radius: 20px;
+    }
+
 .homework{
 width: 762px;
-    height: 669px;
-    position: relative;
-    margin-top: 100px;
-    margin: 100px auto;
+margin: 0 auto;
+text-align: center;
+
+
     border-radius: 30px;
 }
 
   .video_center{
   width: 762px;
-    height: 669px;
+    height: 569px;
     position: relative;
     margin-top: 100px;
-    margin: 100px auto;
+    margin: 0 auto;
     border-radius: 30px;
   }
   .buttona{
@@ -126,3 +125,4 @@ color: #9F7100;
 </style>
 </body>
 </html>
+{% endblock %}

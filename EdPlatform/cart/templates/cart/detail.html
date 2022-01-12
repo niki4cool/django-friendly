@@ -8,6 +8,7 @@
 <div id="main" class="product-list">
     <div class="headerr">
         <h1 class="products">Ваша корзина на сумму: {{ cart.get_total_price }} ₽</h1>
+        <h1 class="products1" style="display: none;">Сумма: {{ cart.get_total_price }} ₽</h1>
         <div class="payy">
             <a class="pay" href="{% url "orders:order_create" %}" class="button">
                 Оплатить
@@ -42,6 +43,7 @@
 </body>
 
 <style>
+
     .payy{
     display: inline-block;
     padding-left: 10px;
@@ -86,7 +88,7 @@
     .headerr{
     padding-left: 18px;
     background: #FFFFFF;
-    width: 1570px;
+
     height: 75px;
     margin-bottom: 20px;
     border: 2px solid transparent;
@@ -131,8 +133,9 @@
     }
 
     .product-list{
+    width: 100%;
     display: inline-block;
-    padding-left: 100px;
+    padding-left: 0px;
     }
 
     .price{
@@ -157,7 +160,26 @@
     font-weight: 600;
     }
 
+@media screen and (max-width:1400px) {
+    .payy{
 
+    margin-left: 70%;
+
+    }
+
+@media screen and (max-width:1000px) {
+    .products{
+    display: none;
+    padding-left: 18px;
+    position: absolute;
+    }
+    .products1{
+    display: inline !important;
+    padding-left: 18px;
+    position: absolute;
+    }
+
+}
 </style>
 
 {% endblock %}

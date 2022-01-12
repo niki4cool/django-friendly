@@ -221,7 +221,7 @@ padding-left: 80px !important;
 
 
 #id_username{
-height: 65px; width:509px; padding-top: 35px; position: relative; vertical-align: top; margin-bottom: 20px; margin-top: 0px; margin-left: 69px;
+height: 65px; width:509px; font-size: 30px; position: relative; vertical-align: top; margin-bottom: 20px; margin-top: 0px; margin-left: 69px;
 }
 
 .log-img{
@@ -255,7 +255,11 @@ margin-bottom: 20px;
 }
 
 #id_password1{
-height: 65px; width:509px; padding-top: 35px; position: relative; vertical-align: top; margin-bottom: 20px; margin-top: 50px; margin-left: 69px;
+height: 65px; width:509px; font-size: 30px; position: relative; vertical-align: top; margin-bottom: 20px; margin-top: 50px; margin-left: 69px;
+}
+
+#id_password{
+height: 65px; width:509px; font-size: 30px; position: relative; vertical-align: top; margin-bottom: 20px; margin-top: 35px; margin-left: 69px;
 }
 
 .pass2-auth{
@@ -268,7 +272,7 @@ margin-bottom: 20px;
 }
 
 #id_password2{
-height: 65px; width:509px; padding-top: 35px; position: relative; vertical-align: top; margin-bottom: 20px; margin-top: 40px; margin-left: 69px;
+height: 65px; width:509px; font-size: 30px; position: relative; vertical-align: top; margin-bottom: 20px; margin-top: 40px; margin-left: 69px;
 }
 
 .inp{
@@ -276,6 +280,14 @@ height: 65px; width:509px; padding-top: 35px; position: relative; vertical-align
 background: #FFD367; border: 3px solid #C79C34; border-radius: 20px; width: 580px; height: 90px; color: #9F7100;
     font-size: 30px;
     font-weight: 550;
+}
+
+.inp1{
+
+background: #FFD367; border: 3px solid #C79C34; border-radius: 20px; width: 580px; height: 90px; color: #9F7100;
+    font-size: 30px;
+    font-weight: 550;
+    margin-top: 100px;
 }
 
 .razrab{

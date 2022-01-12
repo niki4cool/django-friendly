@@ -17,7 +17,7 @@ from orders.models import Order, OrderItem
 from .models import Video, Subject, VideoForConstructor
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import VideoForm, HomeworkForm, CourseForm, ModuleForm
+from .forms import VideoForm, HomeworkForm, CourseForm, ModuleForm, CategoryForm
 from .forms import CoursesForm
 from .forms import CheckForm
 from pytils.translit import slugify
@@ -67,14 +67,29 @@ def show_course(request, slug):
 def show_course_playlist(request, slug):
     course = Course.objects.get(slug=slug)
     module = Module.objects.filter(course=course)
+    dz = course.work
+    if request.method == 'POST':
+        form = HomeworkForm(request.POST, request.FILES)
+        if form.is_valid():
+            homework = form.save(commit=False)
+            homework.course = course
+            homework.user = User.objects.filter(id=request.user.id).first()
+            homework.slug = slug
+            course.save()
+            homework.save()
+            return redirect('oursite:show', slug)
+        else:
+            homework = HomeworkForm()
 
-
+    homework = HomeworkForm()
+    form = HomeworkForm()
     id = slug
     context = {
+        'dz': dz,
         'id': id,
         'Cour': course,
         'Mod': module,
-        'Home': Homework
+        'form': form
     }
     if request.method == 'POST':
         var = request.POST.get("videoConstruct", "")
@@ -124,18 +139,37 @@ def courses(request):
 
 
 @login_required(login_url='/register')
-def profile(request):
+def profile(request, category_slug=None):
+    category = None
+    categories = Subject.objects.all()
+    products = Course.objects.filter(available=True)
+    if category_slug:
+        category = get_object_or_404(Subject, slug=category_slug)
+        products = products.filter(category=category)
     user = User.objects.filter(id=request.user.id).first()
     if user == None:
         return redirect('register')
-    orders = Order.objects.filter(first_name=request.user)
+    orders = Order.objects.filter(first_name=request.user, paid=True)
     item = OrderItem.objects.filter(order__in=orders)
+
     content = {
         'Ord': orders,
-        'Item': item
+        'Item': item,
+        'category': category,
+        'categories': categories,
+        'products': products
     }
     if request.user.is_staff or request.user.is_superuser:
         error = ''
+        if request.method == 'POST':
+            form = CategoryForm(request.POST)
+            if form.is_valid():
+                categoryf = form.save(commit=False)
+                categoryf.slug = slugify(categoryf.title)
+                categoryf.save()
+        else:
+            categoryf = CategoryForm(request.POST)
+        categoryf = CategoryForm(request.POST)
         if request.method == 'POST':
             form = CourseForm(request.POST, request.FILES)
             form_module = ModuleForm(request.POST, request.FILES)
@@ -165,11 +199,16 @@ def profile(request):
         module = ModuleForm()
 
         data = {
+            'form_category': categoryf,
             'form': course,
             'form_module': module,
             'error': error,
             'Ord': orders,
-            'Item': item
+            'Item': item,
+            'category': category,
+            'categories': categories,
+            'products': products
+
         }
         return render(request, 'oursite/Profile_admin.html', data)
     else:
@@ -254,6 +293,7 @@ def logout(request):
     user = User.objects.filter(id=request.user.id).first()
     return redirect('oursite:register')
 
+@login_required(login_url='/register')
 def razrab(request):
     error=""
     check = UrlCheck.objects.all()

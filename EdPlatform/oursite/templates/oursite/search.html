@@ -1,16 +1,198 @@
 {% extends "oursite/index.html" %}
 {% load static %}
 {% block content %}
-
-<h1>Search Results</h1>
+<body>
+    <div id="main" class="product-list">
+        <div class="headerr">
+            <h1 class="products">Результаты поиска:</h1>
+        </div>
 
 {% for product in list %}
-            <div class="item">
+            <div class="item" style="position: relative;">
                 <a href="{{ product.get_absolute_url }}">
-                    <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                    <img class="imgItem" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
                 </a>
-                <a href="{{ product.get_absolute_url }}">{{ product.title }}</a><br>
-                ${{ product.price }}
+                <br>
+                <hr style="width: 440px">
+                <br>
+                <div class="namee">
+                <a class="courseName" href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                </div>
+                <br>
+                <div class="category">
+                <a class="courseCategory" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>
+                </div>
+                <div class="priceDiv">
+                <p class="price">{{ product.price }} ₽</p>
+                </div>
             </div>
         {% endfor %}
+</body>
+<script>
+
+    var colorArray = document.getElementsByClassName('category');
+    var color = document.getElementsByClassName('courseCategory');
+    var i = 10;
+    var t = 0;
+    while (t < 10){
+    if (i == 14){
+    i = 10
+    }
+    if (i % 10 == 0){
+    colorArray[t].style.backgroundColor = '#FDE8F2';
+    color[t].style.color = '#FF166A';
+    }
+    else if (i % 11 == 0){
+    colorArray[t].style.backgroundColor = '#F7ECFF';
+    color[t].style.color = '#FA00FF';
+    }
+
+    else if (i % 12 == 0){
+    colorArray[t].style.backgroundColor = '#E3F3FF';
+    color[t].style.color = '#618DFF';
+    }
+
+    else{
+    colorArray[t].style.backgroundColor = '#FFF3E9';
+    color[t].style.color = '#DF6B00';
+    }
+    i++
+    t++
+
+    }
+
+</script>
+<style>
+    @media screen and (max-width:1800px) {
+    .item{
+    padding-top: 10px;
+     float: left;
+     margin-left: 100px;
+     background: #FFFFFF;
+     background-color: #FFFFFF;
+     width: 470px;
+     height: 460px;
+     margin-right: 67px;
+     text-align: center;
+     margin-bottom: 55px;
+     border: 8px solid transparent;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+}
+
+    @media screen and (max-width:1800px) {
+    .chooseCategory{
+    position: absolute;
+    padding-top: 30px;
+    }
+
+}
+    @media screen and (max-width:1200px) {
+    .chooseCategory{
+    position: absolute;
+    left: -10%;
+    padding-top: 30px;
+    }
+
+}
+    @media screen and (max-width:500px) {
+    .1{
+    hidden;
+    }
+    .2{
+    display;
+    }
+
+}
+
+
+    .products{
+
+    position: absolute;
+    }
+
+    .chooseCategory{
+    position: absolute;
+    margin-left: 82%;
+    padding-top: 30px;
+    }
+
+    .headerr{
+    padding-left: 18px;
+    background: #FFFFFF;
+    width: 98.6%;
+    height: 75px;
+    margin-bottom: 20px;
+    border: 2px solid transparent;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+    .item{
+    padding-top: 10px;
+    margin-left: 60px;
+     float: left;
+     background: #FFFFFF;
+     background-color: #FFFFFF;
+     width: 470px;
+     height: 460px;
+     margin-right: 67px;
+     text-align: center;
+     margin-bottom: 55px;
+     border: 8px solid transparent;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .category{
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 30px;
+    background-color: #E3F3FF;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+    .courseCategory{
+    font-size: 24px;
+    text-decoration: none;
+    color: #618DFF;
+    font-weight: 600;
+    }
+
+    .imgItem{
+    width: 440px;
+    height: 200px;
+    background: #FFFFFF;
+    }
+
+    .product-list{
+       width: 100%;
+    display: inline-block;
+
+    }
+
+    .price{
+    font-size: 24px;
+    color: #0F9F03;
+    font-weight: 800;
+    background: #FFFFFF;
+    }
+
+    .priceDiv{
+    }
+
+    .namee{
+    height: 100px;
+    }
+
+    .courseName{
+    padding-top: 100px;
+    text-decoration: none;
+    color: black;
+    font-size: 32px;
+    font-weight: 600;
+    }
+
+
+</style>
 {% endblock %}

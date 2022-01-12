@@ -23,51 +23,319 @@
             <div class="videocss">{{ form_module.video }}</div>
              <p class="textt">6. Добавить домашнее задание:</p><div class="opacity"><img style="top: 402px; margin-left: 140px;" class="upload_video" src="{% static 'images/upload.png' %}" alt=""></div>
             <div class="homework">{{ form.work }}</div>
-
-
-
-
-
             <span>{{ error }}</span>
             <button class="buttona" type="submit">Добавить курс</button>
         </form>
 
+         <button id="open-popup-1"><image class="addCategory" src="{% static 'images/add.png' %}" alt=""></button>
+        <div id="popup-1">
+	<div class="popup-content">
+		<h1>Добавить категорию</h1>
+		<form method="post">
+        {% csrf_token %}
+    {{form_category.title}}
+                 <button class="buttoncat" type="submit">Добавить категорию</button>
+    </form>
+		<button id="close-popup-1">Close</button>
+	</div>
+</div>
+
     </div>
 </div>
 
+<div id="main" class="product-list">
+    <div class="headerr">
+        <h1 class="products">Курсы</h1>
+    </div>
+</div>
+{% for i in Item %}
+                {% if Item|length == 1 %}
+<div class="centerr1">
+                    <div class="item1" style="position: relative;">
+                <a href="{{ i.product.url_to_course }}">
+                    <img class="imgItem1" src="{% if i.product.image %}{{ i.product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                </a>
+                <br>
+                <hr style="width: 440px">
+                <br>
+                <div class="namee1">
+                <a class="courseName1" href="{{ i.product.url_to_course }}">{{ i.product.title }}</a>
+                </div>
+                <br>
+                <div class="category1">
+                <a class="courseCategory1" href="{{ i.product.category.get_absolute_url }}">{{ i.product.category }}</a></h2>
+                </div>
+            </div>
+                </div>
+ {% else %}
 <div class="centerr">
-    <p  class="coursesAdmin">Курсы</p>
-
-
-            {% for i in Item %}
-            <a href="{{ i.product.url_to_course }}"> {{ i.product }} </a>
+            <div class="item" style="position: relative;">
+                <a href="{{ i.product.url_to_course }}">
+                    <img class="imgItem" src="{% if i.product.image %}{{ i.product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                </a>
+                <br>
+                <hr style="width: 440px">
+                <br>
+                <div class="namee">
+                <a class="courseName" href="{{ i.product.url_to_course }}">{{ i.product.title }}</a>
+                </div>
+                <br>
+                <div class="category">
+                <a class="courseCategory" href="{{ i.product.category.get_absolute_url }}">{{ i.product.category }}</a></h2>
+                </div>
+            </div>
+    {% endif %}
             {% endfor %}
-
-
-
-
 </div>
 
-            <div>{{user.username}}</div>
-        <div class="logout">
-            <a class="logout_" href="{% url 'logout' %}">logout</a>
+<script>
+    var popup1 = document.getElementById("popup-1");
+    var openPopup1 = document.getElementById("open-popup-1");
+    var closePopup1 = document.getElementById('close-popup-1');
 
-    </div>
+openPopup1.addEventListener('click', () => {
+	popup1.style.display = "block";
+})
+
+closePopup1.addEventListener('click', () => {
+	popup1.style.display = "none";
+})
+
+    var colorArray = document.getElementsByClassName('category');
+    var color = document.getElementsByClassName('courseCategory');
+    var i = 10;
+    var t = 0;
+    while (t < 10){
+    if (i == 14){
+    i = 10
+    }
+    if (i % 10 == 0){
+    colorArray[t].style.backgroundColor = '#FDE8F2';
+    color[t].style.color = '#FF166A';
+    }
+    else if (i % 11 == 0){
+    colorArray[t].style.backgroundColor = '#F7ECFF';
+    color[t].style.color = '#FA00FF';
+    }
+
+    else if (i % 12 == 0){
+    colorArray[t].style.backgroundColor = '#E3F3FF';
+    color[t].style.color = '#618DFF';
+    }
+
+    else{
+    colorArray[t].style.backgroundColor = '#FFF3E9';
+    color[t].style.color = '#DF6B00';
+    }
+    i++
+    t++
+
+    }
+
+</script>
+
 <style>
 
+    #open-popup-1{
+    margin-top: -275px;
+    border: 2px solid #C79C34;
+    border-radius: 20px;
+    display: block;
+    margin-left: 330px;
+    margin-right: auto;
+    }
+
+    #popup-1 {
+    z-index: 9;
+	display: none;
+	background-color: rgba(0,0,0,0.5);
+	position: absolute;
+	height: 300px;
+	width: 100%;
+}
+
+    .popup-content {
+    z-index: 9;
+	position: relative;
+	padding: 20px;
+	margin: 0 auto;
+	background-color: white;
+	width: 400px;
+	top: 5vh;
+}
+
+    .addCategory{
+    width: 35px;
 
 
-    .centerr{
-    width: 762px;
-    height: 669px;
-    background: #FFFFFF;
+    }
+
+input[value].but {color: transparent}
+
+input.but{
+margin-top: -270px;
+color: white;
+border: 2px solid #C79C34;
+border-radius: 20px;
+display: block;
+    margin-left: 330px;
+    margin-right: auto;
+}
+
+    .item1{
+    padding-top: 10px;
+    margin-left: 150;
+    margin-right: auto;
+     float: left;
+     background: #FFFFFF;
+     background-color: #FFFFFF;
+     width: 470px;
+     height: 460px;
+     margin-right: 67px;
+     text-align: center;
+     margin-bottom: 55px;
+     border: 8px solid transparent;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .centerr1{
+    width: 800px;
+
     position: relative;
-    margin: 100px auto;
+    margin: auto;
+
+    display: block;
+    }
+
+    .category1{
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 30px;
+    background-color: #E3F3FF;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+    .courseCategory1{
+    font-size: 24px;
+    text-decoration: none;
+    color: #618DFF;
+    font-weight: 600;
+    }
+
+    .courseName1{
+    padding-top: 100px;
+    text-decoration: none;
+    color: black;
+    font-size: 32px;
+    font-weight: 600;
+    }
+
+    .imgItem1{
+    width: 440px;
+    height: 200px;
+    background: #FFFFFF;
+    }
+
+
+
+
+    .category{
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 30px;
+    background-color: #E3F3FF;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+    .courseCategory{
+    font-size: 24px;
+    text-decoration: none;
+    color: #618DFF;
+    font-weight: 600;
+    }
+
+    .courseName{
+    padding-top: 100px;
+    text-decoration: none;
+    color: black;
+    font-size: 32px;
+    font-weight: 600;
+    }
+
+    .headerr{
+    text-align: center;
+    width: 762px;
+    background: #FFFFFF;
+    opacity: .8;
+    position: relative;
+    margin: 20px auto;
+    margin-top: 10px;
     border-radius: 30px;
     border: 2px solid transparent;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    text-align: center;
     }
+
+    .imgItem{
+    width: 440px;
+    height: 200px;
+    background: #FFFFFF;
+    }
+
+    .product-list{
+    width: 762px;
+    position: relative;
+    margin: 20px auto;
+    margin-top: 10px;
+    border-radius: 30px;
+    border: 2px solid transparent;
+    }
+
+
+    .item{
+    padding-top: 10px;
+    margin-left: 150px;
+    margin-right: auto;
+     float: left;
+     background: #FFFFFF;
+     background-color: #FFFFFF;
+     width: 470px;
+     height: 460px;
+     margin-right: 67px;
+     text-align: center;
+     margin-bottom: 55px;
+     border: 8px solid transparent;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+
+    .centerr{
+    width: 1500px;
+
+    position: relative;
+    margin: auto;
+
+    display: block;
+    }
+
+    @media screen and (max-width:1500px) {
+    .centerr{
+    width: 600px;
+    position: relative;
+    margin: auto;
+    border-radius: 30px;
+
+    }
+
+    .item{
+    margin-left: 55;
+    }
+}
 
     .textt{
     font-size: 20px;

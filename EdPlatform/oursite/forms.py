@@ -1,4 +1,4 @@
-from .models import Video, UrlCheck, Homework, Course, Module, Constructor, VideoForConstructor
+from .models import Video, UrlCheck, Homework, Course, Module, Constructor, VideoForConstructor, Subject
 from django.forms import ModelForm, TextInput, Textarea, FileField
 from django import forms
 from django.forms.models import inlineformset_factory
@@ -71,5 +71,13 @@ class HomeworkForm(forms.ModelForm):
         model = Homework
         fields = ('homework_file', 'title')
         homework_file: forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'text'}),
+        }
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Subject
+        fields = ('title',)
 
 

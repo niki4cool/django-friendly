@@ -1,6 +1,6 @@
+{% extends "oursite/index.html" %}
 {% load static %}
-
-
+{% block content %}
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -11,39 +11,18 @@
    <link href="https://vjs.zencdn.net/7.17.0/video-js.css" rel="stylesheet" />
 </head>
 <body class="bg">
-    <header class="header">
-      <a href="http://127.0.0.1:8000"><img class="" src="{% static 'images/morfusha_sova.png' %}" alt=""></a>
-      <p class="headerText1">Courses</p>
-      <p class="headerText2">Programs</p>
-      <p class="headerText3">Collaboration</p>
-      <p class="headerText4">About</p>
-      <form class="search-form">
-        <input type="search" value="" placeholder="Search" class="search-input">
-          <button type="submit" class="search-button">
-            <svg class="submit-button">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
-            </svg>
-          </button>
-      </form>
-      <div class="login">
-        <span class="inText1">Login</span>
-      </div>
-      <div class="register">
-        <span class="inText2">Register</span>
-      </div>
-      <img class="eye" src="{% static 'images/eye.png' %}" alt="">
-      <img class="profile" src="{% static 'images/jake.png' %}" alt="">
-    </header>
+
 <div>
   {% for v in vids %}
-<video class="" id="" preload="auto" controls width="800" height="600">
+<video class="move_video" preload="auto" controls width="800" height="600">
     <source src="{{v.video}}" type="video/mp4">
 
 </video>
   <div class="forma">
 <form method="post">
         {% csrf_token %}
-    <input id="something" name="delete" type="submit" value="{{v.id}}">
+    <input class="but" id="something" name="delete" type="submit" value="{{v.id}}" style="width: 400px; height: 100px;">
+    <div class="add"><span class="textt">Удалить</span></div>
     </form>
     </div>
   {% endfor %}
@@ -51,3 +30,42 @@
 
 </body>
 </html>
+<style>
+
+.add{
+pointer-events: none;
+position: absolute;
+margin-top: -62px;
+left: 920px;
+font-size: 22px;
+color: color: #9F7100;
+}
+
+
+.textt{
+color: #9F7100;
+font-weight: 800;
+
+}
+input[value].but {color: transparent}
+
+input.but{
+margin-top: 30px;
+background-color: #FFF3E9;
+color: white;
+border: 2px solid #C79C34;
+border-radius: 20px;
+display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+     .move_video{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+</style>
+
+{% endblock %}

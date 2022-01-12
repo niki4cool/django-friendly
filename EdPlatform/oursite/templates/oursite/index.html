@@ -15,7 +15,7 @@
         <a href="{% url "oursite:product_list" %}"><img class="logotip-nazvanie" src="{% static 'images/logotip-nazvanie.png' %}" alt=""></a>
         <nav class="container">
 
-      <a class="text1" href="{% url "oursite:product_list" %}">Курсы</a>
+      <a class="text1" href="{% url "oursite:constructor" %}">Плейлист</a>
       <a class="text2" href="{% url "oursite:collaboration" %}">Сотрудничество</a>
       <a class="text3" href="{% url "oursite:contacts" %}">Контакты</a>
 
@@ -88,14 +88,19 @@
         display: none;
     }
     .text1 {
-        display: none;
+
+    }
+
+    .container {
+    margin-left: 100px;
     }
 
     .logotip-sova{
-
+    left: 10;
     }
 
     .logotip-nazvanie{
+    display: none;
     }
 }
 
@@ -107,7 +112,7 @@
         display: none;
     }
     .text1 {
-        display: none;
+
     }
     .s{
     display: none;
@@ -133,7 +138,10 @@
         display: none;
     }
     .text1 {
-        display: none;
+
+    }
+    .container {
+    margin-left: 200px;
     }
     .s{
     display: none;

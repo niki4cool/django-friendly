@@ -43,12 +43,7 @@
 
 <style>
 
-.overvieww{
-width: 700px;
-position: absolute;
-top: 60%;
-margin-left: 15%;
-}
+
 
 
 #id_quantity{
@@ -61,29 +56,7 @@ text-align: center;
 margin-left: 12%;
 }
 
-.courseCategory{
-    font-size: 24px;
-    text-decoration: none;
-    color: #618DFF;
-    font-weight: 600;
-    }
 
-.category{
-width: 200px;
-    position: absolute;
-    top: 70%;
-    left: 73%;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 30px;
-    border: 2px solid transparent;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    background-color: #E3F3FF;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-
-    }
 
     .but{
     margin-bottom: 15px;
@@ -116,23 +89,7 @@ input[type="button"]:hover{
     border-radius: 10px;
 }
 
-    .formCart{
-    width: 500px;
-    position: absolute;
-    top: 40%;
-    margin-left: 21%;
-    font-size: 35px;
-    text-align: center;
-    }
 
-    .titlee{
-    width: 700px;
-    z-index: 9;
-    position: absolute;
-    margin-left: 15.5%;
-    text-align: center;
-    margin-top: 50px;
-    }
 
     .headerr{
     padding-left: 18px;
@@ -175,6 +132,126 @@ input[type="button"]:hover{
     border: 8px solid transparent;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     }
+
+ .courseCategory{
+    font-size: 24px;
+    text-decoration: none;
+    color: #618DFF;
+    font-weight: 600;
+    }
+
+.category{
+width: 200px;
+    position: absolute;
+    top: 660px;
+    left: 73%;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 30px;
+    border: 2px solid transparent;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    background-color: #E3F3FF;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+     .formCart{
+    width: 700px;
+    position: absolute;
+    top: 370px;
+    margin-left: 16%;
+    font-size: 35px;
+    text-align: center;
+    }
+
+    .titlee{
+    width: 700px;
+    position: absolute;
+    top: 220px;
+    margin-left: 16%;
+    text-align: center;
+    z-index: 9;
+    margin-top: 50px;
+    }
+
+    .overvieww{
+        width: 700px;
+        position: absolute;
+        top: 550px;
+        margin-left: 16%;
+        text-align: center;
+    }
+
+
+
+    @media screen and (max-width:1900px) {
+    .imgItem{
+    left: 1000px;
+    height: 215px;
+    width: 438px;
+    }
+
+    .category{
+    top: 550px;
+    left: 1120px;;
+    }
+
+    }
+
+
+
+
+    @media screen and (max-width:1600px) {
+    .imgItem{
+    left: 800px;
+    height: 165px;
+    width: 337px;
+    }
+
+    .category{
+    top: 500px;
+    left: 880px;
+    }
+    .formCart{
+    margin-left: 0%;
+    }
+
+    .titlee{
+    margin-left: 0%;
+    }
+
+    .overvieww{
+    margin-left: 0%;
+    }
+    }
+
+    @media screen and (max-width:1200px) {
+    .imgItem{
+    left: 600px;
+    height: 165px;
+    width: 337px;
+    }
+    .category{
+    top: 500px;
+    left: 680px;
+    }
+    .formCart{
+    margin-left: 0%;
+    text-align: left;
+    }
+
+    .titlee{
+    margin-left: 0%;
+    text-align: left;
+    }
+
+    .overvieww{
+    margin-left: 0%;
+    text-align: left;
+    }
+    }
+}
 
 </style>
 {% endblock %}

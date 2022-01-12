@@ -1,5 +1,6 @@
+{% extends "oursite/index.html" %}
 {% load static %}
-
+{% block content %}
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -10,32 +11,9 @@
    <link href="https://vjs.zencdn.net/7.17.0/video-js.css" rel="stylesheet" />
 </head>
 <body class="bg">
-    <header class="header">
-      <a href="http://127.0.0.1:8000"><img class="" src="{% static 'images/morfusha_sova.png' %}" alt=""></a>
-      <p class="headerText1">Courses</p>
-      <p class="headerText2">Programs</p>
-      <p class="headerText3">Collaboration</p>
-      <p class="headerText4">About</p>
-      <form class="search-form">
-        <input type="search" value="" placeholder="Search" class="search-input">
-          <button type="submit" class="search-button">
-            <svg class="submit-button">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
-            </svg>
-          </button>
-      </form>
-      <div class="login">
-        <span class="inText1">Login</span>
-      </div>
-      <div class="register">
-        <span class="inText2">Register</span>
-      </div>
-      <img class="eye" src="{% static 'images/eye.png' %}" alt="">
-      <img class="profile" src="{% static 'images/jake.png' %}" alt="">
-    </header>
-    <div class="center">
+    <div class="centerrr">
         <div class="perehod">
-            <a href="../" class="buttona_">Режим конструктора</a>
+            <a href="../" class="buttona_">Автоматический просмотр</a>
         </div>
 <div class="move_video">
     {% for m in Mod %}
@@ -46,7 +24,8 @@
     <div class="forma">
 <form method="post">
         {% csrf_token %}
-    <input id="something" name="videoConstruct" type="submit" value="{{m.video.url}}">
+    <input class="but" id="something"  name="videoConstruct" type="submit" value="{{m.video.url}}" placeholder="ExampleDomain" style="width: 400px; height: 100px;">
+    <div class="add"><span class="textt">Добавить в личный плейлист</span></div>
     </form>
     </div>
     <br>
@@ -54,8 +33,82 @@
 </div>
 </div>
 
+<div class="downloadWork">
+        <button class="buttona2">
+    <a style="text-decoration: none; color: #B08B31" href="{{ Cour.work.url }}" download="">Скачать домашнее задание</a></button>
+    </div>
+
+<div class="homework">
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <p class="_text2">Название:</p> {{ form.title }}
+  <div class="videocss">{{ form.homework_file }}</div>
+  <span>{{ error }}</span>
+    <button class="buttona2" type="submit">Отправить ДЗ</button>
+</form>
+</div>
+
+
+
 
 <style>
+.text{
+width: 280px;
+margin-bottom: 20px;
+}
+
+
+.downloadWork{
+text-align: center;
+}
+
+.buttona2{
+margin-top: 20px;
+    width: 400px !important;
+    height: 50px;
+    color: #9F7100;
+    font-size: 23px;
+    font-weight: 600;
+    background-color: #FFF3E9;
+    border: 2px solid #C79C34;
+    border-radius: 20px;
+    }
+
+.homework{
+width: 762px;
+margin: 0 auto;
+text-align: center;
+border-radius: 30px;
+}
+
+.textt{
+color: #9F7100;
+font-weight: 800;
+
+}
+
+.add{
+pointer-events: none;
+position: absolute;
+margin-top: -62px;
+left: 217px;
+font-size: 22px;
+color: color: #9F7100;
+}
+
+input[value].but {color: transparent}
+
+input.but{
+margin-top: 30px;
+background-color: #FFF3E9;
+color: white;
+border: 2px solid #C79C34;
+border-radius: 20px;
+display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
     .move_video{
     display: block;
     margin-left: auto;
@@ -63,12 +116,12 @@
     }
 
     .perehod{
-    width: 300px;
+    width: 400px;
     height: 50px;
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 30px;
+
     color: #9F7100;
     font-size: 23px;
     font-weight: 600;
@@ -90,3 +143,5 @@ color: #9F7100;
 </style>
 </body>
 </html>
+
+{% endblock %}

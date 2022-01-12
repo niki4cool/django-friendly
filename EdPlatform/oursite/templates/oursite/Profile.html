@@ -1,5 +1,6 @@
+{% extends "oursite/index.html" %}
 {% load static %}
-
+{% block content %}
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -7,57 +8,362 @@
   <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 </head>
 <body class="bg">
-    <header class="header">
-      <p class="name">Сайтик</p>
-      <p class="headerText1">Courses</p>
-      <p class="headerText2">Programs</p>
-      <p class="headerText3">Collaboration</p>
-      <p class="headerText4">About</p>
-      <form class="search-form">
-        <input type="search" value="" placeholder="Search" class="search-input">
-          <button type="submit" class="search-button">
-            <svg class="submit-button">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
-            </svg>
-          </button>
-      </form>
-      <div class="login">
-          <p class="login_"><a href="{% url 'login' }">Войти</a></p>
-      </div>
-      <div class="register">
 
-          <p class="register_"><a href="{% url 'register' }">Регистрация</a></p>
-      </div>
-      <img class="eye" src="{% static 'images/eye.png' %}" alt="">
-      <img class="profile" src="{% static 'images/jake.png' %}" alt="">
-    </header>
-<body>
-<div class="center">
 
-            <div>{{user.username}}</div>
-    <div class="razrab">
-            <a class="razrab_" href="{% url 'oursite:razrab' %}">Стать разработчиком</a>
-        </div>
-            {% for o in Ord %}
-            {% if o.first_name == user.username %}
-            {% for i in Item %}
-                {% if i.first_name == user.username %}
-            <a href="{{ i.product.url_to_course }}"> {{ i.product }} </a>
-                {% endif %}
+<div id="main" class="product-list">
+    <div class="headerr">
+        <h1 class="products">Курсы</h1>
+    </div>
+</div>
+
+{% for i in Item %}
+                {% if Item|length == 1 %}
+<div class="centerr1">
+                    <div class="item1" style="position: relative;">
+                <a href="{{ i.product.url_to_course }}">
+                    <img class="imgItem1" src="{% if i.product.image %}{{ i.product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                </a>
+                <br>
+                <hr style="width: 440px">
+                <br>
+                <div class="namee1">
+                <a class="courseName1" href="{{ i.product.url_to_course }}">{{ i.product.title }}</a>
+                </div>
+                <br>
+                <div class="category1">
+                <a class="courseCategory1" href="{{ i.product.category.get_absolute_url }}">{{ i.product.category }}</a></h2>
+                </div>
+            </div>
+                </div>
+ {% else %}
+<div class="centerr">
+
+
+
+            <div class="item" style="position: relative;">
+                <a href="{{ i.product.url_to_course }}">
+                    <img class="imgItem" src="{% if i.product.image %}{{ i.product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                </a>
+                <br>
+                <hr style="width: 440px">
+                <br>
+                <div class="namee">
+                <a class="courseName" href="{{ i.product.url_to_course }}">{{ i.product.title }}</a>
+                </div>
+                <br>
+                <div class="category">
+                <a class="courseCategory" href="{{ i.product.category.get_absolute_url }}">{{ i.product.category }}</a></h2>
+                </div>
+            </div>
+    {% endif %}
             {% endfor %}
-         {% endif %}
-            {% endfor %}
-
-hfdhfdghfgd
 
 </div>
 
+<script>
+
+    var colorArray = document.getElementsByClassName('category');
+    var color = document.getElementsByClassName('courseCategory');
+    var i = 10;
+    var t = 0;
+    while (t < 10){
+    if (i == 14){
+    i = 10
+    }
+    if (i % 10 == 0){
+    colorArray[t].style.backgroundColor = '#FDE8F2';
+    color[t].style.color = '#FF166A';
+    }
+    else if (i % 11 == 0){
+    colorArray[t].style.backgroundColor = '#F7ECFF';
+    color[t].style.color = '#FA00FF';
+    }
+
+    else if (i % 12 == 0){
+    colorArray[t].style.backgroundColor = '#E3F3FF';
+    color[t].style.color = '#618DFF';
+    }
+
+    else{
+    colorArray[t].style.backgroundColor = '#FFF3E9';
+    color[t].style.color = '#DF6B00';
+    }
+    i++
+    t++
+
+    }
+
+</script>
+
+<style>
+
+    .item1{
+    padding-top: 10px;
+    margin-left: 150;
+    margin-right: auto;
+     float: left;
+     background: #FFFFFF;
+     background-color: #FFFFFF;
+     width: 470px;
+     height: 460px;
+     margin-right: 67px;
+     text-align: center;
+     margin-bottom: 55px;
+     border: 8px solid transparent;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .centerr1{
+    width: 800px;
+
+    position: relative;
+    margin: auto;
+
+    display: block;
+    }
+
+    .category1{
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 30px;
+    background-color: #E3F3FF;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+    .courseCategory1{
+    font-size: 24px;
+    text-decoration: none;
+    color: #618DFF;
+    font-weight: 600;
+    }
+
+    .courseName1{
+    padding-top: 100px;
+    text-decoration: none;
+    color: black;
+    font-size: 32px;
+    font-weight: 600;
+    }
+
+    .imgItem1{
+    width: 440px;
+    height: 200px;
+    background: #FFFFFF;
+    }
+
+    .category{
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 30px;
+    background-color: #E3F3FF;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+    .courseCategory{
+    font-size: 24px;
+    text-decoration: none;
+    color: #618DFF;
+    font-weight: 600;
+    }
+
+    .courseName{
+    padding-top: 100px;
+    text-decoration: none;
+    color: black;
+    font-size: 32px;
+    font-weight: 600;
+    }
+
+    .headerr{
+    text-align: center;
+    width: 762px;
+    background: #FFFFFF;
+    opacity: .8;
+    position: relative;
+    margin: 20px auto;
+    margin-top: 10px;
+    border-radius: 30px;
+    border: 2px solid transparent;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .imgItem{
+    width: 440px;
+    height: 200px;
+    background: #FFFFFF;
+    }
+
+    .product-list{
+    width: 762px;
+    position: relative;
+    margin: 20px auto;
+    margin-top: 10px;
+    border-radius: 30px;
+    border: 2px solid transparent;
+    }
+
+
+    .item{
+    padding-top: 10px;
+    margin-left: 150px;
+    margin-right: auto;
+     float: left;
+     background: #FFFFFF;
+     background-color: #FFFFFF;
+     width: 470px;
+     height: 460px;
+     margin-right: 67px;
+     text-align: center;
+     margin-bottom: 55px;
+     border: 8px solid transparent;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+
+    .centerr{
+    width: 1500px;
+
+    position: relative;
+    margin: auto;
+
+    display: block;
+    }
+
+    @media screen and (max-width:1500px) {
+    .centerr{
+    width: 600px;
+    position: relative;
+    margin: auto;
+    border-radius: 30px;
+
+    }
+
+    .item{
+    margin-left: 55;
+    }
+}
+
+    .textt{
+    font-size: 20px;
+    font-weight: 600;
+    padding-left: 5%;
+
+    }
+
+    .overview{
+    font-size: 20px;
+    margin-left: 160px;
+    height: 60px;
+    width: 300px;
+
+    }
+
+    .titlee{
+    position: absolute;
+    top: 100px;
+    margin-left: 3%;
+
+    }
+
+    .title{
+    font-size: 20px;
+    margin-left: 160px;
+    height: 30px;
+    width: 300px;
+    }
+
+    .buttona{
+    width: 300px;
+    height: 50px;
+    margin-top: 30px;
+    margin-left: 40px;
+    color: #9F7100;
+    font-size: 23px;
+    font-weight: 600;
+    background-color: #FFF3E9;
+    border: 2px solid #C79C34;
+    border-radius: 20px;
+    }
+
+    .upload_image{
+    width: 180px;
+    position: absolute; pointer-events: none;
+    padding-left: 535px;
+    padding-top: 60px;
+    }
+
+    .imagecss{
+    width: 180px;
+    position: absolute;
+    padding-left: 535px;
+    padding-top: 60px;
+    }
+    .imagecss input[type=file] {
+    position: absolute;
+    background-color: #000000;
+     width: 180px;
+     height: 180px;
+     opacity: 0;
+    padding-top: -100px;
+
+
+</style>
+<style>
+.upload_video{
+width: 60px;
+position: absolute; pointer-events: none;
+padding-left: 250;
+}
+
+    .homework{
+    display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
+     width: 60px;
+     height: 60px;
+     margin-top: -65px;
+     padding-left: 390;
+    }
+
+     .homework input[type=file] {
+     width: 60px;
+     height: 60px;
+     opacity: 0;
+     position: absolute;
+}
+
+    .videocss{
+    display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
+     width: 60px;
+     height: 60px;
+     padding-left: 250;
+    }
+    .videocss input[type=file] {
+     width: 60px;
+     height: 60px;
+     opacity: 0;
+     position: absolute;
+
+}
+
+</style>
+
+
+
+
 </body>
 
 
-
-
-
-
 </body>
+{% endblock %}
 </html>
