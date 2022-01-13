@@ -30,15 +30,17 @@ def Search(request):
     query = request.GET.get('q')
     object_list = Course.objects.filter(title__icontains=query)
     return render(request, 'oursite/search.html', {"list":object_list})
-def post_list(request):
 
+def post_list(request):
     return render(request, 'oursite/index.html')
 
-
 def show_course(request, slug):
+    orders = Order.objects.filter(first_name=request.user, paid=True)
+    item = OrderItem.objects.filter(order__in=orders)
     course = Course.objects.get(slug=slug)
     module = Module.objects.filter(course=course)
     dz = course.work
+    t = OrderItem.objects.filter(order__in=orders, product=course.id)
     if request.method == 'POST':
         form = HomeworkForm(request.POST, request.FILES)
         if form.is_valid():
@@ -62,12 +64,17 @@ def show_course(request, slug):
         'Cour': course,
         'Mod': module
     }
-    return render(request, 'oursite/id.html', context)
-
+    if t:
+        return render(request, 'oursite/id.html', context)
+    else:
+        return redirect('oursite:profile')
 def show_course_playlist(request, slug):
+    orders = Order.objects.filter(first_name=request.user, paid=True)
+    item = OrderItem.objects.filter(order__in=orders)
     course = Course.objects.get(slug=slug)
     module = Module.objects.filter(course=course)
     dz = course.work
+    t = OrderItem.objects.filter(order__in=orders, product=course.id)
     if request.method == 'POST':
         form = HomeworkForm(request.POST, request.FILES)
         if form.is_valid():
@@ -107,7 +114,11 @@ def show_course_playlist(request, slug):
             vids = VideoForConstructor(video=var, constructor_id=const.id)
             vids.save()
             return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
-    return render(request, 'oursite/id_playlist.html', context)
+    if t:
+        return render(request, 'oursite/id_playlist.html', context)
+    else:
+        return redirect('oursite:profile')
+
 
 def constructor(request):
     constructor = Constructor.objects.filter(owner=request.user.id).first()
