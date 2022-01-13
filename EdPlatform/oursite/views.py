@@ -180,7 +180,7 @@ def profile(request, category_slug=None):
                 course.owner = User.objects.filter(id=request.user.id).first()
                 course.save()
                 for video in request.FILES.getlist('video'):
-                    vids = Module(title="title", description="description",video=video, course=course)
+                    vids = Module(title="title", description="description", video=video, course=course)
                     vids.save()
 
 
