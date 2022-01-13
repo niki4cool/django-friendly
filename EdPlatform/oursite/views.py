@@ -150,6 +150,7 @@ def courses(request):
 
 
 @login_required(login_url='/register')
+
 def profile(request, category_slug=None):
     category = None
     categories = Subject.objects.all()
