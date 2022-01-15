@@ -78,6 +78,6 @@ class HomeworkForm(forms.ModelForm):
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Subject
-        fields = ('title',)
+        fields = ('subj',)
 
 

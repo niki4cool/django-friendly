@@ -176,9 +176,10 @@ def profile(request, category_slug=None):
         if request.method == 'POST':
             form = CategoryForm(request.POST)
             if form.is_valid():
-                categoryf = form.save(commit=False)
-                categoryf.slug = slugify(categoryf.title)
-                categoryf.save()
+                data = form.cleaned_data.get("subj")
+                cat = Subject(subj=data, slug=slugify(data))
+                cat.save()
+
         else:
             categoryf = CategoryForm(request.POST)
         categoryf = CategoryForm(request.POST)

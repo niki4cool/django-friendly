@@ -7,7 +7,7 @@
 <body>
     <div id="main" class="product-list">
         <div class="headerr">
-        <h1 class="products">{% if category %}{{ category.title }}{% else %}Все курсы{% endif %}</h1>
+        <h1 class="products">{% if category %}{{ category.subj }}{% else %}Все курсы{% endif %}</h1>
             <div class="chooseCategory">
             <select onchange="window.location.href = this.options[this.selectedIndex].value">
                 <li {% if not category %}class="selected"{% endif %}>
@@ -18,7 +18,7 @@
                 <option value="{% url "oursite:product_list" %}">Все курсы</option>
             {% for c in categories %}
                 <li {% if category.slug == c.slug %}class="selected"{% endif %}>
-                     <option value="{{ c.get_absolute_url }}"><a href="{{ c.get_absolute_url }}">{{ c.title }}</a>
+                     <option value="{{ c.get_absolute_url }}"><a href="{{ c.get_absolute_url }}">{{ c.subj }}</a>
                     </option>
                 </li>
             {% endfor %}

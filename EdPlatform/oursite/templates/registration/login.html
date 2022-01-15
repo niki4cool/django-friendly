@@ -1,4 +1,6 @@
+{% extends "oursite/index.html" %}
 {% load static %}
+{% block content %}
 
 <html lang="en">
 <head>
@@ -20,12 +22,12 @@
                Пароль:
            </div>
           <img src="{% static 'images/loginPic.png' %}" alt="" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px;">
-          <img src="{% static 'images/PassPic.png' %}" alt="" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; padding-top: 135px;">
+          <img src="{% static 'images/passPic.png' %}" alt="" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; padding-top: 175px;">
 
     <form method='POST' action="{% url 'login' %}">
         {% csrf_token %}
-        <p>{{form.username}}</p>
-        <p>{{form.password}}</p>
+        <p class="ttt">{{form.username}}</p>
+        <p class="23">{{form.password}}</p>
         <p class="input_button"><input class="inp1" type="submit"></p>
     </form>
           <a class="login_reg" href="{% url 'oursite:register' %}" style="text-decoration: underline;
@@ -36,3 +38,5 @@
     </div>
 </body>
 </html>
+
+{% endblock %}

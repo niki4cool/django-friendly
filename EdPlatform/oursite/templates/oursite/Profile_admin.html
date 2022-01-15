@@ -11,34 +11,36 @@
 <div class="center">
     <p class="_text">Создание курса <span class="padd">{{user.username}}</span></p>
 <div class="create">
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <p class="_text3">Аватар урока</p><div class="opacity"> <img class="upload_image" src="{% static 'images/upImage.png' %}" alt=""></div>
-            <div class="imagecss">{{ form.image }}</div>
-            <p class="textt">1. Название:</p> <div class="titlee">{{ form.title }}</div>
-            <p class="textt">2. Цена:</p> <div class="titlee" style="top: 150px; margin-left: 24%;">{{ form.price }}</div>
-            <p class="textt" style="padding-top: 15px;">3. Описание:</p> <div class="titlee" style="top: 196px; ">{{ form.overview }}</div>
-            <p class="textt" style="padding-top: 30px;">4. Категория:</p> <div class="titlee" style="top: 292px; margin-left: 24%;">{{ form.category }}</div>
-            <p class="_text2">5. Добавить видео:</p><div class="opacity"> <img class="upload_video" src="{% static 'images/upload.png' %}" alt=""></div>
-            <div class="videocss">{{ form_module.video }}</div>
-             <p class="textt">6. Добавить домашнее задание:</p><div class="opacity"><img style="top: 402px; margin-left: 140px;" class="upload_video" src="{% static 'images/upload.png' %}" alt=""></div>
-            <div class="homework">{{ form.work }}</div>
-            <span>{{ error }}</span>
-            <button class="buttona" type="submit">Добавить курс</button>
-        </form>
 
+        <div class="addd">
          <button id="open-popup-1"><image class="addCategory" src="{% static 'images/add.png' %}" alt=""></button>
         <div id="popup-1">
 	<div class="popup-content">
 		<h1>Добавить категорию</h1>
 		<form method="post">
         {% csrf_token %}
-    {{form_category.title}}
-                 <button class="buttoncat" type="submit">Добавить категорию</button>
+    {{form_category.subj}}
+                 <button class="buttoncat" type="submit" name="submit">Добавить категорию</button>
     </form>
-		<button id="close-popup-1">Close</button>
+		<button id="close-popup-1">Закрыть</button>
+        </div>
 	</div>
 </div>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div><p class="_text3">Аватар урока</p><div class="opacity"> <img class="upload_image" src="{% static 'images/upImage.png' %}" alt=""></div>
+            <div class="imagecss">{{ form.image }}</div></div>
+            <div class="textt1"><p class="textt">1. Название:</p> <div class="titlee">{{ form.title }}</div></div>
+            <div class="textt1"><p class="textt">2. Цена:</p> <div class="titlee">{{ form.price }}</div></div>
+            <div class="textt1"><p class="textt">3. Описание:</p> <div class="titlee" >{{ form.overview }}</div></div>
+            <div class="textt1"><p class="textt">4. Категория:</p> <div class="titlee">{{ form.category }}</div></div>
+            <div class="textt1"><p class="_text2">5. Добавить видео:</p><img class="upload_video" src="{% static 'images/upload.png' %}" alt="">{{ form_module.video }}</div>
+            <div class="textt1"><p class="_text2">6. Добавить домашнее задание:</p><img class="upload_homework" src="{% static 'images/upload.png' %}" alt="">{{ form.work }}</div>
+            <span>{{ error }}</span>
+            <button class="buttona" type="submit">Добавить курс</button>
+        </form>
+
 
     </div>
 </div>
@@ -136,26 +138,49 @@ closePopup1.addEventListener('click', () => {
 
 <style>
 
+    #id_work{
+    position: absolute;
+    padding-top: 40px;
+    left: 390px;
+    width: 65px;
+    opacity: 0;
+    }
+
+    .addd{
+    width: 60px;
+    position: absolute;
+    margin-top: 215px;
+    }
+
+    #id_video{
+    position: absolute;
+    padding-top: 40px;
+    margin-left: -60px;
+    width: 60px;
+    opacity: 0;
+    }
+
     .padd{
     margin-left: 120px;
     }
 
     #open-popup-1{
-    margin-top: -275px;
     border: 2px solid #C79C34;
     border-radius: 20px;
-    display: block;
+
     margin-left: 330px;
     margin-right: auto;
+    margin-bottom: 20px;
     }
 
     #popup-1 {
+    margin-left: 200%;
     z-index: 9;
 	display: none;
 	background-color: rgba(0,0,0,0.5);
 	position: absolute;
-	height: 300px;
-	width: 100%;
+	height: 295px;
+	width: 450px;
 }
 
     .popup-content {
@@ -345,35 +370,39 @@ display: block;
     font-size: 20px;
     font-weight: 600;
     padding-left: 5%;
-
+    display: inline;
     }
+
+    .textt1{
+    margin-bottom: 45px;
+    height: 28px;
+    vertical-align: middle;
+    }
+
 
     .overview{
     font-size: 20px;
-    margin-left: 160px;
-    height: 60px;
+    height: 28px;
     width: 300px;
 
     }
 
     .titlee{
-    position: absolute;
-    top: 100px;
+    display: inline;
     margin-left: 3%;
 
     }
 
     .title{
     font-size: 20px;
-    margin-left: 160px;
-    height: 30px;
+    height: 28px;
     width: 300px;
     }
 
     .buttona{
+    margin-top: 50px;
     width: 300px;
     height: 50px;
-    margin-top: 30px;
     margin-left: 40px;
     color: #9F7100;
     font-size: 23px;
@@ -393,9 +422,14 @@ display: block;
     .imagecss{
     width: 180px;
     position: absolute;
-    padding-left: 535px;
-    padding-top: 60px;
+    left: 535px;
+    top: 60px;
     }
+
+    #id_image{
+    margin-top: 100px;
+    }
+
     .imagecss input[type=file] {
     position: absolute;
     background-color: #000000;
@@ -409,25 +443,25 @@ display: block;
 <style>
 .upload_video{
 width: 60px;
-position: absolute; pointer-events: none;
+pointer-events: none;
 padding-left: 250;
 }
 
+.upload_homework{
+width: 60px;
+position: absolute; pointer-events: none;
+padding-left: 390;
+}
+
     .homework{
-    display: flex;
-     justify-content: center;
-     align-items: center;
-     flex-direction: column;
      width: 60px;
      height: 60px;
-     margin-top: -65px;
      padding-left: 390;
     }
 
      .homework input[type=file] {
      width: 60px;
      height: 60px;
-     opacity: 0;
      position: absolute;
 }
 
@@ -445,6 +479,7 @@ padding-left: 250;
      height: 60px;
      opacity: 0;
      position: absolute;
+     top: 20px;
 
 }
 

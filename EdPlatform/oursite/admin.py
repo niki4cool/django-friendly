@@ -14,19 +14,21 @@ class UrlCheckAdmin(admin.ModelAdmin):
 
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ['title', 'slug']
-    prepopulated_fields = {'slug': ('title',)}
+    list_display = ['subj', 'slug']
+    prepopulated_fields = {'slug': ('subj',)}
 
 
 
 
 class ModuleInline(admin.StackedInline):
     model = Module
+    extra = 0
 
 
 
 class HomeworkInLine(admin.StackedInline):
     model = Homework
+    extra = 0
 
 
 

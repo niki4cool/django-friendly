@@ -38,14 +38,14 @@ class Video(models.Model):
         return self.caption
 
 class Subject(models.Model):
-    title = models.CharField(max_length=200)
+    subj = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
 
     class Meta:
-        ordering = ('title',)
+        ordering = ('subj',)
 
     def __str__(self):
-        return self.title
+        return self.subj
 
     def get_absolute_url(self):
         return reverse('oursite:product_list_by_category',
