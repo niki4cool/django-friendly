@@ -9,15 +9,15 @@
 </div>
     <div class="product-detail">
         <div class="titlee">
-        <h1 style="font-size: 40px;">{{ product.title }}</h1>
+        <h1 class="h11">{{ product.title }}</h1>
         </div>
         <img class="courseBack" src="{% static 'images/courseBack.jpg' %}" alt="">
         <img class="imgItem" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
         <div class="category">
-        <h2><a class="courseCategory" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>
+        <a class="courseCategory" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a>
         </div>
         <div class="overvieww">
-        <h1 style="font-size: 40px;">{{ product.overview }}</h1>
+        <h1 class="h12">{{ product.overview }}</h1>
         </div>
     </div>
 
@@ -45,6 +45,28 @@
 
 
 
+.formCart{
+    width: 99%;
+    position: absolute;
+    top: 400px;
+    margin-left: -14%;
+    font-size: 35px;
+    text-align: center;
+    margin-top: 1px;
+    }
+
+.price{
+    font-size: 30px;
+    font-weight: 800;
+    }
+
+.h11{
+font-size: 40px;
+}
+
+.h12{
+font-size: 40px;
+}
 
 #id_quantity{
 visibility: hidden;
@@ -54,14 +76,14 @@ pricee{
 width: 500px;
 text-align: center;
 margin-left: 12%;
+
 }
-
-
 
     .but{
     margin-bottom: 15px;
     font-family: "Tahoma", serif;
     font-size: 1.3rem;
+
 }
 input[placeholder].but{
     width: 200px;
@@ -103,7 +125,7 @@ input[type="button"]:hover{
 
     .courseBack{
     width: 99%;
-    height: 600px;
+    height: 100%;
     opacity: 30%;
     }
 
@@ -142,6 +164,8 @@ input[type="button"]:hover{
 
 .category{
 width: 200px;
+height: 50px;
+padding-top: 20px;
     position: absolute;
     top: 660px;
     left: 73%;
@@ -156,14 +180,7 @@ width: 200px;
     margin-right: auto;
     }
 
-     .formCart{
-    width: 700px;
-    position: absolute;
-    top: 370px;
-    margin-left: 16%;
-    font-size: 35px;
-    text-align: center;
-    }
+
 
     .titlee{
     width: 700px;
@@ -214,7 +231,7 @@ width: 200px;
     left: 880px;
     }
     .formCart{
-    margin-left: 0%;
+    margin-left: -25%;
     }
 
     .titlee{
@@ -252,6 +269,87 @@ width: 200px;
     }
     }
 }
+
+
+
+
+
+
+</style>
+
+<style>
+
+
+
+     @media screen and (max-width:500px) {
+     .product-detail{
+     width: 95%;
+     }
+
+     .h11{
+     font-size: 28px;
+     margin: 0 auto;
+
+     }
+
+    .imgItem{
+    left: 15%;
+    width: 200px;
+    height: 100px;
+    margin-top: 50px;
+    }
+    .category{
+    top: 450px;
+    left: 15%;
+    width: 60%;
+    height: 6%;
+    }
+    .formCart{
+    margin-left: 0%;
+    text-align: center;
+    margin-top: 105px;
+    }
+
+    .titlee{
+    margin-left: 0%;
+    text-align: left;
+    width: 100%;
+    }
+
+    .overvieww{
+    margin-left: 0%;
+    text-align: left;
+    width: 100%;
+    height: 100px;
+    font-size: 12px;
+    margin-top: 20px;
+    }
+
+
+
+
+    .courseCategory{
+    font-size: 18px;
+    margin-top: 20px;
+    }
+
+    .but{
+    margin-bottom: 15px;
+    margin-top: -40px;
+    font-size: 12px;
+}
+
+.h12{
+font-size: 18px;
+}
+
+.price{
+    font-size: 20px;
+    font-weight: 800;
+    }
+
+}
+
 
 </style>
 {% endblock %}

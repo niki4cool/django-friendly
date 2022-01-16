@@ -24,7 +24,7 @@
                     <img class="imgItem1" src="{% if i.product.image %}{{ i.product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
                 </a>
                 <br>
-                <hr style="width: 440px">
+                <hr class="hrr" style="">
                 <br>
                 <div class="namee1">
                 <a class="courseName1" href="{{ i.product.url_to_course }}">{{ i.product.title }}</a>
@@ -38,15 +38,12 @@
  {% else %}
 
 <div class="centerr">
-
-
-
             <div class="item" style="position: relative;">
                 <a href="{{ i.product.url_to_course }}">
                     <img class="imgItem" src="{% if i.product.image %}{{ i.product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
                 </a>
                 <br>
-                <hr style="width: 440px">
+                <hr style="">
                 <br>
                 <div class="namee">
                 <a class="courseName" href="{{ i.product.url_to_course }}">{{ i.product.title }}</a>
@@ -98,7 +95,9 @@
 
 <style>
 
-
+    .hrr{
+    width: 440px;
+    }
 
     .item1{
     padding-top: 10px;
@@ -359,6 +358,173 @@ padding-left: 250;
 
 }
 
+
+@media screen and (max-width:500px) {
+    .center{
+    width: 100%;
+    height: 800px;
+    }
+
+    .centerr1{
+    width: 100%;
+    height: 800px;
+    }
+
+    .buttona{
+    margin-top: 140px;
+    margin-left: 10px;
+    }
+
+    ._text3{
+    top: 620px;
+    padding-left: 20px;
+    }
+
+    .upload_image{
+    padding-left: 180px;
+    padding-top: 470px;
+    width: 100px;
+    }
+
+    .imagecss{
+    width: 80px;
+    margin-top: 450px;
+    left: 0;
+    margin-left: 180px;
+    }
+
+    .imagecss input[type=file] {
+    position: absolute;
+    background-color: #000000;
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+    padding-top: 0px;
+}
+
+    ._text2{
+    padding-left: 20px;
+
+    }
+
+    .upload_homework{
+    padding-left: 150px;
+    padding-top: 50px;
+    }
+
+    #id_work{
+    left: 150px;
+    margin-top: 50px;
+    }
+
+    #open-popup-1{
+    margin-left: 280px;
+    width: 30px;
+    height: 30px;
+    }
+
+    #popup-1{
+    margin-left: 20px;
+    width: 300px;
+    }
+
+    .popup-content{
+    width: 200px;
+    }
+
+    .addCategory{
+    margin-left: -10px;
+    margin-top: -6px;
+    }
+
+    .products{
+    font-size: 18px;
+    margin-top: 27px;
+    }
+
+    .chooseCategory{
+    margin-left: 180px;
+    }
+
+    .product-list{
+    width: 100%;
+    }
+
+    .headerr{
+    width:93%;
+    }
+
+    .centerr{
+    width: 100%;
+    }
+
+    .item{
+    width: 90%;
+    margin-left: 6px;
+    height: 240px;
+    margin-right: 0px;
+    }
+
+    .item1{
+    width: 90%;
+    margin-left: 6px;
+    height: 240px;
+    margin-right: 0px;
+    }
+
+    .imgItem{
+    width: 80%;
+    height: 45%;
+    }
+    .imgItem1{
+    width: 80%;
+    height: 45%;
+    }
+
+    .hrr{
+
+    width: 95%;
+    }
+
+    .courseName{
+    font-size: 24px;
+    }
+
+    .courseName1{
+    font-size: 24px;
+    }
+
+    .category{
+    margin-top: -20px;
+
+    }
+
+    .courseCategory{
+    font-size: 18px;
+
+    }
+
+    .priceDiv{
+    margin-top: -60px;
+    }
+
+    .namee{
+
+    margin-bottom: 15px;
+    }
+
+    ._text{
+    padding-left: 25px;
+    }
+
+    .padd{
+    margin-left: 90px;
+    }
+
+    .price{
+    font-size: 18px;
+    }
+}
 </style>
 
 

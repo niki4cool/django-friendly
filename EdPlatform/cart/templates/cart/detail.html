@@ -9,11 +9,15 @@
     <div class="headerr">
         <h1 class="products">Ваша корзина на сумму: {{ cart.get_total_price }} ₽</h1>
         <h1 class="products1" style="display: none;">Сумма: {{ cart.get_total_price }} ₽</h1>
+        {% if cart.get_total_price == 0 %}
+
+        {% else %}
         <div class="payy">
             <a class="pay" href="{% url "orders:order_create" %}" class="button">
                 Оплатить
             </a>
         </div>
+        {% endif %}
     </div>
         {% for item in cart %}
             {% with product=item.product %}
@@ -22,7 +26,7 @@
                     <img class="imgItem" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
                 </a>
                 <br>
-                <hr style="width: 440px">
+                <hr class="hrr" style="">
                 <br>
                 <div class="namee">
                 <a class="courseName" href="{{ product.get_absolute_url }}">{{ product.title }}</a>
@@ -43,6 +47,10 @@
 </body>
 
 <style>
+
+    .hrr{
+    width: 440px;
+    }
 
     .payy{
     display: inline-block;
@@ -177,6 +185,107 @@
     display: inline !important;
     padding-left: 18px;
     position: absolute;
+    }
+
+}
+
+
+@media screen and (max-width:500px) {
+    .products{
+    font-size: 18px;
+    margin-top: 27px;
+    }
+
+    .chooseCategory{
+    margin-left: 180px;
+    }
+
+    .product-list{
+    width: 100%;
+    }
+
+    .headerr{
+    width:93%;
+    }
+
+    .centerr{
+    width: 100%;
+    }
+
+    .item{
+    width: 90%;
+    margin-left: 6px;
+    height: 240px;
+    margin-right: 0px;
+    }
+
+    .imgItem{
+    transform:  scale(0.6);
+    margin-left: -75px;
+    margin-top: -40px;
+
+    }
+
+    .hrr{
+    margin-top: -20px;
+    width: 90%;
+    }
+
+    .courseName{
+    font-size: 24px;
+
+    }
+
+    .namee{
+    padding-top: 0px;
+    margin-top: -25px;
+    }
+
+    .category{
+    margin-top: -65px;
+
+    }
+
+    .courseCategory{
+    font-size: 18px;
+    }
+
+    .priceDiv{
+    margin-top: -60px;
+    }
+
+
+
+    .price{
+    font-size: 18px;
+    }
+
+    .priceDiv{
+        margin-top: -50px;
+    }
+
+    .delete{
+    top: -40;
+    margin-left: 92%;
+    }
+
+    .products1{
+    font-size: 18px;
+    padding-left: 0px;
+    padding-top: 15px;
+    }
+
+    .headerr{
+    padding-left: 5px;
+    }
+
+    .payy{
+    margin-left: 60%;
+    margin-top: 8%;
+    }
+
+    .pay{
+    font-size: 18px;
     }
 
 }

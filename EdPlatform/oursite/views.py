@@ -119,7 +119,7 @@ def show_course_playlist(request, slug):
     else:
         return redirect('oursite:profile')
 
-
+@login_required(login_url='/register')
 def constructor(request):
     constructor = Constructor.objects.filter(owner=request.user.id).first()
     vids = VideoForConstructor.objects.filter(constructor=constructor)

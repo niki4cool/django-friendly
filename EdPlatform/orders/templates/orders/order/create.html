@@ -4,6 +4,9 @@
 
 {% block content %}
 
+
+
+
     <div class="center">
         <div class="centerr">
         <h1 style="color: #FFFFFF; padding-top: 50px;">Ваш заказ</h1>
@@ -17,31 +20,40 @@
 
         <h1 class="formm" style="">Введите ФИО: </h1>
         <div class="polee">
-        <img src="{% static 'images/loginPic.png' %}" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; margin-left: 90px;">
+        <img class="face" src="{% static 'images/loginPic.png' %}" style="">
         {{ form.last_name }}
         </div>
 
 
         <h1 class="formm">Почта: </h1>
         <div class="polee">
-        <img src="{% static 'images/ssilka.png' %}" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; margin-left: 90px; ">
+        <img class="ssill" src="{% static 'images/ssilka.png' %}" style="">
         {{ form.email }}
         </div>
-        <p><button class="inp" type="submit" style="margin-top: 50px;">Оплатить</button></p>
+
+        <p><button class="inp" type="submit" style="">Оплатить</button></p>
         {% csrf_token %}
     </form>
     </div>
 
 <style>
 
-    .inp{
-    margin-left: 12% !important;
+    .ssill{
+    width: 65px; position: absolute; vertical-align: top; border-radius: 10px; margin-left: 90px;
+    }
 
+    .face{
+    width: 65px; position: absolute; vertical-align: top; border-radius: 10px; margin-left: 90px;
+    }
+
+    .inp{
+    margin-left: 12%;
+    margin-top: 50px;
     }
 
     .center{
-    margin-top: 50px !important;
-    height: 700px !important;
+    margin-top: 50px;
+    height: 700px;
     }
 
     .first_name{
@@ -90,6 +102,41 @@
     border-radius: 30px;
     }
 
+    @media screen and (max-width:500px) {
+    .center{
+    width: 100%;
+    }
+
+    .ssill{
+    margin-left: 10px;
+    }
+
+    .face{
+    margin-left: 10px;
+    }
+
+    .formm{
+    padding-left: 10px;
+    width: 90%;
+    }
+
+    .email{
+    margin-left: 80px;
+    width: 70%;
+    }
+
+    .last_name{
+    margin-left: 80px;
+    width: 70%;
+    }
+
+    .inp{
+    width: 90%;
+    height: 10%;
+    margin-left: 10px;
+    margin-top: 30px;
+    }
+}
 
 </style>
 {% endblock %}

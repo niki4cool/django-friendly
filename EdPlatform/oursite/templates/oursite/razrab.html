@@ -11,24 +11,31 @@
     <form action="." method="post" class="order-form">
         <h1 class="formm" style="">Название курса: </h1>
         <div class="polee">
-        <img src="{% static 'images/loginPic.png' %}" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; margin-left: 90px;">
+        <img class="face" src="{% static 'images/loginPic.png' %}" style="">
         {{ form.title }}
         </div>
         <h1 class="formm">Вставьте ссылку на курс: </h1>
         <div class="polee">
-        <img src="{% static 'images/ssilka.png' %}" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; margin-left: 90px; ">
+        <img class="ssill" src="{% static 'images/ssilka.png' %}" style=" ">
         {{ form.url }}
         </div>
-        <p><button class="inp" type="submit" style="margin-top: 100px;">Отправить</button></p>
+        <p><button class="inp" type="submit" style="">Отправить</button></p>
         {% csrf_token %}
     </form>
     </div>
 <style>
 
-    .inp{
-    margin-left: 12% !important;
-    margin-top: 55px !important;
+    .ssill{
+    width: 65px; position: absolute; vertical-align: top; border-radius: 10px; margin-left: 90px;
+    }
 
+    .face{
+    width: 65px; position: absolute; vertical-align: top; border-radius: 10px; margin-left: 90px;
+    }
+
+    .inp{
+    margin-left: 12%;
+    margin-top: 55px;
     }
 
     .center{
@@ -81,6 +88,48 @@
     border-radius: 30px;
     }
 
+
+    @media screen and (max-width:500px) {
+    .center{
+    width: 100%;
+    }
+
+    .inp{
+    width: 90%;
+    height: 10%;
+    margin-left: 10px;
+    margin-top: 35px;
+    }
+
+    .email{
+    width: 30px;
+    }
+
+    .formm{
+    padding-left: 10px;
+    width: 90%;
+    }
+
+    .face{
+    margin-left: 10px;
+    }
+
+    .last_name{
+    margin-left: 80px;
+    width: 70%;
+    }
+
+    .ssill{
+    margin-left: 10px;
+    }
+
+    .email{
+    margin-left: 80px;
+    width: 70%;
+    }
+
+
+}
 
 </style>
 

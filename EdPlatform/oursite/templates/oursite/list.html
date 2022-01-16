@@ -6,10 +6,7 @@
 {% block content %}
 <body>
     <div id="main" class="product-list">
-        <div class="hide">
-        <a class="hide1" href="{% url "oursite:constructor" %}">Плейлист</a>
-        <a class="hide1" href="{% url "oursite:collaboration" %}">Сотрудничество</a>
-      <a class="hide1" href="{% url "oursite:contacts" %}">Контакты</a></div>
+
         <div class="headerr">
         <h1 class="products">{% if category %}{{ category.subj }}{% else %}Все курсы{% endif %}</h1>
 
@@ -35,12 +32,10 @@
 
         {% for product in products %}
             <div class="item" style="position: relative;">
-                <a href="{{ product.get_absolute_url }}">
+                <a class="noPadd" href="{{ product.get_absolute_url }}">
                     <img class="imgItem" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-                </a>
-                <br>
-                <hr style="width: 440px">
-                <br>
+
+                <hr class="hrr">
                 <div class="namee">
                 <a class="courseName" href="{{ product.get_absolute_url }}">{{ product.title }}</a>
                 </div>
@@ -51,6 +46,7 @@
                 <div class="priceDiv">
                 <p class="price">{{ product.price }} ₽</p>
                 </div>
+                    </a>
             </div>
         {% endfor %}
     </div>
@@ -92,22 +88,10 @@
 </script>
 <style>
 
-    .hide{
-    display: none;
-    margin-top: -20px;
-    background-color: #00A6A3;
-    margin-bottom: 20px;
-    width: 100%;
-    height: 20px;
-
+    .hrr{
+    width: 440px;
     }
 
-    .hide1{
-    margin-right: 5px;
-    color: #FFFFFF;
-    alink: none;
-    text-decoration: none;
-    }
 
     .products{
     position: absolute;
@@ -239,16 +223,65 @@
     }
 }
     @media screen and (max-width:500px) {
-    .1{
-    hidden;
-    }
-    .2{
-    display;
+
+    .products{
+    font-size: 18px;
+    margin-top: 27px;
     }
 
-    .hide{
+    .chooseCategory{
+    margin-left: 180px;
+    }
+
+    .headerr{
+    width:93%;
+    }
+
+    .item{
+    width: 90%;
+    margin-left: 6px;
+    height: 240px;
+    margin-right: 0px;
+    }
+
+    .imgItem{
+    width: 80%;
+    height: 45%;
+    }
+
+    .hrr{
+
+    width: 95%;
+    }
+
+    .courseName{
+    font-size: 24px;
+    }
+
+    .category{
+    margin-top: -80px;
+
+    }
+
+    .courseCategory{
+    font-size: 18px;
+    }
+
+    .priceDiv{
+    margin-top: -60px;
+    }
+
+    .price{
+    font-size: 18px;
+    }
+
+    .noPadd{
+    width: 100%;
     display: block;
     }
+
+
+
 
 }
 

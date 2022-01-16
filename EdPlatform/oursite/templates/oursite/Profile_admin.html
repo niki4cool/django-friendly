@@ -29,7 +29,7 @@
 
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div><p class="_text3">Аватар урока</p><div class="opacity"> <img class="upload_image" src="{% static 'images/upImage.png' %}" alt=""></div>
+            <div><p class="_text3">Аватар урока:</p><div class="opacity"> <img class="upload_image" src="{% static 'images/upImage.png' %}" alt=""></div>
             <div class="imagecss">{{ form.image }}</div></div>
             <div class="textt1"><p class="textt">1. Название:</p> <div class="titlee">{{ form.title }}</div></div>
             <div class="textt1"><p class="textt">2. Цена:</p> <div class="titlee">{{ form.price }}</div></div>
@@ -53,39 +53,38 @@
 {% for i in Item %}
                 {% if Item|length == 1 %}
 <div class="centerr1">
+     <a href="{{ i.product.url_to_course }}">
                     <div class="item1" style="position: relative;">
-                <a href="{{ i.product.url_to_course }}">
+
                     <img class="imgItem1" src="{% if i.product.image %}{{ i.product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-                </a>
-                <br>
-                <hr style="width: 440px">
-                <br>
+
+
+                <hr class="hrr">
+
                 <div class="namee1">
                 <a class="courseName1" href="{{ i.product.url_to_course }}">{{ i.product.title }}</a>
                 </div>
-                <br>
+
                 <div class="category1">
                 <a class="courseCategory1" href="{{ i.product.category.get_absolute_url }}">{{ i.product.category }}</a></h2>
                 </div>
             </div>
+         </a>
                 </div>
  {% else %}
 <div class="centerr">
+     <a href="{{ i.product.url_to_course }}">
             <div class="item" style="position: relative;">
-                <a href="{{ i.product.url_to_course }}">
                     <img class="imgItem" src="{% if i.product.image %}{{ i.product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-                </a>
-                <br>
-                <hr style="width: 440px">
-                <br>
+                <hr class="hrr">
                 <div class="namee">
                 <a class="courseName" href="{{ i.product.url_to_course }}">{{ i.product.title }}</a>
                 </div>
-                <br>
                 <div class="category">
-                <a class="courseCategory" href="{{ i.product.category.get_absolute_url }}">{{ i.product.category }}</a></h2>
+                <a class="courseCategory" href="{{ i.product.category.get_absolute_url }}">{{ i.product.category }}</a>
                 </div>
             </div>
+          </a>
     {% endif %}
             {% endfor %}
 </div>
@@ -137,6 +136,10 @@ closePopup1.addEventListener('click', () => {
 </script>
 
 <style>
+
+    .hrr{
+    width: 440px;
+    }
 
     #id_work{
     position: absolute;
@@ -483,6 +486,169 @@ padding-left: 390;
 
 }
 
+
+@media screen and (max-width:500px) {
+    .center{
+    width: 100%;
+    height: 800px;
+    }
+
+    .buttona{
+    margin-top: 140px;
+    margin-left: 10px;
+    }
+
+    ._text3{
+    top: 620px;
+    padding-left: 20px;
+    }
+
+    .upload_image{
+    padding-left: 180px;
+    padding-top: 470px;
+    width: 100px;
+    }
+
+    .imagecss{
+    width: 80px;
+    margin-top: 450px;
+    left: 0;
+    margin-left: 180px;
+    }
+
+    .imagecss input[type=file] {
+    position: absolute;
+    background-color: #000000;
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+    padding-top: 0px;
+}
+
+    ._text2{
+    padding-left: 20px;
+
+    }
+
+    .upload_homework{
+    padding-left: 150px;
+    padding-top: 50px;
+    }
+
+    #id_work{
+    left: 150px;
+    margin-top: 50px;
+    }
+
+    #open-popup-1{
+    margin-left: 280px;
+    width: 30px;
+    height: 30px;
+    }
+
+    #popup-1{
+    margin-left: 20px;
+    width: 300px;
+    }
+
+    .popup-content{
+    width: 200px;
+    }
+
+    .addCategory{
+    margin-left: -10px;
+    margin-top: -6px;
+    }
+
+    .products{
+    font-size: 18px;
+    margin-top: 27px;
+    }
+
+    .chooseCategory{
+    margin-left: 180px;
+    }
+
+    .product-list{
+    width: 100%;
+    }
+
+    .headerr{
+    width:93%;
+    }
+
+    .centerr{
+    width: 100%;
+    }
+
+    .item{
+    width: 90%;
+    margin-left: 6px;
+    height: 240px;
+    margin-right: 0px;
+    }
+
+    .imgItem{
+    width: 80%;
+    height: 45%;
+    }
+
+    .hrr{
+
+    width: 95%;
+    }
+
+    .courseName{
+    font-size: 24px;
+    }
+
+    .category{
+
+
+    }
+
+    .courseCategory{
+    font-size: 18px;
+    }
+
+    .priceDiv{
+    margin-top: -60px;
+    }
+
+    .namee{
+    margin-top: 10px;
+    margin-bottom: 15px;
+    }
+
+    ._text{
+    padding-left: 25px;
+    }
+
+    .padd{
+    margin-left: 90px;
+    }
+
+    .price{
+    font-size: 18px;
+    }
+
+    .centerr1{
+    width: 100%;
+    height: 800px;
+    }
+
+    .item1{
+    width: 90%;
+    margin-left: 6px;
+    height: 240px;
+    margin-right: 0px;
+    }
+
+    .imgItem1{
+    width: 80%;
+    height: 45%;
+    }
+}
 </style>
 
 

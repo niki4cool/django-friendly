@@ -17,14 +17,14 @@
         </div>
 <div class="move_video">
     {% for m in Mod %}
-	<video class="" id="" preload="auto" controls width="800" height="600">
+	<video class="viddd" id="" preload="auto" controls width="800" height="600">
     <source src="{{m.video.url}}" type="video/mp4">
 
 </video>
     <div class="forma">
 <form method="post">
         {% csrf_token %}
-    <input class="but" id="something"  name="videoConstruct" type="submit" value="{{m.video.url}}" placeholder="ExampleDomain" style="width: 400px; height: 100px;">
+    <input class="but" id="something"  name="videoConstruct" type="submit" value="{{m.video.url}}" placeholder="ExampleDomain" style="">
     <div class="add"><span class="textt">Добавить в личный плейлист</span></div>
     </form>
     </div>
@@ -35,7 +35,7 @@
 
 <div class="downloadWork">
         <button class="buttona2">
-    <a style="text-decoration: none; color: #B08B31" href="{{ Cour.work.url }}" download="">Скачать домашнее задание</a></button>
+    <a class="aa" style="text-decoration: none; color: #B08B31" href="{{ Cour.work.url }}" download="">Скачать домашнее задание</a></button>
     </div>
 
 <div class="homework">
@@ -64,7 +64,7 @@ text-align: center;
 
 .buttona2{
 margin-top: 20px;
-    width: 400px !important;
+    width: 400px;
     height: 50px;
     color: #9F7100;
     font-size: 23px;
@@ -99,6 +99,8 @@ margin-bottom: 60px;
 input[value].but {color: transparent}
 
 input.but{
+height: 100px;
+width: 100%;
 margin-top: 30px;
 background-color: #FFF3E9;
 color: white;
@@ -140,6 +142,63 @@ color: #9F7100;
     alink: #9F7100;
     text-decoration: none;
     }
+
+
+    @media screen and (max-width:500px) {
+
+    .centerrr{
+    width: 100%;
+    }
+
+    .buttona{
+    width: 80%;
+    }
+
+    .buttona_{
+    font-size: 18px;
+    }
+
+    .video_center{
+    width: 100%;
+    height: 50%;
+    }
+
+    .video-js{
+    width: 100%;
+    height: 60%;
+    }
+
+    .aa{
+    font-size: 18px;
+    }
+
+    .homework{
+    width: 100%;
+    }
+
+    .viddd{
+    width: 100%;
+    height: 30%;
+    }
+
+    .perehod{
+    width: 100%;
+    margin-bottom: 25px;
+    }
+
+    input.but{
+    height: 70px;
+    }
+
+    .add{
+    margin-bottom: 20px;
+    }
+
+    .buttona2{
+    width: 100%;
+    }
+
+}
 </style>
 </body>
 </html>
