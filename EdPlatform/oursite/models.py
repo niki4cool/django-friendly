@@ -10,6 +10,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from taggit.managers import TaggableManager
 from django.shortcuts import reverse
 from embed_video.fields import EmbedVideoField
+from django.utils.translation import gettext as _
 
 
 
@@ -52,17 +53,58 @@ class Subject(models.Model):
                        args=[self.slug])
 
 
+class ImageForUser(models.Model):
+    user = models.ForeignKey(User, related_name='userPic', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='products/%Y/%m/%d', null=True, blank=True)
+    userstr = str(user)
+    def __str__(self):
+        return str(self.user)
+
+class Chat(models.Model):
+    DIALOG = 'D'
+    CHAT = 'C'
+    CHAT_TYPE_CHOICES = (
+        (DIALOG, _('Dialog')),
+        (CHAT, _('Chat'))
+    )
+
+    type = models.CharField(
+        _('Тип'),
+        max_length=1,
+        choices=CHAT_TYPE_CHOICES,
+        default=DIALOG
+    )
+    members = models.ManyToManyField(User, verbose_name=_("Участник"))
+
+
+    def get_absolute_url(self):
+        return reverse('oursite:messages', args=[self.pk])
+
+
+class Message(models.Model):
+    chat = models.ForeignKey(Chat, verbose_name=_("Чат"), on_delete=models.CASCADE)
+    author = models.ForeignKey(User, verbose_name=_("Пользователь"), on_delete=models.CASCADE)
+    message = models.TextField(_("Сообщение"))
+    pub_date = models.DateTimeField(_('Дата сообщения'), default=timezone.now)
+    is_readed = models.BooleanField(_('Прочитано'), default=False)
+
+    class Meta:
+        ordering = ['pub_date']
+
+    def __str__(self):
+        return self.message
+
 class Course(models.Model):
-    owner = models.ForeignKey(User, related_name='courses_created',on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, related_name='courses_created', on_delete=models.CASCADE)
     selling = models.BooleanField(default=True)
-    category = models.ForeignKey(Subject, related_name='courses',on_delete=models.CASCADE)
+    category = models.ForeignKey(Subject, related_name='courses', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=200, unique=True)
+    slug = models.SlugField(max_length=200, default=uuid.uuid1())
     overview = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     available = models.BooleanField(default=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True)
+    image = models.ImageField(upload_to='products/%Y/%m/%d', null=True, blank=True)
     number = models.CharField(max_length=200)
     created_date = models.DateTimeField(editable=True, auto_now_add=True)
 
@@ -88,7 +130,7 @@ class Module(models.Model):
     course = models.ForeignKey(Course, related_name='modules', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
-    video = models.FileField(upload_to='video/')
+    video = models.ImageField(upload_to='video/')
     slug = models.SlugField(max_length=200, default=uuid.uuid1())
     class Meta:
         ordering = ('title',)

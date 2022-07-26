@@ -1,0 +1,43 @@
+{% extends "oursite/index.html" %}
+{% load static %}
+{% block title %}Thank you{% endblock %}
+
+{% block content %}
+    <div class="center">
+        <div class="centerr">
+        <h1 style="color: #FFFFFF; padding-top: 20px;">Упс...</h1>
+
+        <h1 style="color: #FFFFFF">Похоже вы неверно заполнили форму :(</h1>
+
+            <img src="{% static 'images/notGood.png' %}" style="width: 80%; "  >
+        </div>
+
+
+    </div>
+
+<style>
+     .center{
+    margin-top: 50px !important;
+    height: 600px !important;
+    }
+
+     .centerr{
+    text-align: center;
+    }
+
+    @media screen and (max-width:500px) {
+    .center{
+    width: 100%;
+    }
+    }
+
+</style>
+{% endblock %}
+
+
+
+
+
+
+
+

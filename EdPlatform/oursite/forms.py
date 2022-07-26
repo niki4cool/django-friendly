@@ -1,4 +1,4 @@
-from .models import Video, UrlCheck, Course, Module, Constructor, VideoForConstructor, Subject
+from .models import Video, UrlCheck, Course, Module, Constructor, VideoForConstructor, Subject, Message, Chat, ImageForUser
 from django.forms import ModelForm, TextInput, Textarea, FileField
 from django import forms
 from django.forms.models import inlineformset_factory
@@ -78,11 +78,16 @@ class CourseForm(forms.ModelForm):
             }),
         }
 
+    def __init__(self, *args, **kwargs):
+        super(CourseForm, self).__init__(*args, **kwargs)
+        self.fields['image'].required = True
+
 class ModuleForm(forms.ModelForm):
     class Meta:
         model = Module
         fields = ('video',)
-    video = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    video = forms.ImageField(widget=forms.FileInput(attrs={'multiple': True}))
+
 
 
 class CategoryForm(forms.ModelForm):
@@ -90,4 +95,13 @@ class CategoryForm(forms.ModelForm):
         model = Subject
         fields = ('subj',)
 
+class MessageForm(ModelForm):
+    class Meta:
+        model = Message
+        fields = ['message']
+        labels = {'message': ""}
 
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = ImageForUser
+        fields = ['image']

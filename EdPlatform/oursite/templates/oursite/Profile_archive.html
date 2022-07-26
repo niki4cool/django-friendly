@@ -19,9 +19,9 @@
         <a href="{% url "oursite:profilee" %}"><p class="side-menu-chosen">Мои объявления</p></a>
         <a href="{% url "oursite:profile_buying" %}"><p class="side-menu">Мои заказы</p></a>
         <a href="{% url "cart:cart_detail" %}"> <p class="side-menu">Избранное</p></a>
-        <p class="side-menu">Мои сообщения</p>
+        <a href="{% url "oursite:dialogs" %}"> <p class="side-menu">Мои сообщения</p></a>
         <p class="side-menu">Уведомления</p>
-        <p class="side-menu">Управление профилем</p>
+        <a href="{% url "oursite:profile_manage" %}"><p class="side-menu">Управление профилем</p></a>
         <p class="side-menu">Настройки</p>
 
     </div>

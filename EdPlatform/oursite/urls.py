@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -24,6 +25,11 @@ urlpatterns = [
     path('accounts/profile_user/buy', views.profile_buying, name='profile_buying'),
     path('accounts/profile_user/buy_archive', views.profile_buying_archive, name='profile_buying_archive'),
 
+    path('accounts/profile/confirm/', views.confirm, name='confirm'),
+    path('accounts/profile/negative/', views.negative, name='negative'),
+
+    path('accounts/profile_user/manage', views.profile_manage, name='profile_manage'),
+
     path('accounts/profile_admin/', views.profile_admin, name='profile_admin'),
     path('search/', views.Search, name='search'),
     # path('test', views.newCourses, name='newCourses'),
@@ -40,6 +46,10 @@ urlpatterns = [
     url(r'^(?P<id>\d+)/(?P<slug>[-\w]+)/$',
         views.product_detail,
         name='product_detail'),
+
+    path('accounts/profile/dialogs/', login_required(views.DialogsView.as_view()), name='dialogs'),
+    path('accounts/profile/dialogs/create/<user_id>', login_required(views.CreateDialogView.as_view()), name='create_dialog'),
+    path('accounts/profile/dialogs/<chat_id>', login_required(views.MessagesView.as_view()), name='messages'),
 
 ]
 

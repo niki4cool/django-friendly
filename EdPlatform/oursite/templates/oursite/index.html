@@ -17,6 +17,7 @@
         <nav class="container">
 
       <a class="text1" href="{% url "oursite:constructor" %}">Категории</a>
+
       <a class="text2" href="{% url "oursite:collaboration" %}">Сотрудничество</a>
       <a class="text3" href="{% url "oursite:contacts" %}">Контакты</a>
 
@@ -38,8 +39,8 @@
           <a class="register_" href="{% url "oursite:profile" %}">Разместить объявление</a>
       </div>
 </nav>
-      <a class="" href="{% url "oursite:profilee" %}"> <img class="profile" src="{% static 'images/jake.png' %}" alt=""></a>
-        <a href="{% url "cart:cart_detail" %}"><img class="cartImg" src="{% static 'images/cart.png' %}" alt=""></a>
+         <a class="" href="{% url "oursite:profilee" %}"> <div class="circle">{{ user.first_name.0 }}</div></a>
+
 
     </header>
 

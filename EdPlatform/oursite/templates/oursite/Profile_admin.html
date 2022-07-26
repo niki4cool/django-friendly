@@ -36,7 +36,7 @@
             <div class="textt1"><p class="textt">3. Описание:</p> <div class="titlee" >{{ form.overview }}</div></div>
             <div class="textt1"><p class="textt">4. Категория:</p> <div class="titlee">{{ form.category }}</div></div>
             <div class="textt1"><p class="textt">5. Телефон:</p> <div class="titlee">{{ form.number }}</div></div>
-            <div class="textt1"><p class="_text2">6. Добавить фото:</p><img class="upload_video" src="{% static 'images/upload.png' %}" alt="">{{ form_module.video }}</div>
+            <div class="textt1"><p class="_text2">6. Добавить дополнительные фото:</p><img class="upload_video" src="{% static 'images/upload.png' %}" alt="">{{ form_module.video }}</div>
             <div class="textt1"><p class="textt">Продаёте?</p> <div class="titlee">{{ form.selling }}</div></div>
             <span>{{ error }}</span>
             <button class="buttona" type="submit">Далее</button>
@@ -447,7 +447,7 @@ display: block;
 .upload_video{
 width: 60px;
 pointer-events: none;
-padding-left: 250;
+padding-left: 420;
 }
 
 .upload_homework{

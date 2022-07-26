@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Subject, Course, Module, Video, Post, UrlCheck, Homework, Constructor, VideoForConstructor
+from .models import Subject, Course, Module, Video, Post, UrlCheck, Homework, Constructor, VideoForConstructor, Message, Chat, ImageForUser
 from  embed_video.admin  import  AdminVideoMixin
 
 admin.site.register(Post)
@@ -7,6 +7,13 @@ admin.site.register(Post)
 admin.site.register(Video)
 
 admin.site.register(UrlCheck)
+
+admin.site.register(Message)
+
+admin.site.register(Chat)
+
+admin.site.register(ImageForUser)
+
 class UrlCheckAdmin(admin.ModelAdmin):
     list_display = ['user', 'title']
 
@@ -46,5 +53,7 @@ class CourseAdmin(admin.ModelAdmin):
     search_fields = ['title', 'overview']
     prepopulated_fields = {'slug': ('title',)}
     inlines = [ModuleInline, HomeworkInLine]
+
+
 
 admin.site.register(Course, CourseAdmin)

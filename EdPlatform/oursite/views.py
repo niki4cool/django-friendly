@@ -1,12 +1,14 @@
 import os
+import uuid
 
-
+from django.urls import reverse
 import requests
 from datetime import datetime, timedelta
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.http import urlquote
+from django.views import View
 from requests import Session
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -15,17 +17,17 @@ from django.shortcuts import render, redirect
 from taggit.models import Tag
 from django.http import request, HttpResponse, Http404, HttpResponseRedirect
 from cart.forms import CartAddProductForm
-from .models import Course, Module, Homework, UrlCheck, Constructor
+from .models import Course, Module, Homework, UrlCheck, Constructor, Chat, Message, ImageForUser
 from orders.models import Order, OrderItem
 from .models import Video, Subject, VideoForConstructor
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import VideoForm, CourseForm, ModuleForm, CategoryForm, SearchForm
+from .forms import VideoForm, CourseForm, ModuleForm, CategoryForm, SearchForm, MessageForm, ImageForm
 from .forms import CoursesForm
 from .forms import CheckForm
 from pytils.translit import slugify
 from . import forms
-from django.db.models import Q
+from django.db.models import Q, Count
 
 
 # Create your views here.
@@ -77,90 +79,7 @@ def Search(request):
 def post_list(request):
     return render(request, 'oursite/index.html')
 
-def show_course(request, slug):
-    orders = Order.objects.filter(first_name=request.user, paid=True)
-    item = OrderItem.objects.filter(order__in=orders)
-    course = Course.objects.get(slug=slug)
-    module = Module.objects.filter(course=course)
-    dz = course.work
-    t = OrderItem.objects.filter(order__in=orders, product=course.id)
-    if request.method == 'POST':
-        form = HomeworkForm(request.POST, request.FILES)
-        if form.is_valid():
-            homework = form.save(commit=False)
-            homework.course = course
-            homework.user = User.objects.filter(id=request.user.id).first()
-            homework.slug = slug
-            course.save()
-            homework.save()
-            return redirect('oursite:show', slug)
-        else:
-            homework = HomeworkForm()
 
-    homework = HomeworkForm()
-    form = HomeworkForm()
-    id = slug
-    context = {
-        'dz': dz,
-        'form': form,
-        'id': id,
-        'Cour': course,
-        'Mod': module
-    }
-    if t:
-        return render(request, 'oursite/id.html', context)
-    else:
-        return redirect('oursite:profile')
-def show_course_playlist(request, slug):
-    orders = Order.objects.filter(first_name=request.user, paid=True)
-    item = OrderItem.objects.filter(order__in=orders)
-    course = Course.objects.get(slug=slug)
-    module = Module.objects.filter(course=course)
-    dz = course.work
-    t = OrderItem.objects.filter(order__in=orders, product=course.id)
-    if request.method == 'POST':
-        form = HomeworkForm(request.POST, request.FILES)
-        if form.is_valid():
-            homework = form.save(commit=False)
-            homework.course = course
-            homework.user = User.objects.filter(id=request.user.id).first()
-            homework.slug = slug
-            course.save()
-            homework.save()
-            return redirect('oursite:show', slug)
-        else:
-            homework = HomeworkForm()
-
-    homework = HomeworkForm()
-    form = HomeworkForm()
-    id = slug
-    context = {
-        'dz': dz,
-        'id': id,
-        'Cour': course,
-        'Mod': module,
-        'form': form
-    }
-    if request.method == 'POST':
-        var = request.POST.get("videoConstruct", "")
-        try:
-            if Constructor.objects.get(owner=request.user).owner == User.objects.filter(id=request.user.id).first():
-                constructor = Constructor.objects.get(owner=request.user)
-                vids = VideoForConstructor.objects.create(constructor=constructor,
-                                                          video=var)
-                return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
-        except:
-            const = Constructor.objects.create(owner=User.objects.filter(id=request.user.id).first(),
-                                              title='Test',
-                                              description='Description',
-                                              )
-            vids = VideoForConstructor(video=var, constructor_id=const.id)
-            vids.save()
-            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
-    if t:
-        return render(request, 'oursite/id_playlist.html', context)
-    else:
-        return redirect('oursite:profile')
 
 @login_required(login_url='/register')
 def constructor(request):
@@ -198,14 +117,20 @@ def profilee(request, category_slug=None):
     category = None
     categories = Subject.objects.all()
     products = Course.objects.filter(owner=request.user, available=True, selling=True)
+
     if category_slug:
         category = get_object_or_404(Subject, slug=category_slug)
         products = products.filter(category=category)
+    image = ImageForUser.objects.get(user=request.user)
+    user = User.objects.get(username=request.user)
+
 
     return render(request, 'oursite/Profile_.html',
                   {'category': category,
                    'categories': categories,
-                   'products': products})
+                   'products': products,
+                   'image': image,
+                   'user': user})
 
 
 
@@ -255,7 +180,58 @@ def profile_buying_archive(request, category_slug=None):
                    'products': products})
 
 @login_required(login_url='/register')
+def profile_manage(request, category_slug=None):
 
+    user = get_object_or_404(User,
+                             id=request.user.id)
+
+    username = user.username
+    first_name = user.first_name
+    last_name = user.last_name
+    email = user.email
+    image = ImageForUser.objects.filter(user=request.user)
+
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+        username = request.POST.get('username')
+        user.username = username
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        user.email = request.POST.get('email')
+        user.save()
+        print(image.first())
+        if image.first() == None:
+            print('1')
+            if form.is_valid():
+                t = form.save(commit=False)
+                t.user = request.user
+                t.save()
+                return redirect('oursite:profile_manage')
+        else:
+            print('2')
+            instance = ImageForUser.objects.get(user=request.user)
+            t = ImageForm(request.POST, request.FILES, instance=instance)
+            t.save()
+
+
+
+    else:
+        form = ImageForm()
+
+    imgg = ImageForUser.objects.get(user=request.user)
+    userr = User.objects.get(username=request.user)
+    return render(request, 'oursite/Profile_manage.html', {
+        'username': username,
+        'first_name': first_name,
+        'last_name': last_name,
+        'email': email,
+        'form': form,
+        'img': imgg,
+        'user': userr
+    })
+
+
+@login_required(login_url='/register')
 def profile(request, category_slug=None):
     category = None
     categories = Subject.objects.all()
@@ -294,7 +270,7 @@ def profile(request, category_slug=None):
             if form.is_valid() and form_module.is_valid():
                 course = form.save(commit=False)
                 module = form_module.save(commit=False)
-                course.slug = slugify(course.title)
+                course.slug = uuid.uuid1()
                 course.owner = User.objects.filter(id=request.user.id).first()
                 course.save()
                 for video in request.FILES.getlist('video'):
@@ -308,7 +284,7 @@ def profile(request, category_slug=None):
                 #                       course=course,
                 #                       video=course.video)
 
-                return redirect('oursite:profile')
+                return redirect('oursite:confirm')
         else:
             course = CourseForm()
             module = ModuleForm()
@@ -333,6 +309,12 @@ def profile(request, category_slug=None):
 
         return render(request, 'oursite/Profile.html', content)
 
+
+def confirm(request):
+    return render(request, 'oursite/confirm.html')
+
+def negative(request):
+    return render(request, 'oursite/negative.html')
 
 @login_required(login_url='/register')
 def newCourses(request):
@@ -383,6 +365,8 @@ def profile_admin(request):
 
 
 def index(request):
+    user = User.objects.get(username=request.user)
+    print(image.first())
     try:
         user = models.User.objects.get(id=request.user.id)
     except:
@@ -390,7 +374,7 @@ def index(request):
         return render(request, 'registration/register.html', {'form': form})
         quit()
 
-    return render(request, 'oursite/index.html')
+    return render(request, 'oursite/index.html', {'user': user})
     raise_exception = True
 
 
@@ -440,7 +424,6 @@ def recommendations(request, category_slug=None):
     category = None
     categories = Subject.objects.all()
     if request.user.is_authenticated:
-        print('auth')
         user_products_selling = Course.objects.filter(owner=request.user, selling=True)
         user_products_buying = Course.objects.filter(owner=request.user, selling=False)
         catts1 = []
@@ -466,7 +449,6 @@ def recommendations(request, category_slug=None):
 
         result.extend(result_buying)
     else:
-        print('not-auth')
         result = Course.objects.all()
 
 
@@ -519,12 +501,188 @@ def product_list_buy(request, category_slug=None):
                    'products': products,
                    'cart_product_form': cart_product_form})
 
+
+def show_course(request, slug):
+    orders = Order.objects.filter(first_name=request.user, paid=True)
+    item = OrderItem.objects.filter(order__in=orders)
+    course = Course.objects.get(slug=slug)
+    module = Module.objects.filter(course=course)
+    dz = course.work
+    t = OrderItem.objects.filter(order__in=orders, product=course.id)
+    if request.method == 'POST':
+        form = HomeworkForm(request.POST, request.FILES)
+        if form.is_valid():
+            homework = form.save(commit=False)
+            homework.course = course
+            homework.user = User.objects.filter(id=request.user.id).first()
+            homework.slug = slug
+            course.save()
+            homework.save()
+            return redirect('oursite:show', slug)
+        else:
+            homework = HomeworkForm()
+
+    homework = HomeworkForm()
+    form = HomeworkForm()
+    id = slug
+    context = {
+        'dz': dz,
+        'form': form,
+        'id': id,
+        'Cour': course,
+        'Mod': module
+    }
+    if t:
+        return render(request, 'oursite/id.html', context)
+    else:
+        return redirect('oursite:profile')
+
+def show_course_playlist(request, slug):
+    orders = Order.objects.filter(first_name=request.user, paid=True)
+    item = OrderItem.objects.filter(order__in=orders)
+    course = Course.objects.get(slug=slug)
+    module = Module.objects.filter(course=course)
+    dz = course.work
+    t = OrderItem.objects.filter(order__in=orders, product=course.id)
+    if request.method == 'POST':
+        form = HomeworkForm(request.POST, request.FILES)
+        if form.is_valid():
+            homework = form.save(commit=False)
+            homework.course = course
+            homework.user = User.objects.filter(id=request.user.id).first()
+            homework.slug = slug
+            course.save()
+            homework.save()
+            return redirect('oursite:show', slug)
+        else:
+            homework = HomeworkForm()
+
+    homework = HomeworkForm()
+    form = HomeworkForm()
+    id = slug
+    context = {
+        'dz': dz,
+        'id': id,
+        'Cour': course,
+        'Mod': module,
+        'form': form
+    }
+    if request.method == 'POST':
+        var = request.POST.get("videoConstruct", "")
+        try:
+            if Constructor.objects.get(owner=request.user).owner == User.objects.filter(id=request.user.id).first():
+                constructor = Constructor.objects.get(owner=request.user)
+                vids = VideoForConstructor.objects.create(constructor=constructor,
+                                                          video=var)
+                return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+        except:
+            const = Constructor.objects.create(owner=User.objects.filter(id=request.user.id).first(),
+                                              title='Test',
+                                              description='Description',
+                                              )
+            vids = VideoForConstructor(video=var, constructor_id=const.id)
+            vids.save()
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+    if t:
+        return render(request, 'oursite/id_playlist.html', context)
+    else:
+        return redirect('oursite:profile')
+
+
 def product_detail(request, id, slug):
     product = get_object_or_404(Course,
                                 id=id,
                                 slug=slug,
                                 available=True)
+    module = Module.objects.filter(course=product)
     cart_product_form = CartAddProductForm()
+    neededUser = product.owner
+    user_id = neededUser.id
+    query = request.GET.get('q')
+    if query:
+        if request.user.id:
+            CreateDialogView.get(request, request, user_id)
+            chats = Chat.objects.filter(members__in=[request.user.id, user_id], type=Chat.DIALOG).annotate(c=Count('members')).filter(c=2)
+            chat = chats.first()
+            return redirect(reverse('oursite:messages', kwargs={'chat_id': chat.id}))
+        else:
+            return redirect('oursite:register')
     return render(request, 'oursite/detail.html', {'product': product,
-                                                   'cart_product_form': cart_product_form})
+                                                   'cart_product_form': cart_product_form,
+                                                   'module': module})
 
+
+class DialogsView(View):
+    def get(self, request):
+        chats = Chat.objects.filter(members__in=[request.user.id])
+        members = []
+        messages = []
+        checkMessages = False
+        for chat in chats:
+
+            first = chat.members.all().first()
+            second = chat.members.all().last()
+            if not str(first) in members:
+                members.append(str(first))
+            if not str(second) in members:
+                members.append(str(second))
+
+        for member in members:
+            user = User.objects.filter(username=member)
+
+            message = Message.objects.filter(author=user.first())
+            if not message.first() == None:
+                messages.append(message.first())
+        if messages:
+            checkMessages = True
+        return render(request, 'oursite/dialogs.html', {'user_profile': request.user, 'chats': chats, 'checkMessages': checkMessages})
+
+
+class MessagesView(View):
+    def get(self, request, chat_id):
+        try:
+            chat = Chat.objects.get(id=chat_id)
+            if request.user in chat.members.all():
+                chat.message_set.filter(is_readed=False).exclude(author=request.user).update(is_readed=True)
+            else:
+                chat = None
+        except Chat.DoesNotExist:
+            chat = None
+
+        return render(
+            request,
+            'oursite/messages.html',
+            {
+                'user_profile': request.user,
+                'chat': chat,
+                'form': MessageForm()
+            }
+        )
+
+    def post(self, request, chat_id):
+        form = MessageForm(data=request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.chat_id = chat_id
+            message.author = request.user
+            message.save()
+        return redirect(reverse('oursite:messages', kwargs={'chat_id': chat_id}))
+
+
+class CreateDialogView(View):
+    def get(self, request, user_id):
+        chats = Chat.objects.filter(members__in=[request.user.id, user_id], type=Chat.DIALOG).annotate(c=Count('members')).filter(c=2)
+        if chats.count() == 0:
+            chat = Chat.objects.create()
+            chat.members.add(request.user)
+            chat.members.add(user_id)
+        else:
+            chat = chats.first()
+        user = get_object_or_404(User,
+                                 id=user_id)
+        # user = User.objects.filter(id=user_id)
+
+        # if not (Message.objects.filter(chat=chats.first())):
+        #     msg = Message(chat=chats.first(), author=user, message="Хотите что-то спросить?")
+        #     msg.save()
+        return redirect(reverse('oursite:messages', kwargs={'chat_id': chat.id}))

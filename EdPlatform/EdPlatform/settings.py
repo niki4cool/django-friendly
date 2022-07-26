@@ -50,7 +50,9 @@ INSTALLED_APPS = [
     'cart',
     'orders',
     'imagekit',
-    'pytils'
+    'pytils',
+    'bootstrap4',
+
 
 
 ]
@@ -85,6 +87,10 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'cart.context_processors.cart',
             ],
+        'libraries': {
+            'get_companion': 'oursite.templatetags.get_companion',
+
+        }
         },
     },
 ]
