@@ -1,5 +1,8 @@
 import os
 
+
+import requests
+from datetime import datetime, timedelta
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
@@ -10,14 +13,14 @@ from rest_framework.response import Response
 from . import models
 from django.shortcuts import render, redirect
 from taggit.models import Tag
-from django.http import request, HttpResponse, Http404
+from django.http import request, HttpResponse, Http404, HttpResponseRedirect
 from cart.forms import CartAddProductForm
 from .models import Course, Module, Homework, UrlCheck, Constructor
 from orders.models import Order, OrderItem
 from .models import Video, Subject, VideoForConstructor
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import VideoForm, HomeworkForm, CourseForm, ModuleForm, CategoryForm
+from .forms import VideoForm, CourseForm, ModuleForm, CategoryForm, SearchForm
 from .forms import CoursesForm
 from .forms import CheckForm
 from pytils.translit import slugify
@@ -28,8 +31,48 @@ from django.db.models import Q
 # Create your views here.
 def Search(request):
     query = request.GET.get('q')
-    object_list = Course.objects.filter(title__icontains=query)
-    return render(request, 'oursite/search.html', {"list":object_list})
+    object_list = Course.objects.filter(title__iregex=query)
+    cart_product_form = CartAddProductForm()
+    type1 = ""
+    type2 = ""
+    price_from = ""
+    price_to = ""
+    time = ""
+
+    if request.method == 'POST':
+        type1 = request.POST.get('buy')
+        type2 = request.POST.get('sell')
+        price_from = request.POST.get('from')
+        price_to = request.POST.get('to')
+        time = request.POST.get('time')
+        if type1 == "buy" and type2 == "sell":
+            print("all :)")
+        elif type1 == 'buy':
+            object_list = object_list.filter(selling=True)
+            print(type1)
+        elif type2 == 'sell':
+            object_list = object_list.filter(selling=False)
+            print(type1)
+        if len(price_from) != 0:
+            object_list = object_list.filter(price__gte=price_from)
+        if len(price_to) != 0:
+            object_list = object_list.filter(price__lte=price_to)
+        if time == "7d":
+            object_list = object_list.filter(created_date__gte=datetime.today()-timedelta(days=7))
+        elif time == "24h":
+            object_list = object_list.filter(created_date__gte=datetime.today() - timedelta(days=1))
+    data = {
+        't1': type1,
+        't2': type2,
+        'price_from': price_from,
+        'price_to': price_to,
+        'time': time,
+        'list': object_list,
+        'query': query,
+        'cart_product_form':cart_product_form
+    }
+    return render(request, 'oursite/search.html', data)
+
 
 def post_list(request):
     return render(request, 'oursite/index.html')
@@ -151,6 +194,68 @@ def courses(request):
 
 @login_required(login_url='/register')
 
+def profilee(request, category_slug=None):
+    category = None
+    categories = Subject.objects.all()
+    products = Course.objects.filter(owner=request.user, available=True, selling=True)
+    if category_slug:
+        category = get_object_or_404(Subject, slug=category_slug)
+        products = products.filter(category=category)
+
+    return render(request, 'oursite/Profile_.html',
+                  {'category': category,
+                   'categories': categories,
+                   'products': products})
+
+
+
+@login_required(login_url='/register')
+
+def profile_archive(request, category_slug=None):
+    category = None
+    categories = Subject.objects.all()
+    products = Course.objects.filter(owner=request.user, available=False, selling=True)
+    if category_slug:
+        category = get_object_or_404(Subject, slug=category_slug)
+        products = products.filter(category=category)
+
+    return render(request, 'oursite/Profile_archive.html',
+                  {'category': category,
+                   'categories': categories,
+                   'products': products})
+
+@login_required(login_url='/register')
+
+def profile_buying(request, category_slug=None):
+    category = None
+    categories = Subject.objects.all()
+    products = Course.objects.filter(owner=request.user, available=True, selling=False)
+    if category_slug:
+        category = get_object_or_404(Subject, slug=category_slug)
+        products = products.filter(category=category)
+
+    return render(request, 'oursite/Profile_buying.html',
+                  {'category': category,
+                   'categories': categories,
+                   'products': products})
+
+@login_required(login_url='/register')
+
+def profile_buying_archive(request, category_slug=None):
+    category = None
+    categories = Subject.objects.all()
+    products = Course.objects.filter(owner=request.user, available=False, selling=False)
+    if category_slug:
+        category = get_object_or_404(Subject, slug=category_slug)
+        products = products.filter(category=category)
+
+    return render(request, 'oursite/Profile_buying_archive.html',
+                  {'category': category,
+                   'categories': categories,
+                   'products': products})
+
+@login_required(login_url='/register')
+
 def profile(request, category_slug=None):
     category = None
     categories = Subject.objects.all()
@@ -171,7 +276,7 @@ def profile(request, category_slug=None):
         'categories': categories,
         'products': products
     }
-    if request.user.is_staff or request.user.is_superuser:
+    if 1 == 1:
         error = ''
         if request.method == 'POST':
             form = CategoryForm(request.POST)
@@ -331,12 +436,58 @@ def razrab(request):
     return render(request, 'oursite/razrab.html', data)
 
 
+def recommendations(request, category_slug=None):
+    category = None
+    categories = Subject.objects.all()
 
+    user_products_selling = Course.objects.filter(owner=request.user, selling=True)
+    user_products_buying = Course.objects.filter(owner=request.user, selling=False)
+    catts1 = []
+    result = []
+    result_buying = []
+    for i in categories:
+        if user_products_buying.filter(category=i):
+            user_products_buying.filter(category=i)
+            catts1.append(i)
+    for g in catts1:
+        products_selling = Course.objects.filter(~Q(owner=request.user), selling=True).filter(category=g)
+        result.append(products_selling)
+
+    catts2 = []
+    for i in categories:
+        if user_products_selling.filter(category=i):
+            user_products_selling.filter(category=i)
+            catts2.append(i)
+    for g in catts2:
+        products_buying = Course.objects.filter(~Q(owner=request.user), selling=False).filter(category=g)
+        result_buying.append(products_buying)
+
+    result.extend(result_buying)
+
+
+    products = Course.objects.filter(available=True)
+
+
+    cart_product_form = CartAddProductForm()
+    if category_slug:
+        category = get_object_or_404(Subject, slug=category_slug)
+        products = products.filter(category=category)
+    return render(request,
+                  'oursite/recommendations.html',
+                  {'catts1': catts1,
+                   'result_buying': result_buying,
+                   'result': result,
+
+                   'user_products_selling': user_products_selling,
+                   'categories': categories,
+                   'products': products,
+                   'cart_product_form': cart_product_form})
 
 def product_list(request, category_slug=None):
     category = None
     categories = Subject.objects.all()
-    products = Course.objects.filter(available=True)
+    products = Course.objects.filter(~Q(owner=request.user), available=True, selling=True, )
+    cart_product_form = CartAddProductForm()
     if category_slug:
         category = get_object_or_404(Subject, slug=category_slug)
         products = products.filter(category=category)
@@ -344,9 +495,23 @@ def product_list(request, category_slug=None):
                   'oursite/list.html',
                   {'category': category,
                    'categories': categories,
-                   'products': products})
+                   'products': products,
+                   'cart_product_form': cart_product_form})
 
-
+def product_list_buy(request, category_slug=None):
+    category = None
+    categories = Subject.objects.all()
+    products = Course.objects.filter(~Q(owner=request.user), available=True, selling=False)
+    cart_product_form = CartAddProductForm()
+    if category_slug:
+        category = get_object_or_404(Subject, slug=category_slug)
+        products = products.filter(category=category)
+    return render(request,
+                  'oursite/list_buy.html',
+                  {'category': category,
+                   'categories': categories,
+                   'products': products,
+                   'cart_product_form': cart_product_form})
 
 def product_detail(request, id, slug):
     product = get_object_or_404(Course,
@@ -356,3 +521,4 @@ def product_detail(request, id, slug):
     cart_product_form = CartAddProductForm()
     return render(request, 'oursite/detail.html', {'product': product,
                                                    'cart_product_form': cart_product_form})
+

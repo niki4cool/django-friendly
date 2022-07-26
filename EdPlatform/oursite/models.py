@@ -51,8 +51,10 @@ class Subject(models.Model):
         return reverse('oursite:product_list_by_category',
                        args=[self.slug])
 
+
 class Course(models.Model):
     owner = models.ForeignKey(User, related_name='courses_created',on_delete=models.CASCADE)
+    selling = models.BooleanField(default=True)
     category = models.ForeignKey(Subject, related_name='courses',on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
@@ -61,7 +63,9 @@ class Course(models.Model):
     available = models.BooleanField(default=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True)
-    work = models.FileField(upload_to='work/')
+    number = models.CharField(max_length=200)
+    created_date = models.DateTimeField(editable=True, auto_now_add=True)
+
 
 
     class Meta:

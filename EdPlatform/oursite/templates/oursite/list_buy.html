@@ -13,7 +13,6 @@
             <a href="{% url "oursite:product_list" %}">Товары и услуги</a>
             <a href="{% url "oursite:buy" %}">Заявки</a>
             <a href="{% url "oursite:recommendations" %}">Рекомендации</a>
-
             <div class="chooseCategory">
             <select onchange="window.location.href = this.options[this.selectedIndex].value">
                 <li {% if not category %}class="selected"{% endif %}>
@@ -52,10 +51,10 @@
                 <div class="priceDiv">
                 <p class="price">{{ product.price.normalize|intcomma }} ₽</p>
                 </div>
+
                 <div class="namee">
                 <a class="courseName" href="{{ product.get_absolute_url }}">{{ product.title }}</a>
                 </div>
-
 
                 <br>
 <!--                <div class="category">-->

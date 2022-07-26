@@ -10,6 +10,7 @@ from .forms import CartAddProductForm
 from orders.models import Order, OrderItem
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 
 
 @require_POST
@@ -22,7 +23,7 @@ def cart_add(request, product_id):
         cart.add(product=product,
                  quantity=cd['quantity'],
                  update_quantity=cd['update'])
-    return redirect('cart:cart_detail')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def cart_remove(request, product_id):

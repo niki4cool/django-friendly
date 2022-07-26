@@ -9,6 +9,8 @@ app_name = 'oursite'
 
 urlpatterns = [
     # path('', views.index, name='index'),
+    path('buy/', views.product_list_buy, name='buy'),
+    path('recommended/', views.recommendations, name='recommendations'),
     path('register/', views.register, name='register'),
     path('razrab/', views.razrab, name='razrab'),
     path('logout/', views.logout, name='logout'),
@@ -16,6 +18,12 @@ urlpatterns = [
     path('collaboration/', views.collaboration, name='collaboration'),
     path('contacts/', views.contacts, name='contacts'),
     path('accounts/profile/', views.profile, name='profile'),
+    path('accounts/profile_user/', views.profilee, name='profilee'),
+    path('accounts/profile_user_archive/', views.profile_archive, name='profile_archive'),
+
+    path('accounts/profile_user/buy', views.profile_buying, name='profile_buying'),
+    path('accounts/profile_user/buy_archive', views.profile_buying_archive, name='profile_buying_archive'),
+
     path('accounts/profile_admin/', views.profile_admin, name='profile_admin'),
     path('search/', views.Search, name='search'),
     # path('test', views.newCourses, name='newCourses'),

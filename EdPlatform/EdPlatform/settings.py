@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 
 LOGOUT_REDIRECT_URL = "oursite:product_list"
 
+LOGIN_REDIRECT_URL = "oursite:product_list"
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'oursite',
     'taggit',
     'rest_framework',
@@ -48,6 +51,7 @@ INSTALLED_APPS = [
     'orders',
     'imagekit',
     'pytils'
+
 
 ]
 
@@ -127,7 +131,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 

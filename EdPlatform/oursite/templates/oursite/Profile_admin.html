@@ -9,7 +9,7 @@
 </head>
 <body class="bg">
 <div class="center">
-    <p class="_text">Создание курса <span class="padd">{{user.username}}</span></p>
+    <p class="_text">Создание объявления <span class="padd">{{user.username}}</span></p>
 <div class="create">
 
         <div class="addd">
@@ -29,65 +29,66 @@
 
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div><p class="_text3">Аватар урока:</p><div class="opacity"> <img class="upload_image" src="{% static 'images/upImage.png' %}" alt=""></div>
+            <div><p class="_text3">Главное фото:</p><div class="opacity"> <img class="upload_image" src="{% static 'images/upImage.png' %}" alt=""></div>
             <div class="imagecss">{{ form.image }}</div></div>
             <div class="textt1"><p class="textt">1. Название:</p> <div class="titlee">{{ form.title }}</div></div>
             <div class="textt1"><p class="textt">2. Цена:</p> <div class="titlee">{{ form.price }}</div></div>
             <div class="textt1"><p class="textt">3. Описание:</p> <div class="titlee" >{{ form.overview }}</div></div>
             <div class="textt1"><p class="textt">4. Категория:</p> <div class="titlee">{{ form.category }}</div></div>
-            <div class="textt1"><p class="_text2">5. Добавить видео:</p><img class="upload_video" src="{% static 'images/upload.png' %}" alt="">{{ form_module.video }}</div>
-            <div class="textt1"><p class="_text2">6. Добавить домашнее задание:</p><img class="upload_homework" src="{% static 'images/upload.png' %}" alt="">{{ form.work }}</div>
+            <div class="textt1"><p class="textt">5. Телефон:</p> <div class="titlee">{{ form.number }}</div></div>
+            <div class="textt1"><p class="_text2">6. Добавить фото:</p><img class="upload_video" src="{% static 'images/upload.png' %}" alt="">{{ form_module.video }}</div>
+            <div class="textt1"><p class="textt">Продаёте?</p> <div class="titlee">{{ form.selling }}</div></div>
             <span>{{ error }}</span>
-            <button class="buttona" type="submit">Добавить курс</button>
+            <button class="buttona" type="submit">Далее</button>
         </form>
 
 
     </div>
 </div>
 
-<div id="main" class="product-list">
-    <div class="headerr">
-        <h1 class="products">Курсы</h1>
-    </div>
-</div>
-{% for i in Item %}
-                {% if Item|length == 1 %}
-<div class="centerr1">
-     <a href="{{ i.product.url_to_course }}">
-                    <div class="item1" style="position: relative;">
+<!--<div id="main" class="product-list">-->
+<!--    <div class="headerr">-->
+<!--        <h1 class="products">Мои объявления</h1>-->
+<!--    </div>-->
+<!--</div>-->
+<!--{% for i in Item %}-->
+<!--                {% if Item|length == 1 %}-->
+<!--<div class="centerr1">-->
+<!--     <a href="{{ i.product.url_to_course }}">-->
+<!--                    <div class="item1" style="position: relative;">-->
 
-                    <img class="imgItem1" src="{% if i.product.image %}{{ i.product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+<!--                    <img class="imgItem1" src="{% if i.product.image %}{{ i.product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">-->
 
 
-                <hr class="hrr">
+<!--                <hr class="hrr">-->
 
-                <div class="namee1">
-                <a class="courseName1" href="{{ i.product.url_to_course }}">{{ i.product.title }}</a>
-                </div>
+<!--                <div class="namee1">-->
+<!--                <a class="courseName1" href="{{ i.product.url_to_course }}">{{ i.product.title }}</a>-->
+<!--                </div>-->
 
-                <div class="category1">
-                <a class="courseCategory1" href="{{ i.product.category.get_absolute_url }}">{{ i.product.category }}</a></h2>
-                </div>
-            </div>
-         </a>
-                </div>
- {% else %}
-<div class="centerr">
-     <a href="{{ i.product.url_to_course }}">
-            <div class="item" style="position: relative;">
-                    <img class="imgItem" src="{% if i.product.image %}{{ i.product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-                <hr class="hrr">
-                <div class="namee">
-                <a class="courseName" href="{{ i.product.url_to_course }}">{{ i.product.title }}</a>
-                </div>
-                <div class="category">
-                <a class="courseCategory" href="{{ i.product.category.get_absolute_url }}">{{ i.product.category }}</a>
-                </div>
-            </div>
-          </a>
-    {% endif %}
-            {% endfor %}
-</div>
+<!--                <div class="category1">-->
+<!--                <a class="courseCategory1" href="{{ i.product.category.get_absolute_url }}">{{ i.product.category }}</a></h2>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--         </a>-->
+<!--                </div>-->
+<!-- {% else %}-->
+<!--<div class="centerr">-->
+<!--     <a href="{{ i.product.url_to_course }}">-->
+<!--            <div class="item" style="position: relative;">-->
+<!--                    <img class="imgItem" src="{% if i.product.image %}{{ i.product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">-->
+<!--                <hr class="hrr">-->
+<!--                <div class="namee">-->
+<!--                <a class="courseName" href="{{ i.product.url_to_course }}">{{ i.product.title }}</a>-->
+<!--                </div>-->
+<!--                <div class="category">-->
+<!--                <a class="courseCategory" href="{{ i.product.category.get_absolute_url }}">{{ i.product.category }}</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--          </a>-->
+<!--    {% endif %}-->
+<!--            {% endfor %}-->
+<!--</div>-->
 
 <script>
     var popup1 = document.getElementById("popup-1");
@@ -144,7 +145,7 @@ closePopup1.addEventListener('click', () => {
     #id_work{
     position: absolute;
     padding-top: 40px;
-    left: 390px;
+    left: 250px;
     width: 65px;
     opacity: 0;
     }
@@ -164,7 +165,7 @@ closePopup1.addEventListener('click', () => {
     }
 
     .padd{
-    margin-left: 120px;
+    margin-left: 50px;
     }
 
     #open-popup-1{
@@ -403,15 +404,14 @@ display: block;
     }
 
     .buttona{
-    margin-top: 50px;
     width: 300px;
     height: 50px;
     margin-left: 40px;
-    color: #9F7100;
+    color: #182128;
     font-size: 23px;
     font-weight: 600;
-    background-color: #FFF3E9;
-    border: 2px solid #C79C34;
+    background-color: #00D5D5;
+    border: 2px solid #00D5D5;
     border-radius: 20px;
     }
 
@@ -453,7 +453,7 @@ padding-left: 250;
 .upload_homework{
 width: 60px;
 position: absolute; pointer-events: none;
-padding-left: 390;
+padding-left: 250;
 }
 
     .homework{

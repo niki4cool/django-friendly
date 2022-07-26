@@ -9,7 +9,7 @@
     <div id="main" class="product-list">
 
         <div class="headerr">
-        <h1 class="products">{% if category %}{{ category.subj }}{% else %}Все объявления{% endif %}</h1>
+        <h1 class="products">{% if category %}{{ category.subj }}{% else %}Рекомендации{% endif %}</h1>
             <a href="{% url "oursite:product_list" %}">Товары и услуги</a>
             <a href="{% url "oursite:buy" %}">Заявки</a>
             <a href="{% url "oursite:recommendations" %}">Рекомендации</a>
@@ -33,14 +33,15 @@
             </div>
         </div>
 
+        {% for t in result %}
 
-        {% for product in products %}
+        {% for k in t %}
 
-            <div class="item" style="position: relative;">
-                <a class="noPadd" href="{{ product.get_absolute_url }}">
+          <div class="item" style="position: relative;">
+                <a class="noPadd" href="{{ k.get_absolute_url }}">
 
-                    <img class="imgItem" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-                    <form action="{% url "cart:cart_add" product.id %}" method="post">
+                    <img class="imgItem" src="{% if k.image %}{{ k.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                    <form action="{% url "cart:cart_add" k.id %}" method="post">
                     {{ cart_product_form }}
                     {% csrf_token %}
                     <div class="button">
@@ -50,12 +51,11 @@
 
 
                 <div class="priceDiv">
-                <p class="price">{{ product.price.normalize|intcomma }} ₽</p>
+                <p class="price">{{ k.price.normalize|intcomma }} ₽</p>
                 </div>
                 <div class="namee">
-                <a class="courseName" href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                <a class="courseName" href="{{ k.get_absolute_url }}">{{ k.title }}</a>
                 </div>
-
 
                 <br>
 <!--                <div class="category">-->
@@ -64,7 +64,9 @@
 
                     </a>
             </div>
+
         {% endfor %}
+         {% endfor %}
     </div>
 </body>
 <script type="text/javascript" src={% static "js/price.js" %}></script>

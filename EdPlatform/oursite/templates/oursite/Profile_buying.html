@@ -17,8 +17,8 @@
         <p class="username">Анастасия В.</p>
         <img class="profile_pic" src="{% static 'images/profile_pic.png' %}" alt="" height="160px" style="margin-left: 75px;">
         <a href="{% url "oursite:profilee" %}"><p class="side-menu">Мои объявления</p></a>
-        <a href="{% url "oursite:profile_buying" %}"><p class="side-menu">Мои заказы</p></a>
-        <a href="{% url "cart:cart_detail" %}"> <p class="side-menu-chosen">Избранное</p></a>
+        <p class="side-menu-chosen">Мои заказы</p>
+        <a href="{% url "cart:cart_detail" %}"> <p class="side-menu">Избранное</p></a>
         <p class="side-menu">Мои сообщения</p>
         <p class="side-menu">Уведомления</p>
         <p class="side-menu">Управление профилем</p>
@@ -28,22 +28,19 @@
 
     <div id="main" class="product-list">
         <div class="headerr">
-            <p class="products">Избранное</p>
+            <p class="products">Мои заказы</p>
         </div>
 
         <div class="product1">
-            <a href="" class="product">Избранное</a>
-            <a href="" class="product-not">Подписки</a>
+            <a href="{% url "oursite:profile_buying" %}" class="product">Активные</a>
+            <a href="{% url "oursite:profile_buying_archive" %}" class="product-not">Архив</a>
         </div>
         <div class="all-items">
-        {% for item in cart %}
-            {% with product=item.product %}
+        {% for product in products %}
                 <div class="item" style="position: relative;">
                     <a class="noPadd" href="{{ product.get_absolute_url }}">
                         <img class="imgItem" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-                    <div class="button">
-                        <a class="delete" href="{% url "cart:cart_remove" product.id%}"><img class="cross" src="{% static 'images/cross.png' %}"></a>
-                    </div>
+
                     <div class="priceDiv">
                     <p class="price">{{ product.price.normalize|intcomma }} ₽</p>
                     </div>
@@ -58,8 +55,7 @@
 
                         </a>
                 </div>
-             {% endwith %}
-        {% endfor %}
+            {% endfor %}
         </div>
     </div>
 
@@ -107,18 +103,6 @@
 
 <style>
 
-    .button{
-    position: absolute;
-    top: 3%;
-    left: 85%;
-
-    }
-
-    .cross{
-    height: 30px;
-    width: 30px;
-    }
-
     .products{
     font-size: 28px;
     font-weight: 450;
@@ -159,7 +143,7 @@
     width: 1000px;
 
     position: relative;
-    padding-left: 180px;
+    margin: 20px auto;
     margin-top: 10px;
 
     margin-bottom: 27px;
@@ -170,7 +154,7 @@
     }
 
     .product{
-    margin-right: 160px;
+    margin-right: 200px;
     width: 500px;
     font-size: 24px;
     margin-top: 27px;

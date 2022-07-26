@@ -1,4 +1,4 @@
-from .models import Video, UrlCheck, Homework, Course, Module, Constructor, VideoForConstructor, Subject
+from .models import Video, UrlCheck, Course, Module, Constructor, VideoForConstructor, Subject
 from django.forms import ModelForm, TextInput, Textarea, FileField
 from django import forms
 from django.forms.models import inlineformset_factory
@@ -33,6 +33,24 @@ class CoursesForm(forms.ModelForm):
         fields = ('video',)
         video: forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
 
+class SearchForm(forms.Form):
+    fields = ['from', 'to']
+    CHOICES = [('1', '24h'),
+               ('2', '7d'),
+               ('3', 'all')]
+    date = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
+
+    widgets = {
+        'from': TextInput(attrs={
+            'class': 'from',
+
+        }),
+        'to': TextInput(attrs={
+            'class': 'to',
+
+        }),
+    }
+
 
 class CheckForm(forms.ModelForm):
     class Meta:
@@ -48,7 +66,7 @@ class CourseForm(forms.ModelForm):
     video = forms.FileField()
     class Meta:
         model = Course
-        fields = ('category', 'title', 'overview', 'available', 'price', 'image', 'video', 'work')
+        fields = ('category', 'title', 'overview', 'available', 'price', 'image', 'video', 'number', 'selling')
         widgets = {
             'title': TextInput(attrs={
                 'class': 'title',
@@ -66,14 +84,6 @@ class ModuleForm(forms.ModelForm):
         fields = ('video',)
     video = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
 
-class HomeworkForm(forms.ModelForm):
-    class Meta:
-        model = Homework
-        fields = ('homework_file', 'title')
-        homework_file: forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
-        widgets = {
-            'title': forms.TextInput(attrs={'class': 'text'}),
-        }
 
 class CategoryForm(forms.ModelForm):
     class Meta:

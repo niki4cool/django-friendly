@@ -1,34 +1,76 @@
 {% extends "oursite/index.html" %}
 {% load static %}
+
 {% block content %}
-<body>
-    <div id="main" class="product-list">
-        <div class="headerr">
-            <h1 class="products">Результаты поиска:</h1>
+{% load humanize %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+</head>
+<body class="bg">
+<div class="headerr">
+            <span class="products" id="s">Результаты поиска по запросу: {{ query }}  </span><span class="number">{{ list|length }}</span>
+
         </div>
 
-{% for product in list %}
-            <div class="item" style="position: relative;">
-                <a href="{{ product.get_absolute_url }}">
-                    <img class="imgItem" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-                </a>
-                <br>
-                <hr style="width: 440px">
-                <br>
-                <div class="namee">
-                <a class="courseName" href="{{ product.get_absolute_url }}">{{ product.title }}</a>
-                </div>
-                <br>
-                <div class="category">
-                <a class="courseCategory" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>
-                </div>
-                <div class="priceDiv">
-                <p class="price">{{ product.price }} ₽</p>
-                </div>
+<div class="block">
+
+    <div class="settings">
+        <form method="post" enctype="multipart/form-data" id="search-form">
+            {% csrf_token %}
+
+            <p class="side-text">Тип объявления</p>
+            <div class="form"><input type="checkbox" name="buy" value="buy"><span class="textt">Ищу</span></div>
+            <div class="form"><input type="checkbox" name="sell" value="sell"><span class="textt">Предлагаю</span></div>
+            <p class="side-text">Стоимость</p>
+            <div class="form" style="display:inline-block">
+                <input type="number" name="from" size="10" placeholder="От">
+                <input type="number" name="to" size="10" placeholder="До, руб.">
             </div>
-        {% endfor %}
-</body>
+            <p class="side-text">Срок размещения</p>
+            <div class="form"><input type="radio" name="time" value="24h"><span class="textt">За 24 часа</span></div>
+            <div class="form"><input type="radio" name="time" value="7d"><span class="textt">За 7 дней</span></div>
+            <div class="form"><input type="radio" name="time" value="all"><span class="textt">За все время</span></div>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div id="main" class="product-list">
+        <div class="all-items">
+        {% for product in list %}
+
+                <div class="item" style="position: relative;">
+                    <a class="noPadd" href="{{ product.get_absolute_url }}">
+                        <img class="imgItem" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+
+                    <div class="priceDiv">
+                    <p class="price">{{ product.price.normalize|intcomma }} ₽</p>
+                    </div>
+                    <div class="namee">
+                    <a class="courseName" href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                    </div>
+
+                    <br>
+    <!--                <div class="category">-->
+    <!--                <a class="courseCategory" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>-->
+    <!--                </div>-->
+
+                        </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+
+<script type="text/javascript" src={% static "js/price.js" %}></script>
+<script> doprice() </script>
+
 <script>
+
 
     var colorArray = document.getElementsByClassName('category');
     var color = document.getElementsByClassName('courseCategory');
@@ -62,84 +104,151 @@
     }
 
 </script>
+
 <style>
-    @media screen and (max-width:1800px) {
-    .item{
-    padding-top: 10px;
-     float: left;
-     margin-left: 100px;
-     background: #FFFFFF;
-     background-color: #FFFFFF;
-     width: 470px;
-     height: 460px;
-     margin-right: 67px;
-     text-align: center;
-     margin-bottom: 55px;
-     border: 8px solid transparent;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    }
+
+    input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }
 
-    @media screen and (max-width:1800px) {
-    .chooseCategory{
-    position: absolute;
-    padding-top: 30px;
-    }
-
-}
-    @media screen and (max-width:1200px) {
-    .chooseCategory{
-    position: absolute;
-    left: -10%;
-    padding-top: 30px;
-    }
-
-}
-    @media screen and (max-width:500px) {
-    .1{
-    hidden;
-    }
-    .2{
-    display;
-    }
-
+input[type='number'],
+input[type="number"]:hover,
+input[type="number"]:focus {
+    appearance: none;
+    -moz-appearance: textfield;
 }
 
+input[type='number']{
+    width: 100;
+}
 
     .products{
-
-    position: absolute;
+    font-size: 28px;
+    font-weight: 450;
     }
 
-    .chooseCategory{
-    position: absolute;
-    margin-left: 82%;
-    padding-top: 30px;
+    .number{
+    font-size: 28px;
+    font-weight: 450;
+    color: #777C7D;
+    margin-left: 15px;
+
     }
 
-    .headerr{
-    padding-left: 18px;
-    background: #FFFFFF;
-    width: 98.6%;
-    height: 75px;
-    margin-bottom: 20px;
-    border: 2px solid transparent;
+    .all-items{
+    margin-left: 120px;
+    }
+
+    .side-menu{
+    margin-left: 50px;
+    font-size: 24px;
+    font-weight: 450;
+    }
+
+    .side-menu-chosen{
+    margin-left: 50px;
+    font-size: 24px;
+    font-weight: 450;
+    color: #00B2B2;
+    }
+
+    .side-text{
+    margin-left: 30px;
+    font-size: 26px;
+    font-weight: 650;
+    }
+
+    .form{
+    margin-left: 30px;
+    }
+
+    .settings{
+    width: 309px;
+    height: 530px;
+    border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    background-color: #FFF;
     }
-    .item{
-    padding-top: 10px;
-    margin-left: 60px;
-     float: left;
-     background: #FFFFFF;
-     background-color: #FFFFFF;
-     width: 470px;
-     height: 460px;
-     margin-right: 67px;
-     text-align: center;
-     margin-bottom: 55px;
-     border: 8px solid transparent;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+
+    .product1{
+    text-align: left;
+    width: 1000px;
+
+    position: relative;
+    margin: 20px auto;
+    margin-top: 10px;
+
+    margin-bottom: 27px;
     }
+
+    a{
+    color: black;
+    }
+
+    .product{
+    margin-right: 200px;
+    width: 500px;
+    font-size: 24px;
+    margin-top: 27px;
+    font-weight: 450;
+    border-bottom: 4px solid #00D5D5;
+    }
+
+    .product-not{
+    margin-right: 200px;
+    width: 500px;
+    font-size: 24px;
+    margin-top: 27px;
+    color: #777C7D;
+    font-weight: 450;
+    }
+
+
+
+
+
+    .block{
+    margin-top: 50px;
+    margin-left: 5%;
+    width: 90%;
+    height: 80%;
+    display: grid;
+    grid-template-columns: 0.5fr 80%;
+    }
+
+
+    .namee{
+    margin-left: 20px;
+    width: 210px;
+    word-break: break-all;
+    text-align: left;
+    }
+
+    .priceDiv{
+    width: 210px;
+    margin-left: 20px;
+    word-break: break-all;
+    text-align: left;
+    }
+
+    .price{
+    font-size: 28px;
+    font-weight: 800;
+    color: #182128;
+    margin: 0;
+    margin-top: 20px;
+    }
+
+    a{
+    text-decoration: none;
+    }
+
+    .hrr{
+    width: 440px;
+    }
+
+
 
     .category{
     display: inline-block;
@@ -159,40 +268,360 @@
     font-weight: 600;
     }
 
-    .imgItem{
-    width: 440px;
-    height: 200px;
-    background: #FFFFFF;
-    }
 
-    .product-list{
-       width: 100%;
-    display: inline-block;
-
-    }
-
-    .price{
-    font-size: 24px;
-    color: #0F9F03;
-    font-weight: 800;
-    background: #FFFFFF;
-    }
-
-    .priceDiv{
-    }
-
-    .namee{
-    height: 100px;
-    }
 
     .courseName{
-    padding-top: 100px;
     text-decoration: none;
     color: black;
-    font-size: 32px;
+    font-size: 22px;
     font-weight: 600;
     }
 
+    .headerr{
+
+    width: 762px;
+
+    opacity: .8;
+    position: relative;
+    margin-left: 100px;
+    margin-top: 50px;
+
+    }
+
+    .imgItem{
+    width: 250px;
+    height: 220px;
+    background: #FFFFFF;
+    border-radius: 10px 10px 0 0;
+    }
+
+    .product-list{
+    width: 100%;
+    position: relative;
+
+    border-radius: 30px;
+    border: 2px solid transparent;
+    }
+
+
+    .item{
+    border-radius: 10px;
+    margin-right: auto;
+     float: left;
+     background: #FFFFFF;
+     background-color: #FFFFFF;
+     width: 250px;
+     height: 340px;
+     margin-right: 50px;
+     text-align: center;
+     margin-bottom: 55px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+
+    .centerr{
+    width: 1500px;
+
+    position: relative;
+    margin: auto;
+
+    display: block;
+    }
+
+    @media screen and (max-width:1500px) {
+    .centerr{
+    width: 600px;
+    position: relative;
+    margin: auto;
+    border-radius: 30px;
+
+    }
+
+    .item{
+    margin-left: 55;
+    }
+}
+
+    .textt{
+    font-size: 20px;
+    font-weight: 600;
+    padding-left: 5%;
+
+    }
+
+    .overview{
+    font-size: 20px;
+    margin-left: 160px;
+    height: 60px;
+    width: 300px;
+
+    }
+
+    .titlee{
+    position: absolute;
+    top: 100px;
+    margin-left: 3%;
+
+    }
+
+    .title{
+    font-size: 20px;
+    margin-left: 160px;
+    height: 30px;
+    width: 300px;
+    }
+
+    .buttona{
+    width: 300px;
+    height: 50px;
+    margin-top: 30px;
+    margin-left: 40px;
+    color: #9F7100;
+    font-size: 23px;
+    font-weight: 600;
+    background-color: #FFF3E9;
+    border: 2px solid #C79C34;
+    border-radius: 20px;
+    }
+
+    .upload_image{
+    width: 180px;
+    position: absolute; pointer-events: none;
+    padding-left: 535px;
+    padding-top: 60px;
+    }
+
+    .imagecss{
+    width: 180px;
+    position: absolute;
+    padding-left: 535px;
+    padding-top: 60px;
+    }
+    .imagecss input[type=file] {
+    position: absolute;
+    background-color: #000000;
+     width: 180px;
+     height: 180px;
+     opacity: 0;
+    padding-top: -100px;
+
 
 </style>
+<style>
+.upload_video{
+width: 60px;
+position: absolute; pointer-events: none;
+padding-left: 250;
+}
+
+    .homework{
+    display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
+     width: 60px;
+     height: 60px;
+     margin-top: -65px;
+     padding-left: 390;
+    }
+
+     .homework input[type=file] {
+     width: 60px;
+     height: 60px;
+     opacity: 0;
+     position: absolute;
+}
+
+    .videocss{
+    display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
+     width: 60px;
+     height: 60px;
+     padding-left: 250;
+    }
+    .videocss input[type=file] {
+     width: 60px;
+     height: 60px;
+     opacity: 0;
+     position: absolute;
+
+}
+
+
+@media screen and (max-width:500px) {
+    .center{
+    width: 100%;
+    height: 800px;
+    }
+
+    .centerr1{
+    width: 100%;
+    height: 800px;
+    }
+
+    .buttona{
+    margin-top: 140px;
+    margin-left: 10px;
+    }
+
+    ._text3{
+    top: 620px;
+    padding-left: 20px;
+    }
+
+    .upload_image{
+    padding-left: 180px;
+    padding-top: 470px;
+    width: 100px;
+    }
+
+    .imagecss{
+    width: 80px;
+    margin-top: 450px;
+    left: 0;
+    margin-left: 180px;
+    }
+
+    .imagecss input[type=file] {
+    position: absolute;
+    background-color: #000000;
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+    padding-top: 0px;
+}
+
+    ._text2{
+    padding-left: 20px;
+
+    }
+
+    .upload_homework{
+    padding-left: 150px;
+    padding-top: 50px;
+    }
+
+    #id_work{
+    left: 150px;
+    margin-top: 50px;
+    }
+
+    #open-popup-1{
+    margin-left: 280px;
+    width: 30px;
+    height: 30px;
+    }
+
+    #popup-1{
+    margin-left: 20px;
+    width: 300px;
+    }
+
+    .popup-content{
+    width: 200px;
+    }
+
+    .addCategory{
+    margin-left: -10px;
+    margin-top: -6px;
+    }
+
+
+
+    .chooseCategory{
+    margin-left: 180px;
+    }
+
+    .product-list{
+    width: 100%;
+    }
+
+    .headerr{
+    width:93%;
+    }
+
+    .centerr{
+    width: 100%;
+    }
+
+    .item{
+    width: 90%;
+    margin-left: 6px;
+    height: 240px;
+    margin-right: 0px;
+    }
+
+    .item1{
+    width: 90%;
+    margin-left: 6px;
+    height: 240px;
+    margin-right: 0px;
+    }
+
+    .imgItem{
+    width: 80%;
+    height: 45%;
+    }
+    .imgItem1{
+    width: 80%;
+    height: 45%;
+    }
+
+    .hrr{
+
+    width: 95%;
+    }
+
+    .courseName{
+    font-size: 24px;
+    }
+
+    .courseName1{
+    font-size: 24px;
+    }
+
+    .category{
+    margin-top: -20px;
+
+    }
+
+    .courseCategory{
+    font-size: 18px;
+
+    }
+
+    .priceDiv{
+
+    margin-top: -60px;
+    }
+
+    .namee{
+
+    margin-bottom: 15px;
+    }
+
+    ._text{
+    padding-left: 25px;
+    }
+
+    .padd{
+    margin-left: 90px;
+    }
+
+    .price{
+    font-size: 18px;
+    }
+}
+</style>
+
+
+
+
+</body>
+
+
+</body>
 {% endblock %}
+</html>
