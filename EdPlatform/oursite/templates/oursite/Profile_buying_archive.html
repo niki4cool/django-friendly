@@ -17,8 +17,8 @@
         <p class="username">Анастасия В.</p>
         <img class="profile_pic" src="{% static 'images/profile_pic.png' %}" alt="" height="160px" style="margin-left: 75px;">
         <a href="{% url "oursite:profilee" %}"><p class="side-menu">Мои объявления</p></a>
-        <p class="side-menu-chosen">Мои заказы</p>
-        <p class="side-menu">Избранное</p>
+        <a href="{% url "oursite:profile_buying" %}"><p class="side-menu-chosen">Мои заказы</p></a>
+        <a href="{% url "cart:cart_detail" %}"> <p class="side-menu">Избранное</p></a>
         <p class="side-menu">Мои сообщения</p>
         <p class="side-menu">Уведомления</p>
         <p class="side-menu">Управление профилем</p>
@@ -55,6 +55,14 @@
 
                         </a>
                 </div>
+            {% empty %}
+            <div class="pic">
+                <div class="pic_center">
+                    <h1 style="color: #FFFFFF; padding-top: 20px;">Упс...</h1>
+                    <h1 style="color: #FFFFFF">У Вас нет заказов в архиве</h1>
+                    <img src="{% static 'images/404.png' %}" style="width: 80%;"  >
+                </div>
+            </div>
             {% endfor %}
         </div>
     </div>
@@ -102,6 +110,19 @@
 </script>
 
 <style>
+
+    .pic{
+    width: 762px;
+    height: 669px;
+    background: #182128;
+    opacity: .8;
+    position: relative;
+    text-align: center;
+    margin-left: 170px;
+    border-radius: 30px;
+    margin-top: 50px !important;
+    height: 600px !important;
+    }
 
     .products{
     font-size: 28px;

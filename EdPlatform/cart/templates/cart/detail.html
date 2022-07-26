@@ -38,6 +38,7 @@
         <div class="all-items">
         {% for item in cart %}
             {% with product=item.product %}
+
                 <div class="item" style="position: relative;">
                     <a class="noPadd" href="{{ product.get_absolute_url }}">
                         <img class="imgItem" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
@@ -58,7 +59,16 @@
 
                         </a>
                 </div>
+
              {% endwith %}
+        {% empty %}
+            <div class="pic">
+                <div class="pic_center">
+                    <h1 style="color: #FFFFFF; padding-top: 20px;">Упс...</h1>
+                    <h1 style="color: #FFFFFF">У Вас нет избранных объявлений</h1>
+                    <img src="{% static 'images/404.png' %}" style="width: 80%;"  >
+                </div>
+            </div>
         {% endfor %}
         </div>
     </div>
@@ -106,6 +116,19 @@
 </script>
 
 <style>
+
+    .pic{
+    width: 762px;
+    height: 669px;
+    background: #182128;
+    opacity: .8;
+    position: relative;
+    text-align: center;
+    margin-left: 170px;
+    border-radius: 30px;
+    margin-top: 50px !important;
+    height: 600px !important;
+    }
 
     .button{
     position: absolute;

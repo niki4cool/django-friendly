@@ -218,7 +218,7 @@ def profile_archive(request, category_slug=None):
     if category_slug:
         category = get_object_or_404(Subject, slug=category_slug)
         products = products.filter(category=category)
-
+    print(products)
     return render(request, 'oursite/Profile_archive.html',
                   {'category': category,
                    'categories': categories,
@@ -439,54 +439,57 @@ def razrab(request):
 def recommendations(request, category_slug=None):
     category = None
     categories = Subject.objects.all()
+    if request.user.is_authenticated:
+        print('auth')
+        user_products_selling = Course.objects.filter(owner=request.user, selling=True)
+        user_products_buying = Course.objects.filter(owner=request.user, selling=False)
+        catts1 = []
+        result = []
+        result_buying = []
+        for i in categories:
+            if user_products_buying.filter(category=i):
+                user_products_buying.filter(category=i)
+                catts1.append(i)
+        for g in catts1:
+            products_selling = Course.objects.filter(~Q(owner=request.user), selling=True).filter(category=g)
+            result.append(products_selling)
 
-    user_products_selling = Course.objects.filter(owner=request.user, selling=True)
-    user_products_buying = Course.objects.filter(owner=request.user, selling=False)
-    catts1 = []
-    result = []
-    result_buying = []
-    for i in categories:
-        if user_products_buying.filter(category=i):
-            user_products_buying.filter(category=i)
-            catts1.append(i)
-    for g in catts1:
-        products_selling = Course.objects.filter(~Q(owner=request.user), selling=True).filter(category=g)
-        result.append(products_selling)
+        catts2 = []
+        for i in categories:
+            if user_products_selling.filter(category=i):
+                user_products_selling.filter(category=i)
+                catts2.append(i)
+        for g in catts2:
 
-    catts2 = []
-    for i in categories:
-        if user_products_selling.filter(category=i):
-            user_products_selling.filter(category=i)
-            catts2.append(i)
-    for g in catts2:
-        products_buying = Course.objects.filter(~Q(owner=request.user), selling=False).filter(category=g)
-        result_buying.append(products_buying)
+            products_buying = Course.objects.filter(~Q(owner=request.user), selling=False).filter(category=g)
+            result_buying.append(products_buying)
 
-    result.extend(result_buying)
+        result.extend(result_buying)
+    else:
+        print('not-auth')
+        result = Course.objects.all()
 
 
-    products = Course.objects.filter(available=True)
+
 
 
     cart_product_form = CartAddProductForm()
-    if category_slug:
-        category = get_object_or_404(Subject, slug=category_slug)
-        products = products.filter(category=category)
+
     return render(request,
                   'oursite/recommendations.html',
-                  {'catts1': catts1,
-                   'result_buying': result_buying,
+                  {
                    'result': result,
-
-                   'user_products_selling': user_products_selling,
                    'categories': categories,
-                   'products': products,
+
                    'cart_product_form': cart_product_form})
 
 def product_list(request, category_slug=None):
     category = None
     categories = Subject.objects.all()
-    products = Course.objects.filter(~Q(owner=request.user), available=True, selling=True, )
+    if not request.user.is_authenticated:
+        products = Course.objects.filter(available=True, selling=True)
+    else:
+        products = Course.objects.filter(~Q(owner=request.user), available=True, selling=True)
     cart_product_form = CartAddProductForm()
     if category_slug:
         category = get_object_or_404(Subject, slug=category_slug)
@@ -501,7 +504,10 @@ def product_list(request, category_slug=None):
 def product_list_buy(request, category_slug=None):
     category = None
     categories = Subject.objects.all()
-    products = Course.objects.filter(~Q(owner=request.user), available=True, selling=False)
+    if not request.user.is_authenticated:
+        products = Course.objects.filter(available=True, selling=False)
+    else:
+        products = Course.objects.filter(~Q(owner=request.user), available=True, selling=False)
     cart_product_form = CartAddProductForm()
     if category_slug:
         category = get_object_or_404(Subject, slug=category_slug)

@@ -32,41 +32,67 @@
             </select>
             </div>
         </div>
+        {% if not request.user.is_authenticated %}
+            {% for t in result %}
+                <div class="item" style="position: relative;">
+                    <a class="noPadd" href="{{ t.get_absolute_url }}">
 
-        {% for t in result %}
+                        <img class="imgItem" src="{% if t.image %}{{ t.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                        <form action="{% url "cart:cart_add" t.id %}" method="post">
+                        {{ cart_product_form }}
+                        {% csrf_token %}
+                        <div class="button">
+                            <input class="but" type="submit" value="">
+                        </div>
+                        </form>
 
-        {% for k in t %}
 
-          <div class="item" style="position: relative;">
-                <a class="noPadd" href="{{ k.get_absolute_url }}">
-
-                    <img class="imgItem" src="{% if k.image %}{{ k.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-                    <form action="{% url "cart:cart_add" k.id %}" method="post">
-                    {{ cart_product_form }}
-                    {% csrf_token %}
-                    <div class="button">
-                        <input class="but" type="submit" value="">
+                    <div class="priceDiv">
+                    <p class="price">{{ t.price.normalize|intcomma }} ₽</p>
                     </div>
-                    </form>
+                    <div class="namee">
+                    <a class="courseName" href="{{ t.get_absolute_url }}">{{ t.title }}</a>
+                    </div>
 
+                    <br>
+    <!--                <div class="category">-->
+    <!--                <a class="courseCategory" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>-->
+    <!--                </div>-->
 
-                <div class="priceDiv">
-                <p class="price">{{ k.price.normalize|intcomma }} ₽</p>
+                        </a>
                 </div>
-                <div class="namee">
-                <a class="courseName" href="{{ k.get_absolute_url }}">{{ k.title }}</a>
-                </div>
+            {% endfor %}
+        {% else %}
+            {% for t in result %}
+                {% for k in t %}
+                    <div class="item" style="position: relative;">
+                        <a class="noPadd" href="{{ k.get_absolute_url }}">
+                            <img class="imgItem" src="{% if k.image %}{{ k.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                            <form action="{% url "cart:cart_add" k.id %}" method="post">
+                            {{ cart_product_form }}
+                            {% csrf_token %}
+                            <div class="button">
+                                <input class="but" type="submit" value="">
+                            </div>
+                            </form>
+                        <div class="priceDiv">
+                        <p class="price">{{ k.price.normalize|intcomma }} ₽</p>
+                        </div>
+                        <div class="namee">
+                        <a class="courseName" href="{{ k.get_absolute_url }}">{{ k.title }}</a>
+                        </div>
 
-                <br>
-<!--                <div class="category">-->
-<!--                <a class="courseCategory" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>-->
-<!--                </div>-->
+                        <br>
+        <!--                <div class="category">-->
+        <!--                <a class="courseCategory" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>-->
+        <!--                </div>-->
 
-                    </a>
-            </div>
+                            </a>
+                    </div>
 
-        {% endfor %}
-         {% endfor %}
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
     </div>
 </body>
 <script type="text/javascript" src={% static "js/price.js" %}></script>
