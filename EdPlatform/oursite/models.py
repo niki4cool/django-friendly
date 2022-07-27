@@ -52,6 +52,29 @@ class Subject(models.Model):
         return reverse('oursite:product_list_by_category',
                        args=[self.slug])
 
+    def get_absolute_url_buy(self):
+        return reverse('oursite:product_list_by_category_buy',
+                       args=[self.slug])
+
+    def get_absolute_url_recommendations(self):
+        return reverse('oursite:recommendations_by_category',
+                       args=[self.slug])
+
+class Notifications(models.Model):
+    members = models.ManyToManyField(User, verbose_name=_("Пользователь"))
+    image = models.ImageField(upload_to='products/%Y/%m/%d', null=True, blank=True)
+    title = models.CharField(max_length=200)
+    clickbait = models.TextField()
+    overview = models.TextField()
+    url = models.CharField(max_length=200)
+    pub_date = models.DateTimeField(_('Дата уведомления'), default=timezone.now)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('oursite:notification',
+                       args=[self.id])
 
 class ImageForUser(models.Model):
     user = models.ForeignKey(User, related_name='userPic', on_delete=models.CASCADE)
@@ -125,6 +148,13 @@ class Course(models.Model):
         return reverse('oursite:show',
                        args=[self.slug])
 
+    def url_to_catalog(self):
+        return reverse('oursite:seller_catalog',
+                       args=[self.owner])
+
+    def url_to_catalog_buy(self):
+        return reverse('oursite:buyer_catalog',
+                       args=[self.owner])
 
 class Module(models.Model):
     course = models.ForeignKey(Course, related_name='modules', on_delete=models.CASCADE)

@@ -20,9 +20,8 @@
 
 
         <img class="profile_pic" src="{{ image.image.url }}" alt="" height="160px" style="margin-left: 75px;">
-
         <a href="{% url "oursite:profilee" %}"><p class="side-menu">Мои объявления</p></a>
-        <a href="{% url "oursite:profile_buying" %}"><p class="side-menu-chosen">Мои заказы</p></a>
+        <a href="{% url "oursite:profile_buying" %}"><p class="side-menu">Мои заказы</p></a>
         <a href="{% url "cart:cart_detail" %}"> <p class="side-menu">Избранное</p></a>
         <a href="{% url "oursite:dialogs" %}"> <p class="side-menu">Мои сообщения</p></a>
         <a href="{% url "oursite:notifications" %}"><p class="side-menu">Уведомления</p></a>
@@ -33,15 +32,16 @@
 
     <div id="main" class="product-list">
         <div class="headerr">
-            <p class="products">Мои заказы</p>
+            <p class="products">Объявления продавца <span style="font-weight: 800">{{ id.first_name }} {{ id.last_name.0 }}.</span></p>
         </div>
 
         <div class="product1">
-            <a href="{% url "oursite:profile_buying" %}" class="product">Активные</a>
-            <a href="{% url "oursite:profile_buying_archive" %}" class="product-not">Архив</a>
+            <a href="{{ product.url_to_catalog }}" class="product-not">Продает</a>
+            <a href="{{ product.url_to_catalog_buy }}" class="product">Покупает</a>
         </div>
         <div class="all-items">
-        {% for product in products %}
+        {% for product in catalog %}
+
                 <div class="item" style="position: relative;">
                     <a class="noPadd" href="{{ product.get_absolute_url }}">
                         <img class="imgItem" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
@@ -64,7 +64,7 @@
             <div class="pic">
                 <div class="pic_center">
                     <h1 style="color: #FFFFFF; padding-top: 20px;">Упс...</h1>
-                    <h1 style="color: #FFFFFF">У Вас нет объявлений в архиве</h1>
+                    <h1 style="color: #FFFFFF">Вы еще не разместили ни одного объявления</h1>
                     <img src="{% static 'images/404.png' %}" style="width: 80%;"  >
                 </div>
             </div>
@@ -152,7 +152,6 @@
     }
 
     .username{
-    margin-left: 70px;
     font-size: 26px;
     font-weight: 650;
     }

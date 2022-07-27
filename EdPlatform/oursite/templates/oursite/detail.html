@@ -8,13 +8,19 @@
         <h1 class="products">{% if category %}{{ category.title }}{% else %}Объявление{% endif %}</h1>
 </div>
     <div class="product-detail">
+        {% if neededUser != product.owner %}
         <div>
             <form class="s" method="get" style="display: inline; padding-bottom: 20px; margin-right: 30px;">
                 <input class="s" name="q" type="submit" value="Написать продавцу">
             </form>
         </div>
+        {% endif %}
         <div class="titleee">
-        <h1 class="h11">{{ product.owner }}</h1>
+
+        <a class="courseCategory" href="{{ product.url_to_catalog }}">
+            <h1 class="h11">{{ first_name }} {{ last_name.0 }}. ({{ catalog|length }} объявлений)</h1>
+        </a>
+
         </div>
         <div class="titlee">
         <h1 class="h11">{{ product.title }}</h1>

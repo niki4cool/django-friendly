@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Subject, Course, Module, Video, Post, UrlCheck, Homework, Constructor, VideoForConstructor, Message, Chat, ImageForUser
+from .models import Subject, Course, Module, Video, Post, UrlCheck, Homework, Constructor, VideoForConstructor, Message, Chat, ImageForUser, Notifications
 from  embed_video.admin  import  AdminVideoMixin
 
 admin.site.register(Post)
@@ -13,6 +13,8 @@ admin.site.register(Message)
 admin.site.register(Chat)
 
 admin.site.register(ImageForUser)
+
+admin.site.register(Notifications)
 
 class UrlCheckAdmin(admin.ModelAdmin):
     list_display = ['user', 'title']

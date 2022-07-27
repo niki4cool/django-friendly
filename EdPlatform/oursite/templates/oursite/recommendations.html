@@ -17,14 +17,14 @@
             <div class="chooseCategory">
             <select onchange="window.location.href = this.options[this.selectedIndex].value">
                 <li {% if not category %}class="selected"{% endif %}>
-                <a href="{% url "oursite:product_list" %}">All</a>
+                <a href="{% url "oursite:recommendations" %}">All</a>
             </li>
                 <option value="">Выберите категорию</option>
 
-                <option value="{% url "oursite:product_list" %}">Все объявления</option>
+                <option value="{% url "oursite:recommendations" %}">Все объявления</option>
             {% for c in categories %}
                 <li {% if category.slug == c.slug %}class="selected"{% endif %}>
-                     <option value="{{ c.get_absolute_url }}"><a href="{{ c.get_absolute_url }}">{{ c.subj }}</a>
+                     <option value="{{ c.get_absolute_url_recommendations }}"><a href="{{ c.get_absolute_url_recommendations }}">{{ c.subj }}</a>
                     </option>
                 </li>
             {% endfor %}

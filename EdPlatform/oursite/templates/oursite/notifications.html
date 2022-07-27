@@ -20,12 +20,11 @@
 
 
         <img class="profile_pic" src="{{ image.image.url }}" alt="" height="160px" style="margin-left: 75px;">
-
         <a href="{% url "oursite:profilee" %}"><p class="side-menu">Мои объявления</p></a>
-        <a href="{% url "oursite:profile_buying" %}"><p class="side-menu-chosen">Мои заказы</p></a>
+        <a href="{% url "oursite:profile_buying" %}"><p class="side-menu">Мои заказы</p></a>
         <a href="{% url "cart:cart_detail" %}"> <p class="side-menu">Избранное</p></a>
         <a href="{% url "oursite:dialogs" %}"> <p class="side-menu">Мои сообщения</p></a>
-        <a href="{% url "oursite:notifications" %}"><p class="side-menu">Уведомления</p></a>
+        <a href="{% url "oursite:notifications" %}"><p class="side-menu-chosen">Уведомления</p></a>
         <a href="{% url "oursite:profile_manage" %}"><p class="side-menu">Управление профилем</p></a>
         <p class="side-menu">Настройки</p>
 
@@ -33,42 +32,32 @@
 
     <div id="main" class="product-list">
         <div class="headerr">
-            <p class="products">Мои заказы</p>
+            <p class="products">Мои уведомления</p>
         </div>
 
         <div class="product1">
-            <a href="{% url "oursite:profile_buying" %}" class="product">Активные</a>
-            <a href="{% url "oursite:profile_buying_archive" %}" class="product-not">Архив</a>
+            <a href="{% url "oursite:notifications" %}" class="product">Уведомления</a>
+
         </div>
         <div class="all-items">
-        {% for product in products %}
-                <div class="item" style="position: relative;">
-                    <a class="noPadd" href="{{ product.get_absolute_url }}">
-                        <img class="imgItem" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-
-                    <div class="priceDiv">
-                    <p class="price">{{ product.price.normalize|intcomma }} ₽</p>
-                    </div>
-                    <div class="namee">
-                    <a class="courseName" href="{{ product.get_absolute_url }}">{{ product.title }}</a>
-                    </div>
-
-                    <br>
-    <!--                <div class="category">-->
-    <!--                <a class="courseCategory" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>-->
-    <!--                </div>-->
-
-                        </a>
+        {% for nott in nots %}
+        <a href="{{ nott.get_absolute_url }}">
+            <div class="notification">
+                <div class="picture">
+                    <img class="logo" src="{% static 'images/profferLogo.png' %}" alt="" width="70px">
                 </div>
-            {% empty %}
-            <div class="pic">
-                <div class="pic_center">
-                    <h1 style="color: #FFFFFF; padding-top: 20px;">Упс...</h1>
-                    <h1 style="color: #FFFFFF">У Вас нет объявлений в архиве</h1>
-                    <img src="{% static 'images/404.png' %}" style="width: 80%;"  >
+                <div class="text">
+                    <h3>{{ nott.title }}</h3>
+                    <p style="font-weight: 450">{{ nott.clickbait }}</p>
+                    <div class="pub_date">
+                    <p style="font-weight: 450">{{ nott.pub_date }}</p>
+
+                    </div>
                 </div>
+
             </div>
-            {% endfor %}
+        </a>
+        {% endfor %}
         </div>
     </div>
 
@@ -116,17 +105,35 @@
 
 <style>
 
-    .pic{
-    width: 762px;
-    height: 669px;
-    background: #182128;
+    .pub_date{
+    text-align: right;
+    margin-top: -3em;
+    margin-right: 20px;
+    color: #000;
+    }
+
+    .text{
+    margin-left: 130px;
+    }
+
+    .notification{
+    width: 900px;
+    height: 120px;
+    background: #FFF;
     opacity: .8;
     position: relative;
-    text-align: center;
+    text-align: left;
     margin-left: 170px;
     border-radius: 30px;
-    margin-top: 50px !important;
-    height: 600px !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+    display: inline-block;
+    }
+
+    .picture{
+    margin-left: 20px;
+    padding-top: 1.4em;
+    float: left;
     }
 
     .products{
@@ -135,7 +142,8 @@
     }
 
     .all-items{
-    margin-left: 120px;
+    margin-left: 10px;
+    margin-top: 30px;
     }
 
     .side-menu{
@@ -152,7 +160,6 @@
     }
 
     .username{
-    margin-left: 70px;
     font-size: 26px;
     font-weight: 650;
     }

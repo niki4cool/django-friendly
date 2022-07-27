@@ -17,7 +17,7 @@ from django.shortcuts import render, redirect
 from taggit.models import Tag
 from django.http import request, HttpResponse, Http404, HttpResponseRedirect
 from cart.forms import CartAddProductForm
-from .models import Course, Module, Homework, UrlCheck, Constructor, Chat, Message, ImageForUser
+from .models import Course, Module, Homework, UrlCheck, Constructor, Chat, Message, ImageForUser, Notifications
 from orders.models import Order, OrderItem
 from .models import Video, Subject, VideoForConstructor
 from django.contrib.auth.models import User
@@ -144,10 +144,15 @@ def profile_archive(request, category_slug=None):
         category = get_object_or_404(Subject, slug=category_slug)
         products = products.filter(category=category)
     print(products)
+    image = ImageForUser.objects.get(user=request.user)
+    user = User.objects.get(username=request.user)
     return render(request, 'oursite/Profile_archive.html',
                   {'category': category,
                    'categories': categories,
-                   'products': products})
+                   'products': products,
+                   'image': image,
+                   'user': user
+                   })
 
 @login_required(login_url='/register')
 
@@ -158,11 +163,15 @@ def profile_buying(request, category_slug=None):
     if category_slug:
         category = get_object_or_404(Subject, slug=category_slug)
         products = products.filter(category=category)
-
+    image = ImageForUser.objects.get(user=request.user)
+    user = User.objects.get(username=request.user)
     return render(request, 'oursite/Profile_buying.html',
                   {'category': category,
                    'categories': categories,
-                   'products': products})
+                   'products': products,
+                   'image': image,
+                   'user': user
+                   })
 
 @login_required(login_url='/register')
 
@@ -173,11 +182,15 @@ def profile_buying_archive(request, category_slug=None):
     if category_slug:
         category = get_object_or_404(Subject, slug=category_slug)
         products = products.filter(category=category)
-
+    image = ImageForUser.objects.get(user=request.user)
+    user = User.objects.get(username=request.user)
     return render(request, 'oursite/Profile_buying_archive.html',
                   {'category': category,
                    'categories': categories,
-                   'products': products})
+                   'products': products,
+                   'image': image,
+                   'user': user
+                   })
 
 @login_required(login_url='/register')
 def profile_manage(request, category_slug=None):
@@ -423,6 +436,8 @@ def razrab(request):
 def recommendations(request, category_slug=None):
     category = None
     categories = Subject.objects.all()
+
+
     if request.user.is_authenticated:
         user_products_selling = Course.objects.filter(owner=request.user, selling=True)
         user_products_buying = Course.objects.filter(owner=request.user, selling=False)
@@ -452,14 +467,20 @@ def recommendations(request, category_slug=None):
         result = Course.objects.all()
 
 
-
-
-
     cart_product_form = CartAddProductForm()
+    if category_slug:
+        temparr = []
+        for t in result:
+            category = get_object_or_404(Subject, slug=category_slug)
+            t = t.filter(category=category)
+            temparr.append(t)
+        result = temparr
+
 
     return render(request,
                   'oursite/recommendations.html',
-                  {
+                  {'category': category,
+
                    'result': result,
                    'categories': categories,
 
@@ -589,6 +610,8 @@ def show_course_playlist(request, slug):
         return redirect('oursite:profile')
 
 
+
+
 def product_detail(request, id, slug):
     product = get_object_or_404(Course,
                                 id=id,
@@ -597,8 +620,13 @@ def product_detail(request, id, slug):
     module = Module.objects.filter(course=product)
     cart_product_form = CartAddProductForm()
     neededUser = product.owner
+    print(neededUser)
     user_id = neededUser.id
+    first_name = neededUser.first_name
+    last_name = neededUser.last_name
     query = request.GET.get('q')
+    catalog = Course.objects.filter(owner=user_id)
+
     if query:
         if request.user.id:
             CreateDialogView.get(request, request, user_id)
@@ -609,7 +637,11 @@ def product_detail(request, id, slug):
             return redirect('oursite:register')
     return render(request, 'oursite/detail.html', {'product': product,
                                                    'cart_product_form': cart_product_form,
-                                                   'module': module})
+                                                   'module': module,
+                                                   'neededUser':neededUser,
+                                                   'catalog': catalog,
+                                                   'first_name': first_name,
+                                                   'last_name': last_name})
 
 
 class DialogsView(View):
@@ -686,3 +718,42 @@ class CreateDialogView(View):
         #     msg = Message(chat=chats.first(), author=user, message="Хотите что-то спросить?")
         #     msg.save()
         return redirect(reverse('oursite:messages', kwargs={'chat_id': chat.id}))
+
+
+def notifications(request):
+    image = ImageForUser.objects.get(user=request.user)
+    nots = Notifications.objects.filter(members__in=[request.user.id])
+    return render(request, 'oursite/notifications.html', {'nots': nots,
+                                                          'image': image})
+
+def notification(request, id):
+    image = ImageForUser.objects.get(user=request.user)
+    nots = get_object_or_404(Notifications,
+                                id=id)
+    return render(request, 'oursite/notification.html', {'nots': nots,
+                                                         'image': image})
+
+def seller_catalog(request, owner):
+    image = ImageForUser.objects.get(user=request.user)
+    id = get_object_or_404(User,
+                           username=owner)
+    catalog = Course.objects.filter(owner=id, selling=True, available=True)
+    product = catalog[0]
+
+    return render(request, 'oursite/seller_catalog.html', {'catalog': catalog,
+                                                           'id': id,
+                                                           'product': product,
+                                                           'image': image})
+#
+#
+def buyer_catalog(request, owner):
+    image = ImageForUser.objects.get(user=request.user)
+    id = get_object_or_404(User,
+                           username=owner)
+    catalog = Course.objects.filter(owner=id, selling=False, available=True)
+    product = catalog[0]
+
+    return render(request, 'oursite/buyer_catalog.html', {'catalog': catalog,
+                                                           'id': id,
+                                                           'product': product,
+                                                          'image': image})

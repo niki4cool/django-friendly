@@ -14,13 +14,18 @@
 <div class="block">
 
     <div class="settings">
-        <p class="username">Анастасия В.</p>
-        <img class="profile_pic" src="{% static 'images/profile_pic.png' %}" alt="" height="160px" style="margin-left: 75px;">
+        <div style="text-align: center">
+            <p class="username">{{ user.first_name }} {{ user.last_name.0 }}.</p>
+        </div>
+
+
+        <img class="profile_pic" src="{{ image.image.url }}" alt="" height="160px" style="margin-left: 75px;">
+
         <a href="{% url "oursite:profilee" %}"><p class="side-menu">Мои объявления</p></a>
         <a href="{% url "oursite:profile_buying" %}"><p class="side-menu-chosen">Мои заказы</p></a>
         <a href="{% url "cart:cart_detail" %}"> <p class="side-menu">Избранное</p></a>
         <a href="{% url "oursite:dialogs" %}"> <p class="side-menu">Мои сообщения</p></a>
-        <p class="side-menu">Уведомления</p>
+        <a href="{% url "oursite:notifications" %}"><p class="side-menu">Уведомления</p></a>
         <a href="{% url "oursite:profile_manage" %}"><p class="side-menu">Управление профилем</p></a>
         <p class="side-menu">Настройки</p>
 

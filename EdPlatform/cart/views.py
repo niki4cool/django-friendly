@@ -4,7 +4,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
-from oursite.models import Course, Module
+from oursite.models import Course, Module, ImageForUser
 from .cart import Cart
 from .forms import CartAddProductForm
 from orders.models import Order, OrderItem
@@ -34,6 +34,10 @@ def cart_remove(request, product_id):
 
 @login_required(login_url='/register')
 def cart_detail(request):
+    image = ImageForUser.objects.get(user=request.user)
+    user = User.objects.get(username=request.user)
     cart = Cart(request)
-    return render(request, 'cart/detail.html', {'cart': cart})
+    return render(request, 'cart/detail.html', {'cart': cart,
+                                                'image': image,
+                                                'user': user})
 
