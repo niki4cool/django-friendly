@@ -63,9 +63,9 @@ urlpatterns = [
         views.product_detail,
         name='product_detail'),
 
-    path('accounts/profile/dialogs/', login_required(views.DialogsView.as_view()), name='dialogs'),
-    path('accounts/profile/dialogs/create/<user_id>', login_required(views.CreateDialogView.as_view()), name='create_dialog'),
-    path('accounts/profile/dialogs/<chat_id>', login_required(views.MessagesView.as_view()), name='messages'),
+    path('accounts/profile/dialogs/', (views.DialogsView.as_view()), name='dialogs'),
+    path('accounts/profile/dialogs/create/<user_id>', (views.CreateDialogView.as_view()), name='create_dialog'),
+    path('accounts/profile/dialogs/<chat_id>', (views.MessagesView.as_view()), name='messages'),
 
 ]
 

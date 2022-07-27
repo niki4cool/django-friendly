@@ -121,7 +121,9 @@ def profilee(request, category_slug=None):
     if category_slug:
         category = get_object_or_404(Subject, slug=category_slug)
         products = products.filter(category=category)
-    image = ImageForUser.objects.get(user=request.user)
+
+    image = ImageForUser.objects.filter(user=request.user)
+
     user = User.objects.get(username=request.user)
 
 
@@ -144,7 +146,7 @@ def profile_archive(request, category_slug=None):
         category = get_object_or_404(Subject, slug=category_slug)
         products = products.filter(category=category)
     print(products)
-    image = ImageForUser.objects.get(user=request.user)
+    image = ImageForUser.objects.filter(user=request.user)
     user = User.objects.get(username=request.user)
     return render(request, 'oursite/Profile_archive.html',
                   {'category': category,
@@ -163,7 +165,7 @@ def profile_buying(request, category_slug=None):
     if category_slug:
         category = get_object_or_404(Subject, slug=category_slug)
         products = products.filter(category=category)
-    image = ImageForUser.objects.get(user=request.user)
+    image = ImageForUser.objects.filter(user=request.user)
     user = User.objects.get(username=request.user)
     return render(request, 'oursite/Profile_buying.html',
                   {'category': category,
@@ -182,7 +184,7 @@ def profile_buying_archive(request, category_slug=None):
     if category_slug:
         category = get_object_or_404(Subject, slug=category_slug)
         products = products.filter(category=category)
-    image = ImageForUser.objects.get(user=request.user)
+    image = ImageForUser.objects.filter(user=request.user)
     user = User.objects.get(username=request.user)
     return render(request, 'oursite/Profile_buying_archive.html',
                   {'category': category,
@@ -231,7 +233,7 @@ def profile_manage(request, category_slug=None):
     else:
         form = ImageForm()
 
-    imgg = ImageForUser.objects.get(user=request.user)
+    imgg = ImageForUser.objects.filter(user=request.user)
     userr = User.objects.get(username=request.user)
     return render(request, 'oursite/Profile_manage.html', {
         'username': username,
@@ -379,7 +381,7 @@ def profile_admin(request):
 
 def index(request):
     user = User.objects.get(username=request.user)
-    print(image.first())
+
     try:
         user = models.User.objects.get(id=request.user.id)
     except:
@@ -468,13 +470,25 @@ def recommendations(request, category_slug=None):
 
 
     cart_product_form = CartAddProductForm()
-    if category_slug:
-        temparr = []
-        for t in result:
-            category = get_object_or_404(Subject, slug=category_slug)
-            t = t.filter(category=category)
-            temparr.append(t)
-        result = temparr
+    if not request.user.is_authenticated:
+        if category_slug:
+            result = Course.objects.filter(available=True)
+            tempArr = []
+            for t in result:
+                category = get_object_or_404(Subject, slug=category_slug)
+                if t.category == category:
+                    tempArr.append(t)
+
+            result = tempArr
+            print(result)
+    else:
+        if category_slug:
+            temparr = []
+            for t in result:
+                category = get_object_or_404(Subject, slug=category_slug)
+                t = t.filter(category=category)
+                temparr.append(t)
+            result = temparr
 
 
     return render(request,
@@ -646,6 +660,8 @@ def product_detail(request, id, slug):
 
 class DialogsView(View):
     def get(self, request):
+        if request.user.is_authenticated == False:
+            return redirect('login')
         chats = Chat.objects.filter(members__in=[request.user.id])
         members = []
         messages = []
@@ -671,7 +687,10 @@ class DialogsView(View):
 
 
 class MessagesView(View):
+
     def get(self, request, chat_id):
+        if request.user.is_authenticated == False:
+            return redirect('login')
         try:
             chat = Chat.objects.get(id=chat_id)
             if request.user in chat.members.all():
@@ -692,6 +711,8 @@ class MessagesView(View):
         )
 
     def post(self, request, chat_id):
+        if request.user.is_authenticated == False:
+            return redirect('login')
         form = MessageForm(data=request.POST)
         if form.is_valid():
             message = form.save(commit=False)
@@ -703,6 +724,8 @@ class MessagesView(View):
 
 class CreateDialogView(View):
     def get(self, request, user_id):
+        if request.user.is_authenticated == False:
+            return redirect('login')
         chats = Chat.objects.filter(members__in=[request.user.id, user_id], type=Chat.DIALOG).annotate(c=Count('members')).filter(c=2)
         if chats.count() == 0:
             chat = Chat.objects.create()
@@ -719,26 +742,36 @@ class CreateDialogView(View):
         #     msg.save()
         return redirect(reverse('oursite:messages', kwargs={'chat_id': chat.id}))
 
-
+@login_required(login_url='/register')
 def notifications(request):
-    image = ImageForUser.objects.get(user=request.user)
+    image = ImageForUser.objects.filter(user=request.user)
     nots = Notifications.objects.filter(members__in=[request.user.id])
     return render(request, 'oursite/notifications.html', {'nots': nots,
                                                           'image': image})
-
+@login_required(login_url='/register')
 def notification(request, id):
-    image = ImageForUser.objects.get(user=request.user)
+    image = ImageForUser.objects.filter(user=request.user)
     nots = get_object_or_404(Notifications,
                                 id=id)
     return render(request, 'oursite/notification.html', {'nots': nots,
                                                          'image': image})
 
 def seller_catalog(request, owner):
-    image = ImageForUser.objects.get(user=request.user)
     id = get_object_or_404(User,
                            username=owner)
+    if request.user.is_authenticated:
+        image = ImageForUser.objects.filter(user=request.user)
+    else:
+        image = ImageForUser.objects.get(user=id.id)
+
+
     catalog = Course.objects.filter(owner=id, selling=True, available=True)
-    product = catalog[0]
+    if catalog:
+        product = catalog[0]
+    else:
+        noproduct = Course.objects.filter(owner=id, selling=False, available=True)
+        product = noproduct[0]
+
 
     return render(request, 'oursite/seller_catalog.html', {'catalog': catalog,
                                                            'id': id,
@@ -747,11 +780,18 @@ def seller_catalog(request, owner):
 #
 #
 def buyer_catalog(request, owner):
-    image = ImageForUser.objects.get(user=request.user)
     id = get_object_or_404(User,
                            username=owner)
+    if request.user.is_authenticated:
+        image = ImageForUser.objects.filter(user=request.user)
+    else:
+        image = ImageForUser.objects.get(user=id.id)
     catalog = Course.objects.filter(owner=id, selling=False, available=True)
-    product = catalog[0]
+    if catalog:
+        product = catalog[0]
+    else:
+        noproduct = Course.objects.filter(owner=id, selling=True, available=True)
+        product = noproduct[0]
 
     return render(request, 'oursite/buyer_catalog.html', {'catalog': catalog,
                                                            'id': id,
