@@ -34,7 +34,7 @@ def cart_remove(request, product_id):
 
 @login_required(login_url='/register')
 def cart_detail(request):
-    image = ImageForUser.objects.filter(user=request.user)
+    image = ImageForUser.objects.get(user=request.user)
     user = User.objects.get(username=request.user)
     cart = Cart(request)
     return render(request, 'cart/detail.html', {'cart': cart,

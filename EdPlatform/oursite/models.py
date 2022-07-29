@@ -78,7 +78,7 @@ class Notifications(models.Model):
 
 class ImageForUser(models.Model):
     user = models.ForeignKey(User, related_name='userPic', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='products/%Y/%m/%d', null=True, blank=True)
+    image = models.ImageField(upload_to='products/%Y/%m/%d', default='../static/images/v20_51.png')
     userstr = str(user)
     def __str__(self):
         return str(self.user)

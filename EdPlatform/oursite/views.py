@@ -122,7 +122,7 @@ def profilee(request, category_slug=None):
         category = get_object_or_404(Subject, slug=category_slug)
         products = products.filter(category=category)
 
-    image = ImageForUser.objects.filter(user=request.user)
+    image = ImageForUser.objects.get(user=request.user)
 
     user = User.objects.get(username=request.user)
 
@@ -146,7 +146,7 @@ def profile_archive(request, category_slug=None):
         category = get_object_or_404(Subject, slug=category_slug)
         products = products.filter(category=category)
     print(products)
-    image = ImageForUser.objects.filter(user=request.user)
+    image = ImageForUser.objects.get(user=request.user)
     user = User.objects.get(username=request.user)
     return render(request, 'oursite/Profile_archive.html',
                   {'category': category,
@@ -165,7 +165,7 @@ def profile_buying(request, category_slug=None):
     if category_slug:
         category = get_object_or_404(Subject, slug=category_slug)
         products = products.filter(category=category)
-    image = ImageForUser.objects.filter(user=request.user)
+    image = ImageForUser.objects.get(user=request.user)
     user = User.objects.get(username=request.user)
     return render(request, 'oursite/Profile_buying.html',
                   {'category': category,
@@ -184,7 +184,7 @@ def profile_buying_archive(request, category_slug=None):
     if category_slug:
         category = get_object_or_404(Subject, slug=category_slug)
         products = products.filter(category=category)
-    image = ImageForUser.objects.filter(user=request.user)
+    image = ImageForUser.objects.get(user=request.user)
     user = User.objects.get(username=request.user)
     return render(request, 'oursite/Profile_buying_archive.html',
                   {'category': category,
@@ -204,7 +204,7 @@ def profile_manage(request, category_slug=None):
     first_name = user.first_name
     last_name = user.last_name
     email = user.email
-    image = ImageForUser.objects.filter(user=request.user)
+    image = ImageForUser.objects.get(user=request.user)
 
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
@@ -233,7 +233,7 @@ def profile_manage(request, category_slug=None):
     else:
         form = ImageForm()
 
-    imgg = ImageForUser.objects.filter(user=request.user)
+    imgg = ImageForUser.objects.get(user=request.user)
     userr = User.objects.get(username=request.user)
     return render(request, 'oursite/Profile_manage.html', {
         'username': username,
@@ -398,6 +398,7 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            img = ImageForUser.objects.create(user=user)
             return redirect('login')
         else:
             return render(request, 'registration/register.html', {'form': form})
@@ -744,13 +745,13 @@ class CreateDialogView(View):
 
 @login_required(login_url='/register')
 def notifications(request):
-    image = ImageForUser.objects.filter(user=request.user)
+    image = ImageForUser.objects.get(user=request.user)
     nots = Notifications.objects.filter(members__in=[request.user.id])
     return render(request, 'oursite/notifications.html', {'nots': nots,
                                                           'image': image})
 @login_required(login_url='/register')
 def notification(request, id):
-    image = ImageForUser.objects.filter(user=request.user)
+    image = ImageForUser.objects.get(user=request.user)
     nots = get_object_or_404(Notifications,
                                 id=id)
     return render(request, 'oursite/notification.html', {'nots': nots,
@@ -760,7 +761,7 @@ def seller_catalog(request, owner):
     id = get_object_or_404(User,
                            username=owner)
     if request.user.is_authenticated:
-        image = ImageForUser.objects.filter(user=request.user)
+        image = ImageForUser.objects.get(user=request.user)
     else:
         image = ImageForUser.objects.get(user=id.id)
 
@@ -783,7 +784,7 @@ def buyer_catalog(request, owner):
     id = get_object_or_404(User,
                            username=owner)
     if request.user.is_authenticated:
-        image = ImageForUser.objects.filter(user=request.user)
+        image = ImageForUser.objects.get(user=request.user)
     else:
         image = ImageForUser.objects.get(user=id.id)
     catalog = Course.objects.filter(owner=id, selling=False, available=True)
