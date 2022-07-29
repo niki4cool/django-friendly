@@ -214,8 +214,7 @@ def profile_manage(request, category_slug=None):
         user.last_name = request.POST.get('last_name')
         user.email = request.POST.get('email')
         user.save()
-        print(image.first())
-        if image.first() == None:
+        if not image:
             print('1')
             if form.is_valid():
                 t = form.save(commit=False)
@@ -397,8 +396,13 @@ def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
+
+            name = request.POST.get('username')
+            user.first_name = name
+            user.save()
             img = ImageForUser.objects.create(user=user)
+
             return redirect('login')
         else:
             return render(request, 'registration/register.html', {'form': form})
@@ -635,7 +639,6 @@ def product_detail(request, id, slug):
     module = Module.objects.filter(course=product)
     cart_product_form = CartAddProductForm()
     neededUser = product.owner
-    print(neededUser)
     user_id = neededUser.id
     first_name = neededUser.first_name
     last_name = neededUser.last_name
