@@ -5,382 +5,123 @@
 {% endblock %}
 {% block content %}
 {% load humanize %}
-<body>
-    <div id="main" class="product-list">
 
-        <div class="headerr">
-        <h1 class="products">{% if category %}{{ category.subj }}{% else %}Рекомендации{% endif %}</h1>
-            <a href="{% url "oursite:product_list" %}">Товары и услуги</a>
-            <a href="{% url "oursite:buy" %}">Заявки</a>
-            <a href="{% url "oursite:recommendations" %}">Рекомендации</a>
 
-            <div class="chooseCategory">
-            <select onchange="window.location.href = this.options[this.selectedIndex].value">
-                <li {% if not category %}class="selected"{% endif %}>
-                <a href="{% url "oursite:recommendations" %}">All</a>
-            </li>
-                <option value="">Выберите категорию</option>
-
-                <option value="{% url "oursite:recommendations" %}">Все объявления</option>
-            {% for c in categories %}
-                <li {% if category.slug == c.slug %}class="selected"{% endif %}>
-                     <option value="{{ c.get_absolute_url_recommendations }}"><a href="{{ c.get_absolute_url_recommendations }}">{{ c.subj }}</a>
-                    </option>
-                </li>
-            {% endfor %}
-
-            </select>
+        <div class="sliderContainer">
+            <div id="home-slider" class="wrapper">
+                    <div class="carousel">
+                      <div><a href=""><img src="{% static 'images/slider1.png' %}"></a></div>
+                      <div><a href=""><img src="{% static 'images/slider2.png' %}"></a></div>
+                      <div><a href=""><img src="{% static 'images/slider3.png' %}"></a></div>
+                      <!--<div><img src="https://picsum.photos/300/200?random=3"></div>
+                      <div><img src="https://picsum.photos/300/200?random=4"></div>
+                      <div><img src="https://picsum.photos/300/200?random=5"></div>
+                      <div><img src="https://picsum.photos/300/200?random=6"></div>-->
+                    </div>
             </div>
         </div>
-        {% if not request.user.is_authenticated %}
-            {% for t in result %}
-                <div class="item" style="position: relative;">
-                    <a class="noPadd" href="{{ t.get_absolute_url }}">
+            <section id="tabs">
+                <div class="row">
+                    <div class="col-sm-12 ">
+                        <div class="navTabFlex">
+                         <h4 class="section-title">Смотреть:</h4>
 
-                        <img class="imgItem" src="{% if t.image %}{{ t.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-                        <form action="{% url "cart:cart_add" t.id %}" method="post">
-                        {{ cart_product_form }}
-                        {% csrf_token %}
-                        <div class="button">
-                            <input class="but" type="submit" value="">
-                        </div>
-                        </form>
-
-
-                    <div class="priceDiv">
-                    <p class="price">{{ t.price.normalize|intcomma }} ₽</p>
-                    </div>
-                    <div class="namee">
-                    <a class="courseName" href="{{ t.get_absolute_url }}">{{ t.title }}</a>
-                    </div>
-
-                    <br>
-    <!--                <div class="category">-->
-    <!--                <a class="courseCategory" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>-->
-    <!--                </div>-->
-
-                        </a>
-                </div>
-            {% endfor %}
-        {% else %}
-            {% for t in result %}
-                {% for k in t %}
-                    <div class="item" style="position: relative;">
-                        <a class="noPadd" href="{{ k.get_absolute_url }}">
-                            <img class="imgItem" src="{% if k.image %}{{ k.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-                            <form action="{% url "cart:cart_add" k.id %}" method="post">
-                            {{ cart_product_form }}
-                            {% csrf_token %}
-                            <div class="button">
-                                <input class="but" type="submit" value="">
+                            <div class="nav nav-tabs nav-fill">
+                                <a class="nav-item nav-link" id="nav-home-tab" href="{% url "oursite:product_list" %}">Товары и Услуги</a>
+                                <a  class="nav-item nav-link" id="nav-profile-tab" href="{% url "oursite:buy" %}">Заявки</a>
+                                <a class="nav-item nav-link active" id="nav-contact-tab" href="{% url "oursite:recommendations" %}">Рекомендации</a>
                             </div>
-                            </form>
-                        <div class="priceDiv">
-                        <p class="price">{{ k.price.normalize|intcomma }} ₽</p>
-                        </div>
-                        <div class="namee">
-                        <a class="courseName" href="{{ k.get_absolute_url }}">{{ k.title }}</a>
+
                         </div>
 
-                        <br>
-        <!--                <div class="category">-->
-        <!--                <a class="courseCategory" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>-->
-        <!--                </div>-->
+                        <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                <div class="productContainer">
+                                    <div class="row">
+                                      {% if not request.user.is_authenticated %}
+                                        {% for t in result %}
+                                      <div class="col-lg-3 col-md-6">
+                                              <div class="block product no-border z-depth-2-top z-depth-2-top-hover">
+                                                  <div class="block-image">
+                                                      <a href="{{ t.get_absolute_url }}">
+                                                          <img src="{% if t.image %}{{ t.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" height="238px">
 
-                            </a>
+                                                        </a>
+                                                      <span class="wish-icon"><i class="fa-solid fa-heart"></i></span>
+                                                  </div>
+                                                  <div class="block-body">
+                                                      <h3 class="heading heading-5">{{ t.price.normalize|intcomma }} ₽</h3>
+                                                      <p class="product-description">{{ t.title }}</p>
+                                                  </div>
+                                              </div>
+
+                                        </div>
+
+                                  </div>
+                                  </div>
+                                </div>
+
+                            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                <div class="productContainer">
+                                    <div class="row">
+                                        {% endfor %}
+                                        {% else %}
+                                        {% for t in result %}
+                                        {% for k in t %}
+                                      <div class="col-lg-3 col-md-6">
+                                              <div class="block product no-border z-depth-2-top z-depth-2--hover">
+                                                  <div class="block-image">
+                                                      <a href="{{ k.get_absolute_url }}">
+                                                          <img src="{% if k.image %}{{ k.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" height="238px">
+
+                                                        </a>
+                                                      <span class="wish-icon"><i class="fa-solid fa-heart"></i></span>
+                                                  </div>
+                                                  <div class="block-body">
+                                                      <h3 class="heading heading-5">{{ k.price.normalize|intcomma }} ₽</h3>
+                                                      <p class="product-description">{{ k.title }}</p>
+                                                  </div>
+                                              </div>
+
+                                        </div>
+                                        {% endfor %}
+                                        {% endfor %}
+                                        {% endif %}
+                                  </div>
+                                  </div>
+                            </div>
+                            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                <div class="productContainer">
+                                    <div class="row">
+                                        {% for product in products %}
+                                      <div class="col-lg-3 col-md-6">
+                                              <div class="block product no-border z-depth-2-top z-depth-2--hover">
+                                                  <div class="block-image">
+                                                      <a href="{{ product.get_absolute_url }}">
+                                                          <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" height="238px">
+
+                                                        </a>
+                                                      <span class="wish-icon"><i class="fa-solid fa-heart"></i></span>
+                                                  </div>
+                                                  <div class="block-body">
+                                                      <h3 class="heading heading-5">{{ product.price.normalize|intcomma }} ₽</h3>
+                                                      <p class="product-description">{{ product.title }}</p>
+                                                  </div>
+                                              </div>
+
+                                        </div>
+                                        {% endfor %}
+                                  </div>
+                                  </div>
+                            </div>
+                        </div>
+
                     </div>
-
-                {% endfor %}
-            {% endfor %}
-        {% endif %}
-    </div>
-</body>
-<script type="text/javascript" src={% static "js/price.js" %}></script>
-<script> doprice() </script>
-
-<script>
-
-    var colorArray = document.getElementsByClassName('category');
-    var color = document.getElementsByClassName('courseCategory');
-    var i = 10;
-    var t = 0;
-    while (t < 10){
-    if (i == 14){
-    i = 10
-    }
-    if (i % 10 == 0){
-    colorArray[t].style.backgroundColor = '#FDE8F2';
-    color[t].style.color = '#FF166A';
-    }
-    else if (i % 11 == 0){
-    colorArray[t].style.backgroundColor = '#F7ECFF';
-    color[t].style.color = '#FA00FF';
-    }
-
-    else if (i % 12 == 0){
-    colorArray[t].style.backgroundColor = '#E3F3FF';
-    color[t].style.color = '#618DFF';
-    }
-
-    else{
-    colorArray[t].style.backgroundColor = '#FFF3E9';
-    color[t].style.color = '#DF6B00';
-    }
-    i++
-    t++
-
-    }
-
-</script>
-<style>
-
-    .button{
-    position: absolute;
-    top: 3%;
-    left: 85%;
-    }
-
-    input{
-    outline:none;
-    border: none;
-    cursor: pointer;
-    }
-
-    input.but{
-    height: 30px;
-    width: 30px;
-    background: url({% static 'images/heart.png' %}) no-repeat center center;
-    background-size: 30px;
-
-    }
-
-
-    #id_quantity{
-    display: none;
-    }
-
-    .namee{
-    margin-left: 20px;
-    width: 210px;
-    word-break: break-all;
-    text-align: left;
-    }
-
-    .priceDiv{
-    width: 210px;
-    margin-left: 20px;
-    word-break: break-all;
-    text-align: left;
-    }
-
-    .price{
-    font-size: 28px;
-    font-weight: 800;
-    color: #182128;
-    margin: 0;
-    margin-top: 20px;
-    }
-
-    a{
-    text-decoration: none;
-    }
-
-    .hrr{
-    width: 300px;
-    }
-
-
-    .products{
-    position: absolute;
-    }
-
-    .chooseCategory{
-    position: absolute;
-    margin-left: 82%;
-    padding-top: 30px;
-    }
-
-    .headerr{
-    padding-left: 18px;
-    background: #FFFFFF;
-    width: 98.6%;
-    height: 75px;
-    margin-bottom: 20px;
-    border: 2px solid transparent;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    }
-    .item{
-    border-radius: 10px;
-    margin-left: 40px;
-    margin-right: auto;
-     float: left;
-     background: #FFFFFF;
-     background-color: #FFFFFF;
-     width: 250px;
-     height: 340px;
-     margin-right: 67px;
-     text-align: center;
-     margin-bottom: 55px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .category{
-    display: inline-block;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 30px;
-    background-color: #E3F3FF;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    }
-
-    .courseCategory{
-    font-size: 24px;
-    text-decoration: none;
-    color: #618DFF;
-    font-weight: 600;
-    }
-
-     .imgItem{
-    width: 250px;
-    height: 220px;
-    background: #FFFFFF;
-    border-radius: 10px 10px 0 0;
-    }
-
-    .product-list{
-       width: 100%;
-    display: inline-block;
-    }
+                </div>
+        </section>
 
 
 
-    .priceDiv{
-    }
-
-    .namee{
-    height: 100px;
-    }
-
-    .courseName{
-    text-decoration: none;
-    color: black;
-    font-size: 22px;
-    font-weight: 600;
-    }
-
-        @media screen and (max-width:1900px) {
-    .item{
-    padding-top: 10px;
-     margin-left: 200;
-     margin-right: auto;
-     background: #FFFFFF;
-     background-color: #FFFFFF;
-     width: 470px;
-     height: 460px;
-     margin-right: 67px;
-     text-align: center;
-     margin-bottom: 55px;
-     border: 8px solid transparent;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    }
-
-
-}
-
-    @media screen and (max-width:1800px) {
-    .chooseCategory{
-    position: absolute;
-    padding-top: 30px;
-    }
-
-}
-
- @media screen and (max-width:1530px) {
-
-    .item{
-    margin-left: 400px;
-    }
-}
-
-    @media screen and (max-width:1200px) {
-    .chooseCategory{
-    position: absolute;
-    left: -10%;
-    padding-top: 30px;
-    }
-    .item{
-    margin-left: 100px;
-    }
-}
-    @media screen and (max-width:500px) {
-
-    .products{
-    font-size: 18px;
-    margin-top: 27px;
-    }
-
-    .chooseCategory{
-    margin-left: 180px;
-    }
-
-    .headerr{
-    width:93%;
-    }
-
-    .item{
-    width: 90%;
-    margin-left: 6px;
-    height: 240px;
-    margin-right: 0px;
-    }
-
-    .imgItem{
-    width: 80%;
-    height: 45%;
-    }
-
-    .hrr{
-
-    width: 95%;
-    }
-
-    .courseName{
-    font-size: 24px;
-    }
-
-    .category{
-    margin-top: -80px;
-
-    }
-
-    .courseCategory{
-    font-size: 18px;
-    }
-
-    .priceDiv{
-    margin-top: -60px;
-    }
-
-    .price{
-    font-size: 18px;
-    }
-
-    .noPadd{
-
-    width: 100%;
-    display: block;
-    text-decoration: none;
-    }
-
-
-
-
-}
-
-
-</style>
 {% endblock %}
 
 

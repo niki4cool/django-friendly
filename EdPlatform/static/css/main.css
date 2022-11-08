@@ -1,18 +1,5 @@
-*{
-    font-family: Mont;
-}
 
-.circle{
-    background: #0A8484;
-    color: white;
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
-    text-align: center;
-    line-height: 1.7em;
-    font-size: 30px;
-    margin-top: 10px;
-}
+
 
 .header{
     width: 100%;
@@ -20,6 +7,7 @@
     background: #182128;
     display: flex;
     align-items: center;
+    margin-top: 130px;
 }
 
 .name{
@@ -74,10 +62,10 @@ color: #FFFFFF;
     height: 50px;
     margin-right: 40px;
 }
-.container{
+/*.container{
 margin-left: 400px;
 
-}
+}*/
 
 
 
@@ -106,7 +94,6 @@ text-align: center;
 padding-top: 10px;
 margin-top: 10px;
 color: #FFFFFF;
-    alink: #FFFFFF;
     text-decoration: none;
 }
 
@@ -123,12 +110,10 @@ color: #FFFFFF;
     border-radius: 3px;
     text-align: center;
     color: #182128;
-    alink: #182128;
 }
 
 .register_{
 color: #182128;
-    alink: #182128;
     text-decoration: none;
     }
 
@@ -245,10 +230,7 @@ height: 65px; width:509px; font-size: 30px; position: relative; vertical-align: 
 
 .bg{
     width: 100%;
-
     background-color: #EFF8FA;
-    background-size: 99.99% auto;
-    repeat-y;
     margin: 0;
 }
 

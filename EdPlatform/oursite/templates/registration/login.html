@@ -2,130 +2,63 @@
 {% load static %}
 {% block content %}
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <title>Login</title>
-</head>
-<body class="bg">
-    <div class="center">
-      <span class="auth">Авторизация на сайте</span>
 
-      <div class="logPassAuth" style="">
-           <div class="log-auth">
-               Логин:
-           </div>
-          <div class="pass-auth">
-               Пароль:
-           </div>
-          <img src="{% static 'images/loginPic.png' %}" alt="" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px;">
-          <img src="{% static 'images/passPic.png' %}" alt="" style="width: 65px; position: absolute; vertical-align: top; border-radius: 10px; padding-top: 175px;">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-md-3"></div>
+        <div class="col-lg-4 col-md-6 login-box">
+            <div class="col-lg-12 login-title">
+                <div class="panel">
+                    <h2>Войдите в аккаунт</h2>
+                    <p>Пожалуйста, введите логин и пароль</p>
+                </div>
+            </div>
 
-    <form method='POST' action="{% url 'login' %}">
-        {% csrf_token %}
-        <p class="ttt">{{form.username}}</p>
-        <p class="23">{{form.password}}</p>
-        <p class="input_button"><input class="inp1" type="submit"></p>
-    </form>
-          <a class="login_reg" href="{% url 'oursite:register' %}" style="">Еще нет аккаунта?</a>
-      </div>
+            <div class="col-lg-12 login-form">
+                <div class="col-lg-12 login-form">
+                    <form method='POST' action="{% url 'login' %}">
+                        {% csrf_token %}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <!--<input type="text" class="form-control" name="username" placeholder="Логин...">-->
+                                {{form.username}}
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                <!--<input  type="password" class="form-control" name="password" placeholder="Пароль...">-->
+                                {{form.password}}
+                            </div>
+
+                        <div class="col-lg-12 loginbttm">
+                            <div class="col-lg-12 login-btm login-button">
+                                <button class="btn btn-lg btn-primary btnLogin" type="submit">войти</button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 loginforgot">
+                            <div class="col-lg-12 forgot">
+                                <a href="#">Забыли пароль?</a>
+                                <a href="{% url 'oursite:register' %}">Еще нет аккаунта?</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-lg-4 col-md-3"></div>
     </div>
-</body>
-</html>
-
-<style>
-
-    .login_reg{
-    text-decoration: underline;
-    color: #FFFFFF;
-    padding-left: 180px;
-    font-size: 25px;
-    }
-
-    @media screen and (max-width:500px) {
-    .center{
-    margin-top: 15px;
-    width: 100%;
-    height: 620px;
-    }
-
-    .inp{
-    width: 90%;
-    height: 10%;
-    margin-left: 10px;
-    margin-top: 35px;
-    }
-
-    .email{
-    width: 30px;
-    }
-
-    .formm{
-    padding-left: 10px;
-    width: 90%;
-    }
-
-    .face{
-
-    }
-
-    .last_name{
-    margin-left: 80px;
-    width: 70%;
-    }
-
-    .ssill{
-    margin-left: 10px;
-    }
-
-    .email{
-    margin-left: 80px;
-    width: 70%;
-    }
-
-    .logPassAuth{
-    padding-left: 5px;
-    }
-
-    #id_username{
-    margin-left: 70px;
-    width: 70%;
-    }
 
 
-
-    #id_password{
-    margin-left: 70px;
-    width: 70%;
-    }
-
-    .auth{
-    margin-left: 5%;
-    margin-top: 30px;
-    font-size: 24px;
-    }
-
-    .login_reg{
-    padding-left: 0;
-    margin-left: 10%;
-
-    }
-
-
-    .inp1{
-    width: 90%;
-    height: 10%;
-    margin-left: 10px;
-    margin-top: 35px;
-    }
-
-
-
-}
-
-</style>
-
+    <script>
+        //Query input fields
+        var form_fields = document.getElementsByTagName('input')
+        form_fields[2].placeholder='Логин...';
+        form_fields[3].placeholder='Пароль...';
+        
+        
+        for (var field in form_fields){	
+        form_fields[field].className += 'form-control'
+        }
+        </script>
 {% endblock %}

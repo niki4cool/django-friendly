@@ -1,24 +1,92 @@
-{% if not chat %}
-    <div class="panel panel-body">
-        "Невозможно начать беседу. Не найден пользователь или вы не имеете доступа к данной беседе."
-    </div>
-{% else %}
-    {% load get_companion %}
-    {% if chat %}
-        <div id="messages" class="panel">
-            <div id="innerMessages">
-                {% for message in chat.message_set.all %}
+{% extends "oursite/index.html" %}
+{% load static %}
+{% block content %}
+{% load humanize %}
+    <div class="container">
+        <div class="profile">
+            <div class="col-md-3">
+                <div class="profile-sidebar">
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name">
+                            {{ user.first_name }} {{ user.last_name.0 }}
+                        </div>
+                    </div>
+                    <div class="profile-userpic">
+                        <img src="{{ image.image.url }}" class="img-responsive" alt="">
+                    </div>
+                    <div class="profile-usermenu">
+                        <ul class="nav">
+                            <li><a class="dropdown-item" href="{% url 'oursite:profilee' %}">&nbsp;&nbsp;<i class="fa-solid fa-scroll"></i>&nbsp;&nbsp;Мои объявления</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:profile_buying' %}">&nbsp;&nbsp;<i class="fa-solid fa-file-image"></i>&nbsp;&nbsp;Мои заказы</a></li>
+                            <li><a class="dropdown-item" href="{% url 'cart:cart_detail' %}">&nbsp;&nbsp;<i class="fa-solid fa-bookmark"></i>&nbsp;&nbsp;Избранное</a></li>
+                            <li class="active"><a class="dropdown-item" href="{% url 'oursite:dialogs' %}">&nbsp;&nbsp;<i class="fa-regular fa-comment"></i>&nbsp;&nbsp;Сообщения</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:notifications' %}">&nbsp;&nbsp;<i class="fa-regular fa-bell"></i>&nbsp;&nbsp;Уведомления</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:profile_manage' %}">&nbsp;&nbsp;<i class="fa-regular fa-id-card"></i>&nbsp;&nbsp;Профиль</a></li>
+                            <li><a class="dropdown-item" href="">&nbsp;&nbsp;<i class="fa-solid fa-gear"></i>&nbsp;&nbsp;Настройки</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="profile-content">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="card panel panel-default chat-widget">
+                        <div class="card-header">
+                                <div class="inbox_chat_top">
+                                    <div class="chat_list active_chat">
+                                    <div class="chat_people_img">
+                                        <span class="chat_back"><a href="{% url 'oursite:dialogs' %}"><i class="fa fa-arrow-left" style="font-size:24px"></i></a></span>
+                                        <div class="chat_img"><img src="{{ chat_image.image.url }}" width="68px" height="68px" alt="sunil"></div>
+                                        <div class="chat_people">
+                                            <div class="name_person"><h5>{{ chat_member }}</h5></div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div id="msgg" class="card-body msg_card_body">
+                          {% for message in chat.message_set.all %}
                         {% include 'oursite/message.html' with message_item=message %}
-                {% endfor %}
+                        {% endfor %}
+                          </div>
+
+                          <div class="card-footer">
+                            <div class="input-group">
+                            <button class="btn btn-primary btn-sm">
+                                <i class="fas fa-paperclip"></i>
+                            </button>
+                            <button class="btn btn-primary btn-sm">
+                                <i class="fa fa-camera"></i>
+                            </button>
+<!--                            <input type="text" placeholder="Написать сообщение" class="form-control primary">-->
+                                <form id="message-form" class="form-control primary" method="post" >
+<!--                                {% load bootstrap4 %}-->
+                                {% csrf_token %}
+<!--                                {% bootstrap_form form %}-->
+                                    <textarea name="message" style="height: 38px;" class="form-control primary" placeholder="Написать сообщение" title="" required="" id="id_message"></textarea>
+                                    <span class="input-group-btn">
+                                <button class="btn btn-primary btn-sm" onclick="return ETextEditor.validateForm('message-form')" type="submit"><i class="fas fa-location-arrow"></i></button>
+                            </span>
+                                </form>
+
+                          </div>
+                          </div>
+                      </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-    {% endif %}
-    <div id="message_form">
-        <form id="message-form" class="panel panel-body" method="post" >
-            {% load bootstrap4 %}
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            <button type="submit" class="btn btn-default btn-sm" onclick="return ETextEditor.validateForm('message-form')"><span class="ico ico-comment"></span>"Отправить"</button>
-        </form>
     </div>
-{% endif %}
+
+</body>
+
+<script type="text/javascript">
+var msgg = document.getElementById("msgg");
+msgg.scrollTop = msgg.scrollHeight;
+
+</script>
+
+</html>-->
+{% endblock %}
+

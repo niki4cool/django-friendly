@@ -1,0 +1,28 @@
+{% load static %}
+
+{% block list_item %}
+{% load humanize %}
+
+{% for product in products %}
+  <div class="col-lg-4 col-md-6">
+    <div class="block-profile product-profile no-border z-depth-2-top-profile z-depth-2-top-profile-hover">
+        <div class="block-profile-image">
+                  <a href="{{ product.get_absolute_url }}"><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" height="190px"></a>
+                  
+        </div>
+              <div class="block-profile-body">
+                  <h3 class="heading-profile heading-5-profile">{{ product.price.normalize|intcomma }} ₽</h3>
+                  <p class="product-profile-description">{{ product.title }}</p>
+                  <span class="wish-profile-icon"><i class="fa-solid fa-circle"></i></span>
+              </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-lg-12 col-md-6">
+    <div class="alert alert-primary" role="alert">
+        Упс! У Вас нет объявлений в архиве
+    </div>
+  </div>
+{% endfor %}
+
+{% endblock %}

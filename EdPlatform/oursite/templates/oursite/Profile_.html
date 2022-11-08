@@ -1,30 +1,107 @@
 {% extends "oursite/index.html" %}
 {% load static %}
-
 {% block content %}
 {% load humanize %}
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Home</title>
-  <link rel="stylesheet" href="{% static 'css/profile.css' %}">
-</head>
-<body class="bg">
+    <div class="container">
+        <div class="profile">
+            <div class="col-md-3">
+                <div class="profile-sidebar">
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name">
+                            {{ user.first_name }} {{ user.last_name.0 }}
+                        </div>
+                    </div>
+                    <div class="profile-userpic">
+                        <img src="{{ image.image.url }}" class="img-responsive" alt="">
+                    </div>
+                    <div class="profile-usermenu">
+                        <ul class="nav">
+                            <li class=" active"><a class="dropdown-item" href="{% url 'oursite:profilee' %}">&nbsp;&nbsp;<i class="fa-solid fa-scroll"></i>&nbsp;&nbsp;Мои объявления</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:profile_buying' %}">&nbsp;&nbsp;<i class="fa-solid fa-file-image"></i>&nbsp;&nbsp;Мои заказы</a></li>
+                            <li><a class="dropdown-item" href="{% url 'cart:cart_detail' %}">&nbsp;&nbsp;<i class="fa-solid fa-bookmark"></i>&nbsp;&nbsp;Избранное</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:dialogs' %}">&nbsp;&nbsp;<i class="fa-regular fa-comment"></i>&nbsp;&nbsp;Сообщения</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:notifications' %}">&nbsp;&nbsp;<i class="fa-regular fa-bell"></i>&nbsp;&nbsp;Уведомления</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:profile_manage' %}">&nbsp;&nbsp;<i class="fa-regular fa-id-card"></i>&nbsp;&nbsp;Профиль</a></li>
+                            <li><a class="dropdown-item" href="">&nbsp;&nbsp;<i class="fa-solid fa-gear"></i>&nbsp;&nbsp;Настройки</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="profile-content">
+                    <section id="tabs-profile">
+                        <div class="row">
+                            <div class="col-sm-12 ">
+                                <div class="navTabFlex-profile">
+                                 <h4 class="section-title">Мои объявления</h4>
+                                <nav>
+                                    <div class="nav nav-tabs nav-fil" id="nav-tab" role="tablist">
+                                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Активные</a>
+                                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Проданные</a>
+                                        
 
-<div class="block">
+                                    </div>
+                                </nav>  
+                                </div>
+            
+                                <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                        <div class="productContainer">
+                                            <div class="row">
+                                             {% for product in products %}
+                                              <div class="col-lg-4 col-md-6 ifram-col">
+                                                <div class="block-profile product-profile no-border z-depth-2-top-profile z-depth-2-top-profile-hover">
+                                                    <div class="block-profile-image">
+                                                              <a href="{{ product.get_absolute_url }}"><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" height="190px"></a>
+                                                              
+                                                    </div>
+                                                          <div class="block-profile-body">
+                                                              <h3 class="heading-profile heading-5-profile">{{ product.price.normalize|intcomma }} ₽</h3>
+                                                              <p class="product-profile-description">{{ product.title }}</p>
 
+                                                          </div>
+                                                </div>
+                                              </div>
+                                              {% empty %}
+                                              <div class="col-lg-12 col-md-6">
+                                                <div class="alert alert-primary text-center" role="alert">
+                                                    Упс! Вы еще не разместили ни одного объявления.
+                                                </div>
+                                              </div>
+                                              {% endfor %}
+                                             
+                                          </div>  
+                                          </div>
+                                        </div>
+                                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                        <div class="productContainer">
+                                            <div class="row">
+                                                <iframe class="myiframe embed-responsive-item" src="{% url 'oursite:profile_archive' %}" allowfullscreen></iframe>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                        </div>
+                    </section>  
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--<div class="block">
     <div class="settings">
         <div style="text-align: center">
             <p class="username">{{ user.first_name }} {{ user.last_name.0 }}.</p>
         </div>
-
 
         <img class="profile_pic" src="{{ image.image.url }}" alt="" height="160px" style="margin-left: 75px;">
         <a href="{% url "oursite:profilee" %}"><p class="side-menu-chosen">Мои объявления</p></a>
         <a href="{% url "oursite:profile_buying" %}"><p class="side-menu">Мои заказы</p></a>
         <a href="{% url "cart:cart_detail" %}"> <p class="side-menu">Избранное</p></a>
         <a href="{% url "oursite:dialogs" %}"> <p class="side-menu">Мои сообщения</p></a>
-        <a href="{% url "oursite:notifications" %}"><p class="side-menu">Уведомления</p></a>
+        <p class="side-menu">Уведомления</p>
         <a href="{% url "oursite:profile_manage" %}"><p class="side-menu">Управление профилем</p></a>
         <p class="side-menu">Настройки</p>
 
@@ -44,7 +121,7 @@
 
                 <div class="item" style="position: relative;">
                     <a class="noPadd" href="{{ product.get_absolute_url }}">
-                        <img class="imgItem" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                        <img class="imgItem" width="150px" height="200px" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
 
                     <div class="priceDiv">
                     <p class="price">{{ product.price.normalize|intcomma }} ₽</p>
@@ -54,9 +131,6 @@
                     </div>
 
                     <br>
-    <!--                <div class="category">-->
-    <!--                <a class="courseCategory" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>-->
-    <!--                </div>-->
 
                         </a>
                 </div>
@@ -64,7 +138,7 @@
             <div class="pic">
                 <div class="pic_center">
                     <h1 style="color: #FFFFFF; padding-top: 20px;">Упс...</h1>
-                    <h1 style="color: #FFFFFF">Вы еще не разместили ни одного объявления</h1>
+                    <h1 style="color: #FFFFFF">Упс! Вы еще не разместили ни одного объявления</h1>
                     <img src="{% static 'images/404.png' %}" style="width: 80%;"  >
                 </div>
             </div>
@@ -72,13 +146,13 @@
         </div>
     </div>
 
-</div>
+</div>-->
 
 
-<script type="text/javascript" src={% static "js/price.js" %}></script>
-<script> doprice() </script>
+<!--<script type="text/javascript" src={% static "js/price.js" %}></script>
+<script> doprice() </script>-->
 
-<script>
+<!--<script>
 
 
     var colorArray = document.getElementsByClassName('category');
@@ -112,9 +186,9 @@
 
     }
 
-</script>
+</script> -->
 
-<style>
+<!--<style>
 
     .pic{
     width: 762px;
@@ -165,7 +239,6 @@
 
     .product1{
     text-align: left;
-    width: 1000px;
 
     position: relative;
     margin: 20px auto;
@@ -205,7 +278,7 @@
     margin-left: 5%;
     width: 90%;
     height: 80%;
-    display: grid;
+    /*display: grid;*/
     grid-template-columns: 0.5fr 80%;
     }
 
@@ -313,7 +386,7 @@
 
 
     .centerr{
-    width: 1500px;
+    width: 100%;
 
     position: relative;
     margin: auto;
@@ -321,19 +394,6 @@
     display: block;
     }
 
-    @media screen and (max-width:1500px) {
-    .centerr{
-    width: 600px;
-    position: relative;
-    margin: auto;
-    border-radius: 30px;
-
-    }
-
-    .item{
-    margin-left: 55;
-    }
-}
 
     .textt{
     font-size: 20px;
@@ -396,7 +456,7 @@
      width: 180px;
      height: 180px;
      opacity: 0;
-    padding-top: -100px;
+    padding-top: -100px; }
 
 
 </style>
@@ -442,171 +502,6 @@ padding-left: 250;
 
 }
 
-
-@media screen and (max-width:500px) {
-    .center{
-    width: 100%;
-    height: 800px;
-    }
-
-    .centerr1{
-    width: 100%;
-    height: 800px;
-    }
-
-    .buttona{
-    margin-top: 140px;
-    margin-left: 10px;
-    }
-
-    ._text3{
-    top: 620px;
-    padding-left: 20px;
-    }
-
-    .upload_image{
-    padding-left: 180px;
-    padding-top: 470px;
-    width: 100px;
-    }
-
-    .imagecss{
-    width: 80px;
-    margin-top: 450px;
-    left: 0;
-    margin-left: 180px;
-    }
-
-    .imagecss input[type=file] {
-    position: absolute;
-    background-color: #000000;
-    width: 100px;
-    height: 100px;
-    opacity: 0;
-    padding-top: 0px;
-}
-
-    ._text2{
-    padding-left: 20px;
-
-    }
-
-    .upload_homework{
-    padding-left: 150px;
-    padding-top: 50px;
-    }
-
-    #id_work{
-    left: 150px;
-    margin-top: 50px;
-    }
-
-    #open-popup-1{
-    margin-left: 280px;
-    width: 30px;
-    height: 30px;
-    }
-
-    #popup-1{
-    margin-left: 20px;
-    width: 300px;
-    }
-
-    .popup-content{
-    width: 200px;
-    }
-
-    .addCategory{
-    margin-left: -10px;
-    margin-top: -6px;
-    }
-
-
-
-    .chooseCategory{
-    margin-left: 180px;
-    }
-
-    .product-list{
-    width: 100%;
-    }
-
-    .headerr{
-    width:93%;
-    }
-
-    .centerr{
-    width: 100%;
-    }
-
-    .item{
-    width: 90%;
-    margin-left: 6px;
-    height: 240px;
-    margin-right: 0px;
-    }
-
-    .item1{
-    width: 90%;
-    margin-left: 6px;
-    height: 240px;
-    margin-right: 0px;
-    }
-
-    .imgItem{
-    width: 80%;
-    height: 45%;
-    }
-    .imgItem1{
-    width: 80%;
-    height: 45%;
-    }
-
-    .hrr{
-
-    width: 95%;
-    }
-
-    .courseName{
-    font-size: 24px;
-    }
-
-    .courseName1{
-    font-size: 24px;
-    }
-
-    .category{
-    margin-top: -20px;
-
-    }
-
-    .courseCategory{
-    font-size: 18px;
-
-    }
-
-    .priceDiv{
-
-    margin-top: -60px;
-    }
-
-    .namee{
-
-    margin-bottom: 15px;
-    }
-
-    ._text{
-    padding-left: 25px;
-    }
-
-    .padd{
-    margin-left: 90px;
-    }
-
-    .price{
-    font-size: 18px;
-    }
-}
 </style>
 
 
@@ -614,7 +509,5 @@ padding-left: 250;
 
 </body>
 
-
-</body>
+</html>-->
 {% endblock %}
-</html>

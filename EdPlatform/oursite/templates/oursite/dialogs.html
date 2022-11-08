@@ -1,36 +1,135 @@
 {% extends "oursite/index.html" %}
 {% load static %}
 {% block content %}
-<div class="panel">
-        {% load get_companion %}
-        {% if not checkMessages %}
-            <div class="panel panel-body">"Нет ни одного начатого диалога"</div>
-        {% endif %}
-        {% for chat in chats %}
-            {% if chat.message_set.count != 0 %}
-                {% with last_message=chat.message_set.last %}
-                    {% get_companion user chat as companion %}
-                    <a class="list-group-item {% if companion == last_message.author and not last_message.is_readed %}unreaded{% endif %}" href="{{ chat.get_absolute_url }}">
-                        <img class="avatar-messages" src="{{ companion.userprofile.get_avatar }}">
-                        <div class="reply-body">
-                            <ul class="list-inline">
-                                <li class="drop-left-padding">
-                                    <strong class="list-group-item-heading">{{ companion.username }}</strong>
-                                </li>
-                                <li class="pull-right text-muted"><small>{{ last_message.pub_date }}</small></li>
-                            </ul>
-                            {% if companion != last_message.author %}
-                                <div>
-                                    <img class="avatar-rounded-sm" src="{{ last_message.author.userprofile.get_avatar }}">
-                                    <div class="attached-reply-body {% if not last_message.is_readed %}unreaded{% endif %}">{{ last_message.message|truncatechars_html:"200"|safe|striptags }}</div>
-                                </div>
-                            {% else %}
-                                <div>{{ last_message.message|truncatechars_html:"200"|safe|striptags }}</div>
-                            {% endif %}
+{% load humanize %}
+    <div class="container">
+        <div class="profile">
+            <div class="col-md-3">
+                <div class="profile-sidebar">
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name">
+                            {{ user.first_name }} {{ user.last_name.0 }}
                         </div>
-                    </a>
-                {% endwith %}
-            {% endif %}
-        {% endfor %}
+                    </div>
+                    <div class="profile-userpic">
+                        <img src="{{ image.image.url }}" class="img-responsive" alt="">
+                    </div>
+                    <div class="profile-usermenu">
+                        <ul class="nav">
+                            <li><a class="dropdown-item" href="{% url 'oursite:profilee' %}">&nbsp;&nbsp;<i class="fa-solid fa-scroll"></i>&nbsp;&nbsp;Мои объявления</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:profile_buying' %}">&nbsp;&nbsp;<i class="fa-solid fa-file-image"></i>&nbsp;&nbsp;Мои заказы</a></li>
+                            <li><a class="dropdown-item" href="{% url 'cart:cart_detail' %}">&nbsp;&nbsp;<i class="fa-solid fa-bookmark"></i>&nbsp;&nbsp;Избранное</a></li>
+                            <li class="active"><a class="dropdown-item" href="{% url 'oursite:dialogs' %}">&nbsp;&nbsp;<i class="fa-regular fa-comment"></i>&nbsp;&nbsp;Сообщения</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:notifications' %}">&nbsp;&nbsp;<i class="fa-regular fa-bell"></i>&nbsp;&nbsp;Уведомления</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:profile_manage' %}">&nbsp;&nbsp;<i class="fa-regular fa-id-card"></i>&nbsp;&nbsp;Профиль</a></li>
+                            <li><a class="dropdown-item" href="">&nbsp;&nbsp;<i class="fa-solid fa-gear"></i>&nbsp;&nbsp;Настройки</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="profile-content">
+                    <section id="tabs-profile">
+                        <div class="row">
+                            <div class="col-sm-12 ">
+                                <div class="navTabFlex-profile">
+                                 <h4 class="section-title">Сообщения</h4>
+                                <nav>
+                                    <div class="nav nav-tabs nav-fil" id="nav-tab" role="tablist">
+                                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Все сообщения</a>
+                                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Непрочитанные</a>
+                                        
+
+                                    </div>
+                                </nav>  
+                                </div>
+            
+                                <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                        <div class="productContainer">
+                                            <div class="row">
+                                                <div class="col-md-12 chat-co">
+                                                    <div class="inbox_people">
+                                                        {% load get_companion %}
+                                                        {% if not checkMessages %}
+                                                            <div class="alert alert-primary text-center" role="alert">
+                                                                Нет ни одного начатого диалога.
+                                                            </div>
+                                                        {% endif %}
+                                                        {% for chat in chats %}
+                                                        {% if chat.message_set.count != 0 %}
+                                                            {% with last_message=chat.message_set.last %}
+                                                                {% get_companion user chat as companion %}
+                                                        <a class="chat_link" href="{{ chat.get_absolute_url }}">
+                                                            <div class="inbox_chat">
+                                                                <div class="chat_list active_chat">
+                                                                <div class="chat_people_img">
+<!--                                                                    companion.userprofile.get_avatar-->
+                                                                    {% for img in images %}
+                                                                    {% if img.user == companion %}
+
+
+                                                                        <div class="chat_img"><img src="{{ img.image.url }}" width="68px" height="68px" alt="{{ companion }}"></div>
+                                                                    {% endif %}
+                                                                    {% endfor %}
+                                                                        <div class="chat_people">
+                                                                        <div class="name_person"><h5>{{ companion.username }} <span class="unread">Unread</span></h5></div>
+                                                                        
+                                                                        {% if companion != last_message.author %}
+                                                                        <!--<div class="chat_img"><img src="{{ last_message.author.userprofile.get_avatar }}" width="68px" height="68px" alt="sunil"></div>-->
+                                                                        <div class="text_message"><p>{{ last_message.message|truncatechars_html:"200"|safe|striptags }}</p></div> 
+                                                                        {% else %}
+                                                                        <div class="text_message"><p>{{ last_message.message|truncatechars_html:"200"|safe|striptags }}</p></div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="date_chat"><h6>{{ last_message.pub_date }}</h6></div>                                                            
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                            {% endwith %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                        
+                                                    </div>
+                                                </div>  
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                    <div class="productContainer">
+                                        <div class="row">
+                                            <div class="col-md-12 chat-co">
+                                                <div class="inbox_people">
+                                                    <a class="chat_link" href="#">
+                                                        <div class="inbox_chat">
+                                                            <div class="chat_list active_chat">
+                                                            <div class="chat_people_img">
+                                                                    <div class="chat_img"><img src="{% static 'images/imgprofil.png' %}" width="68px" height="68px" alt="sunil"></div>
+                                                                    <div class="chat_people">
+                                                                    <div class="name_person"><h5>Поддержка Proffer <span class="unread">Unread</span></h5></div>
+                                                                    <div class="text_message"><p>Добро пожаловать!...</p></div> 
+                                                                    </div>
+                                                            </div>
+                                                            <div class="date_chat"><h6>Вчера 12:40</h6></div>                                                            
+                                                            </div>
+                                                        </div>
+                                                    </a>                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                        </div>
+                    </section>  
+                </div>
+            </div>
+        </div>
     </div>
+
+</body>
+
+</html>-->
 {% endblock %}

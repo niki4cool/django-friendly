@@ -57,6 +57,8 @@ INSTALLED_APPS = [
 
 ]
 
+#Setting to use iframe option
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 
 MIDDLEWARE = [

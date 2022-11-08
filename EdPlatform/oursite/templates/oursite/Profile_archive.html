@@ -1,9 +1,150 @@
-{% extends "oursite/index.html" %}
-{% load static %}
 
-{% block content %}
+{% load static %}
 {% load humanize %}
+<!DOCTYPE html>
 <html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:wght@100&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+        integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+        integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <link rel="stylesheet" href="{% static 'css/mystyle.css' %}">
+</head>
+
+<body> 
+    {% for product in products %}
+        <div class="ifram-item">
+            <div class="col-lg-4 col-md-6 ifram-col">
+                <div class="block-profile product-profile no-border z-depth-2-top-ifram z-depth-2-top-ifram-hover">
+                    <div class="block-profile-image">
+                              <a href="{{ product.get_absolute_url }}"><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" height="190px"></a>
+                    </div>
+                          <div class="block-profile-body">
+                              <h3 class="heading-profile heading-5-profile">{{ product.price.normalize|intcomma }} ₽</h3>
+                              <p class="product-profile-description">{{ product.title }}</p>
+                              <span class="wish-profile-icon"><i class="fa-solid fa-circle"></i></span>
+                          </div>
+                </div>
+              </div>
+        </div>
+              {% empty %}
+                <div class="col-lg-12 col-md-6">
+                    <div class="alert alert-primary text-center" role="alert">
+                        Упс! У Вас нет объявлений в архиве.
+                    </div>
+                </div>
+            {% endfor %}
+
+              <!--<div class="col-lg-4 col-md-6">
+                <div class="block-profile product-profile no-border z-depth-2-top-profile z-depth-2-top-profile-hover">
+                    <div class="block-profile-image">
+                              <a href="#"><img src="https://picsum.photos/300/200?random=0" class="card-img-top" height="190px"></a>
+                    </div>
+                          <div class="block-profile-body">
+                              <h3 class="heading-profile heading-5-profile">1500 ₽</h3>
+                              <p class="product-profile-description">My Botilou</p>
+                              <span class="wish-profile-icon"><i class="fa-solid fa-circle"></i></span>
+                          </div>
+                </div>
+              </div> 
+
+              <div class="col-lg-4 col-md-6">
+                <div class="block-profile product-profile no-border z-depth-2-top-profile z-depth-2-top-profile-hover">
+                    <div class="block-profile-image">
+                              <a href="#"><img src="https://picsum.photos/300/200?random=0" class="card-img-top" height="190px"></a>
+                    </div>
+                          <div class="block-profile-body">
+                              <h3 class="heading-profile heading-5-profile">1500 ₽</h3>
+                              <p class="product-profile-description">My Botilou</p>
+                              <span class="wish-profile-icon"><i class="fa-solid fa-circle"></i></span>
+                          </div>
+                </div>
+              </div> 
+
+              <div class="col-lg-4 col-md-6">
+                <div class="block-profile product-profile no-border z-depth-2-top-profile z-depth-2-top-profile-hover">
+                    <div class="block-profile-image">
+                              <a href="#"><img src="https://picsum.photos/300/200?random=0" class="card-img-top" height="190px"></a>
+                    </div>
+                          <div class="block-profile-body">
+                              <h3 class="heading-profile heading-5-profile">1500 ₽</h3>
+                              <p class="product-profile-description">My Botilou</p>
+                              <span class="wish-profile-icon"><i class="fa-solid fa-circle"></i></span>
+                          </div>
+                </div>
+              </div> 
+
+              <div class="col-lg-4 col-md-6">
+                <div class="block-profile product-profile no-border z-depth-2-top-profile z-depth-2-top-profile-hover">
+                    <div class="block-profile-image">
+                              <a href="#"><img src="https://picsum.photos/300/200?random=0" class="card-img-top" height="190px"></a>
+                    </div>
+                          <div class="block-profile-body">
+                              <h3 class="heading-profile heading-5-profile">1500 ₽</h3>
+                              <p class="product-profile-description">My Botilou</p>
+                              <span class="wish-profile-icon"><i class="fa-solid fa-circle"></i></span>
+                          </div>
+                </div>
+              </div> 
+
+              <div class="col-lg-4 col-md-6">
+                <div class="block-profile product-profile no-border z-depth-2-top-profile z-depth-2-top-profile-hover">
+                    <div class="block-profile-image">
+                              <a href="#"><img src="https://picsum.photos/300/200?random=0" class="card-img-top" height="190px"></a>
+                    </div>
+                          <div class="block-profile-body">
+                              <h3 class="heading-profile heading-5-profile">1500 ₽</h3>
+                              <p class="product-profile-description">My Botilou</p>
+                              <span class="wish-profile-icon"><i class="fa-solid fa-circle"></i></span>
+                          </div>
+                </div>
+              </div> 
+              <div class="col-lg-4 col-md-6">
+                <div class="block-profile product-profile no-border z-depth-2-top-profile z-depth-2-top-profile-hover">
+                    <div class="block-profile-image">
+                              <a href="#"><img src="https://picsum.photos/300/200?random=0" class="card-img-top" height="190px"></a>
+                    </div>
+                          <div class="block-profile-body">
+                              <h3 class="heading-profile heading-5-profile">1500 ₽</h3>
+                              <p class="product-profile-description">My Botilou</p>
+                              <span class="wish-profile-icon"><i class="fa-solid fa-circle"></i></span>
+                          </div>
+                </div>
+              </div> 
+              <div class="col-lg-4 col-md-6">
+                <div class="block-profile product-profile no-border z-depth-2-top-profile z-depth-2-top-profile-hover">
+                    <div class="block-profile-image">
+                              <a href="#"><img src="https://picsum.photos/300/200?random=0" class="card-img-top" height="190px"></a>
+                    </div>
+                          <div class="block-profile-body">
+                              <h3 class="heading-profile heading-5-profile">1500 ₽</h3>
+                              <p class="product-profile-description">My Botilou</p>
+                              <span class="wish-profile-icon"><i class="fa-solid fa-circle"></i></span>
+                          </div>
+                </div>
+              </div> -->
+        
+
+<!--Iframe resizer window-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.contentWindow.min.js" integrity="sha512-14SY6teTzhrLWeL55Q4uCyxr6GQOxF3pEoMxo2mBxXwPRikdMtzKMYWy2B5Lqjr6PHHoGOxZgPaxUYKQrSmu0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+</html>
+
+  
+
+
+<!--<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Home</title>
@@ -14,18 +155,13 @@
 <div class="block">
 
     <div class="settings">
-        <div style="text-align: center">
-            <p class="username">{{ user.first_name }} {{ user.last_name.0 }}.</p>
-        </div>
-
-
-        <img class="profile_pic" src="{{ image.image.url }}" alt="" height="160px" style="margin-left: 75px;">
-
+        <p class="username">Анастасия В.</p>
+        <img class="profile_pic" src="{% static 'images/profile_pic.png' %}" alt="" height="160px" style="margin-left: 75px;">
         <a href="{% url "oursite:profilee" %}"><p class="side-menu-chosen">Мои объявления</p></a>
         <a href="{% url "oursite:profile_buying" %}"><p class="side-menu">Мои заказы</p></a>
         <a href="{% url "cart:cart_detail" %}"> <p class="side-menu">Избранное</p></a>
         <a href="{% url "oursite:dialogs" %}"> <p class="side-menu">Мои сообщения</p></a>
-        <a href="{% url "oursite:notifications" %}"><p class="side-menu">Уведомления</p></a>
+        <p class="side-menu">Уведомления</p>
         <a href="{% url "oursite:profile_manage" %}"><p class="side-menu">Управление профилем</p></a>
         <p class="side-menu">Настройки</p>
 
@@ -55,9 +191,6 @@
                     </div>
 
                     <br>
-    <!--                <div class="category">-->
-    <!--                <a class="courseCategory" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>-->
-    <!--                </div>-->
 
                         </a>
                 </div>
@@ -618,5 +751,4 @@ padding-left: 250;
 
 
 </body>
-{% endblock %}
-</html>
+</html>-->

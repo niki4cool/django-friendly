@@ -3,536 +3,94 @@
 {% block content %}
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Home</title>
-  <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'css/profile0.css' %}">
 </head>
-<body class="bg">
-
-
-<div id="main" class="product-list">
-    <div class="headerr">
-        <h1 class="products">Мои объявления</h1>
+<body class="bg0">
+    <div id="main0" class="product-list0">
+        <div class="headerr0">
+            <div class="products0">Мои объявления</div>
+        </div>
     </div>
-</div>
 
-{% for i in Item %}
-                {% if Item|length == 1 %}
-<div class="centerr1">
-                    <div class="item1" style="position: relative;">
-                <a href="{{ i.product.url_to_course }}">
-                    <img class="imgItem1" src="{% if i.product.image %}{{ i.product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-                </a>
-                <br>
-                <hr class="hrr" style="">
-                <br>
-                <div class="namee1">
-                <a class="courseName1" href="{{ i.product.url_to_course }}">{{ i.product.title }}</a>
-                </div>
-                <br>
-                <div class="category1">
-                <a class="courseCategory1" href="{{ i.product.category.get_absolute_url }}">{{ i.product.category }}</a></h2>
-                </div>
+    {% for i in Item %}
+    {% if Item|length == 1 %}
+    <div class="centerr0">
+        <div class="item10" style="position: relative;">
+            <a href="{{ i.product.url_to_course }}">
+                <img class="imgItem1"
+                    src="{% if i.product.image %}{{ i.product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+            </a>
+            <br>
+            <hr class="hrr0">
+            <br>
+            <div class="namee10">
+                <a class="courseName10" href="{{ i.product.url_to_course }}">{{ i.product.title }}</a>
             </div>
-                </div>
- {% else %}
-
-<div class="centerr">
-            <div class="item" style="position: relative;">
-                <a href="{{ i.product.url_to_course }}">
-                    <img class="imgItem" src="{% if i.product.image %}{{ i.product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-                </a>
-                <br>
-                <hr style="">
-                <br>
-                <div class="namee">
-                <a class="courseName" href="{{ i.product.url_to_course }}">{{ i.product.title }}</a>
-                </div>
-                <br>
-                <div class="category">
-                <a class="courseCategory" href="{{ i.product.category.get_absolute_url }}">{{ i.product.category }}</a></h2>
-                </div>
+            <br>
+            <div class="category10">
+                <a class="courseCategory10" href="{{ i.product.category.get_absolute_url }}">{{ i.product.category
+                    }}</a></h2>
             </div>
-    {% endif %}
-            {% endfor %}
-
-</div>
-
-<script>
-
-    var colorArray = document.getElementsByClassName('category');
-    var color = document.getElementsByClassName('courseCategory');
-    var i = 10;
-    var t = 0;
-    while (t < 10){
-    if (i == 14){
-    i = 10
-    }
-    if (i % 10 == 0){
-    colorArray[t].style.backgroundColor = '#FDE8F2';
-    color[t].style.color = '#FF166A';
-    }
-    else if (i % 11 == 0){
-    colorArray[t].style.backgroundColor = '#F7ECFF';
-    color[t].style.color = '#FA00FF';
-    }
-
-    else if (i % 12 == 0){
-    colorArray[t].style.backgroundColor = '#E3F3FF';
-    color[t].style.color = '#618DFF';
-    }
-
-    else{
-    colorArray[t].style.backgroundColor = '#FFF3E9';
-    color[t].style.color = '#DF6B00';
-    }
-    i++
-    t++
-
-    }
-
-</script>
-
-<style>
-
-    .hrr{
-    width: 440px;
-    }
-
-    .item1{
-    padding-top: 10px;
-    margin-left: 150;
-    margin-right: auto;
-     float: left;
-     background: #FFFFFF;
-     background-color: #FFFFFF;
-     width: 470px;
-     height: 460px;
-     margin-right: 67px;
-     text-align: center;
-     margin-bottom: 55px;
-     border: 8px solid transparent;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .centerr1{
-    width: 800px;
-
-    position: relative;
-    margin: auto;
-
-    display: block;
-    }
-
-    .category1{
-    display: inline-block;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 30px;
-    background-color: #E3F3FF;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    }
-
-    .courseCategory1{
-    font-size: 24px;
-    text-decoration: none;
-    color: #618DFF;
-    font-weight: 600;
-    }
-
-    .courseName1{
-    padding-top: 100px;
-    text-decoration: none;
-    color: black;
-    font-size: 32px;
-    font-weight: 600;
-    }
-
-    .imgItem1{
-    width: 440px;
-    height: 200px;
-    background: #FFFFFF;
-    }
-
-    .category{
-    display: inline-block;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 30px;
-    background-color: #E3F3FF;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    }
-
-    .courseCategory{
-    font-size: 24px;
-    text-decoration: none;
-    color: #618DFF;
-    font-weight: 600;
-    }
-
-    .courseName{
-    padding-top: 100px;
-    text-decoration: none;
-    color: black;
-    font-size: 32px;
-    font-weight: 600;
-    }
-
-    .headerr{
-    text-align: center;
-    width: 762px;
-    background: #FFFFFF;
-    opacity: .8;
-    position: relative;
-    margin: 20px auto;
-    margin-top: 10px;
-    border-radius: 30px;
-    border: 2px solid transparent;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .imgItem{
-    width: 440px;
-    height: 200px;
-    background: #FFFFFF;
-    }
-
-    .product-list{
-    width: 762px;
-    position: relative;
-    margin: 20px auto;
-    margin-top: 10px;
-    border-radius: 30px;
-    border: 2px solid transparent;
-    }
-
-
-    .item{
-    padding-top: 10px;
-    margin-left: 150px;
-    margin-right: auto;
-     float: left;
-     background: #FFFFFF;
-     background-color: #FFFFFF;
-     width: 470px;
-     height: 460px;
-     margin-right: 67px;
-     text-align: center;
-     margin-bottom: 55px;
-     border: 8px solid transparent;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    }
-
-
-    .centerr{
-    width: 1500px;
-
-    position: relative;
-    margin: auto;
-
-    display: block;
-    }
-
-    @media screen and (max-width:1500px) {
-    .centerr{
-    width: 600px;
-    position: relative;
-    margin: auto;
-    border-radius: 30px;
-
-    }
-
-    .item{
-    margin-left: 55;
-    }
-}
-
-    .textt{
-    font-size: 20px;
-    font-weight: 600;
-    padding-left: 5%;
-
-    }
-
-    .overview{
-    font-size: 20px;
-    margin-left: 160px;
-    height: 60px;
-    width: 300px;
-
-    }
-
-    .titlee{
-    position: absolute;
-    top: 100px;
-    margin-left: 3%;
-
-    }
-
-    .title{
-    font-size: 20px;
-    margin-left: 160px;
-    height: 30px;
-    width: 300px;
-    }
-
-    .buttona{
-    width: 300px;
-    height: 50px;
-    margin-top: 30px;
-    margin-left: 40px;
-    color: #9F7100;
-    font-size: 23px;
-    font-weight: 600;
-    background-color: #FFF3E9;
-    border: 2px solid #C79C34;
-    border-radius: 20px;
-    }
-
-    .upload_image{
-    width: 180px;
-    position: absolute; pointer-events: none;
-    padding-left: 535px;
-    padding-top: 60px;
-    }
-
-    .imagecss{
-    width: 180px;
-    position: absolute;
-    padding-left: 535px;
-    padding-top: 60px;
-    }
-    .imagecss input[type=file] {
-    position: absolute;
-    background-color: #000000;
-     width: 180px;
-     height: 180px;
-     opacity: 0;
-    padding-top: -100px;
-
-
-</style>
-<style>
-.upload_video{
-width: 60px;
-position: absolute; pointer-events: none;
-padding-left: 250;
-}
-
-    .homework{
-    display: flex;
-     justify-content: center;
-     align-items: center;
-     flex-direction: column;
-     width: 60px;
-     height: 60px;
-     margin-top: -65px;
-     padding-left: 390;
-    }
-
-     .homework input[type=file] {
-     width: 60px;
-     height: 60px;
-     opacity: 0;
-     position: absolute;
-}
-
-    .videocss{
-    display: flex;
-     justify-content: center;
-     align-items: center;
-     flex-direction: column;
-     width: 60px;
-     height: 60px;
-     padding-left: 250;
-    }
-    .videocss input[type=file] {
-     width: 60px;
-     height: 60px;
-     opacity: 0;
-     position: absolute;
-
-}
-
-
-@media screen and (max-width:500px) {
-    .center{
-    width: 100%;
-    height: 800px;
-    }
-
-    .centerr1{
-    width: 100%;
-    height: 800px;
-    }
-
-    .buttona{
-    margin-top: 140px;
-    margin-left: 10px;
-    }
-
-    ._text3{
-    top: 620px;
-    padding-left: 20px;
-    }
-
-    .upload_image{
-    padding-left: 180px;
-    padding-top: 470px;
-    width: 100px;
-    }
-
-    .imagecss{
-    width: 80px;
-    margin-top: 450px;
-    left: 0;
-    margin-left: 180px;
-    }
-
-    .imagecss input[type=file] {
-    position: absolute;
-    background-color: #000000;
-    width: 100px;
-    height: 100px;
-    opacity: 0;
-    padding-top: 0px;
-}
-
-    ._text2{
-    padding-left: 20px;
-
-    }
-
-    .upload_homework{
-    padding-left: 150px;
-    padding-top: 50px;
-    }
-
-    #id_work{
-    left: 150px;
-    margin-top: 50px;
-    }
-
-    #open-popup-1{
-    margin-left: 280px;
-    width: 30px;
-    height: 30px;
-    }
-
-    #popup-1{
-    margin-left: 20px;
-    width: 300px;
-    }
-
-    .popup-content{
-    width: 200px;
-    }
-
-    .addCategory{
-    margin-left: -10px;
-    margin-top: -6px;
-    }
-
-    .products{
-    font-size: 18px;
-    margin-top: 27px;
-    }
-
-    .chooseCategory{
-    margin-left: 180px;
-    }
-
-    .product-list{
-    width: 100%;
-    }
-
-    .headerr{
-    width:93%;
-    }
-
-    .centerr{
-    width: 100%;
-    }
-
-    .item{
-    width: 90%;
-    margin-left: 6px;
-    height: 240px;
-    margin-right: 0px;
-    }
-
-    .item1{
-    width: 90%;
-    margin-left: 6px;
-    height: 240px;
-    margin-right: 0px;
-    }
-
-    .imgItem{
-    width: 80%;
-    height: 45%;
-    }
-    .imgItem1{
-    width: 80%;
-    height: 45%;
-    }
-
-    .hrr{
-
-    width: 95%;
-    }
-
-    .courseName{
-    font-size: 24px;
-    }
-
-    .courseName1{
-    font-size: 24px;
-    }
-
-    .category{
-    margin-top: -20px;
-
-    }
-
-    .courseCategory{
-    font-size: 18px;
-
-    }
-
-    .priceDiv{
-    margin-top: -60px;
-    }
-
-    .namee{
-
-    margin-bottom: 15px;
-    }
-
-    ._text{
-    padding-left: 25px;
-    }
-
-    .padd{
-    margin-left: 90px;
-    }
-
-    .price{
-    font-size: 18px;
-    }
-}
-</style>
-
-
-
-
+        </div>
+    </div>
+    {% else %}
+
+    <div class="centerr0">
+        <div class="item0" style="position: relative;">
+            <a href="{{ i.product.url_to_course }}">
+                <img class="imgItem0"
+                    src="{% if i.product.image %}{{ i.product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+            </a>
+            <br>
+            <hr>
+            <br>
+            <div class="namee0">
+                <a class="courseName0" href="{{ i.product.url_to_course }}">{{ i.product.title }}</a>
+            </div>
+            <br>
+            <div class="category0">
+                <a class="courseCategory0" href="{{ i.product.category.get_absolute_url }}">{{ i.product.category }}</a>
+                </h2>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+    </div>
+    <script>
+        var colorArray = document.getElementsByClassName('category');
+        var color = document.getElementsByClassName('courseCategory');
+        var i = 10;
+        var t = 0;
+        while (t < 10) {
+            if (i == 14) {
+                i = 10
+            }
+            if (i % 10 == 0) {
+                colorArray[t].style.backgroundColor = '#FDE8F2';
+                color[t].style.color = '#FF166A';
+            }
+            else if (i % 11 == 0) {
+                colorArray[t].style.backgroundColor = '#F7ECFF';
+                color[t].style.color = '#FA00FF';
+            }
+
+            else if (i % 12 == 0) {
+                colorArray[t].style.backgroundColor = '#E3F3FF';
+                color[t].style.color = '#618DFF';
+            }
+
+            else {
+                colorArray[t].style.backgroundColor = '#FFF3E9';
+                color[t].style.color = '#DF6B00';
+            }
+            i++
+            t++
+
+        }
+    </script>
 </body>
-
-
-</body>
-{% endblock %}
 </html>
+{% endblock %}

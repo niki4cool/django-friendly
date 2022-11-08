@@ -12,6 +12,9 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 
+#import to use iframe
+from django.views.decorators.clickjacking import xframe_options_deny
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 
 @require_POST
 def cart_add(request, product_id):
@@ -33,6 +36,8 @@ def cart_remove(request, product_id):
     return redirect('cart:cart_detail')
 
 @login_required(login_url='/register')
+@xframe_options_sameorigin
+
 def cart_detail(request):
     image = ImageForUser.objects.get(user=request.user)
     user = User.objects.get(username=request.user)

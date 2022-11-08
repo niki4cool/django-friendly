@@ -1,8 +1,76 @@
 {% extends "oursite/index.html" %}
 {% load static %}
-
 {% block content %}
 {% load humanize %}
+    <div class="container">
+        <div class="profile">
+            <div class="col-md-3">
+                <div class="profile-sidebar">
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name">
+                            {{ user.first_name }} {{ user.last_name.0 }}
+                        </div>
+                    </div>
+                    <div class="profile-userpic">
+                        <img src="{{ image.image.url }}" class="img-responsive" alt="">
+                    </div>
+                    <div class="profile-usermenu">
+                        <ul class="nav">
+                            <li><a class="dropdown-item" href="{% url 'oursite:profilee' %}">&nbsp;&nbsp;<i class="fa-solid fa-scroll"></i>&nbsp;&nbsp;Мои объявления</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:profile_buying' %}">&nbsp;&nbsp;<i class="fa-solid fa-file-image"></i>&nbsp;&nbsp;Мои заказы</a></li>
+                            <li><a class="dropdown-item" href="{% url 'cart:cart_detail' %}">&nbsp;&nbsp;<i class="fa-solid fa-bookmark"></i>&nbsp;&nbsp;Избранное</a></li>
+                            <li class="active"><a class="dropdown-item" href="{% url 'oursite:dialogs' %}">&nbsp;&nbsp;<i class="fa-regular fa-comment"></i>&nbsp;&nbsp;Сообщения</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:notifications' %}">&nbsp;&nbsp;<i class="fa-regular fa-bell"></i>&nbsp;&nbsp;Уведомления</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:profile_manage' %}">&nbsp;&nbsp;<i class="fa-regular fa-id-card"></i>&nbsp;&nbsp;Профиль</a></li>
+                            <li><a class="dropdown-item" href="">&nbsp;&nbsp;<i class="fa-solid fa-gear"></i>&nbsp;&nbsp;Настройки</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="profile-content">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="card panel panel-default chat-widget">
+                        <div class="card-header">
+                                <div class="inbox_chat_top">
+                                    <div class="chat_list active_chat">
+                                    <div class="chat_people_img">
+                                        <span class="chat_back"><a href="{% url 'oursite:notifications' %}"><i class="fa fa-arrow-left" style="font-size:24px"></i></a></span>
+                                        <div class="chat_img"><img src="{% static 'images/profferLogo.png' %}" width="68px" height="68px" alt="sunil"></div>
+                                        <div class="chat_people">
+                                            <div class="name_person"><h5>Поддержка Proffer</h5></div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="card-body">
+                            <span class="alert_content">
+                                {% if nots.image %}
+                                <span class="alert_content_img"></span><img src="{{ nots.image.url }}" alt="" height="90px" width="120px">
+                                {% endif %}
+                                <span class="alert_content_title"><h6>{{ nots.title }} </h6></span>
+                                <span class="alert_content_text"><p>{{ nots.overview }}</p></span>
+                            </span>
+                        </div>
+                          <!--<div class="card-footer">
+                            <h3>Ok</h3>
+                          </div>-->
+                      </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>-->
+{% endblock %}
+
+
+<!--
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -649,5 +717,4 @@ padding-left: 250;
 
 
 </body>
-{% endblock %}
-</html>
+</html>-->

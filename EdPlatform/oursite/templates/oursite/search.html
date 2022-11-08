@@ -3,625 +3,131 @@
 
 {% block content %}
 {% load humanize %}
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Home</title>
-  <link rel="stylesheet" href="{% static 'css/profile.css' %}">
-</head>
-<body class="bg">
-<div class="headerr">
-            <span class="products" id="s">Результаты поиска по запросу: {{ query }}  </span><span class="number">{{ list|length }}</span>
 
-        </div>
+<div class="container currentLinkContainer">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
 
-<div class="block">
-
-    <div class="settings">
-        <form method="post" enctype="multipart/form-data" id="search-form">
-            {% csrf_token %}
-
-            <p class="side-text">Тип объявления</p>
-            <div class="form"><input type="checkbox" name="buy" value="buy"><span class="textt">Ищу</span></div>
-            <div class="form"><input type="checkbox" name="sell" value="sell"><span class="textt">Предлагаю</span></div>
-            <p class="side-text">Стоимость</p>
-            <div class="form" style="display:inline-block">
-                <input type="number" name="from" size="10" placeholder="От">
-                <input type="number" name="to" size="10" placeholder="До, руб.">
-            </div>
-            <p class="side-text">Срок размещения</p>
-            <div class="form"><input type="radio" name="time" value="24h"><span class="textt">За 24 часа</span></div>
-            <div class="form"><input type="radio" name="time" value="7d"><span class="textt">За 7 дней</span></div>
-            <div class="form"><input type="radio" name="time" value="all"><span class="textt">За все время</span></div>
-            <input type="submit" value="Submit">
-        </form>
-    </div>
-
-    <div id="main" class="product-list">
-        <div class="all-items">
-        {% for product in list %}
-
-                <div class="item" style="position: relative;">
-                    <a class="noPadd" href="{{ product.get_absolute_url }}">
-                        <img class="imgItem" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-
-                    <div class="priceDiv">
-                    <p class="price">{{ product.price.normalize|intcomma }} ₽</p>
-                    </div>
-                    <div class="namee">
-                    <a class="courseName" href="{{ product.get_absolute_url }}">{{ product.title }}</a>
-                    </div>
-
-                    <br>
-    <!--                <div class="category">-->
-    <!--                <a class="courseCategory" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>-->
-    <!--                </div>-->
-
-                        </a>
-                </div>
-            {% endfor %}
+            </nav>
         </div>
     </div>
-
 </div>
-
-
-<script type="text/javascript" src={% static "js/price.js" %}></script>
-<script> doprice() </script>
-
-<script>
-
-
-    var colorArray = document.getElementsByClassName('category');
-    var color = document.getElementsByClassName('courseCategory');
-    var i = 10;
-    var t = 0;
-    while (t < 10){
-    if (i == 14){
-    i = 10
-    }
-    if (i % 10 == 0){
-    colorArray[t].style.backgroundColor = '#FDE8F2';
-    color[t].style.color = '#FF166A';
-    }
-    else if (i % 11 == 0){
-    colorArray[t].style.backgroundColor = '#F7ECFF';
-    color[t].style.color = '#FA00FF';
-    }
-
-    else if (i % 12 == 0){
-    colorArray[t].style.backgroundColor = '#E3F3FF';
-    color[t].style.color = '#618DFF';
-    }
-
-    else{
-    colorArray[t].style.backgroundColor = '#FFF3E9';
-    color[t].style.color = '#DF6B00';
-    }
-    i++
-    t++
-
-    }
-
-</script>
-
-<style>
-
-    input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-}
-
-input[type='number'],
-input[type="number"]:hover,
-input[type="number"]:focus {
-    appearance: none;
-    -moz-appearance: textfield;
-}
-
-input[type='number']{
-    width: 100;
-}
-
-    .products{
-    font-size: 28px;
-    font-weight: 450;
-    }
-
-    .number{
-    font-size: 28px;
-    font-weight: 450;
-    color: #777C7D;
-    margin-left: 15px;
-
-    }
-
-    .all-items{
-    margin-left: 120px;
-    }
-
-    .side-menu{
-    margin-left: 50px;
-    font-size: 24px;
-    font-weight: 450;
-    }
-
-    .side-menu-chosen{
-    margin-left: 50px;
-    font-size: 24px;
-    font-weight: 450;
-    color: #00B2B2;
-    }
-
-    .side-text{
-    margin-left: 30px;
-    font-size: 26px;
-    font-weight: 650;
-    }
-
-    .form{
-    margin-left: 30px;
-    }
-
-    .settings{
-    width: 309px;
-    height: 530px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    background-color: #FFF;
-    }
-
-    .product1{
-    text-align: left;
-    width: 1000px;
-
-    position: relative;
-    margin: 20px auto;
-    margin-top: 10px;
-
-    margin-bottom: 27px;
-    }
-
-    a{
-    color: black;
-    }
-
-    .product{
-    margin-right: 200px;
-    width: 500px;
-    font-size: 24px;
-    margin-top: 27px;
-    font-weight: 450;
-    border-bottom: 4px solid #00D5D5;
-    }
-
-    .product-not{
-    margin-right: 200px;
-    width: 500px;
-    font-size: 24px;
-    margin-top: 27px;
-    color: #777C7D;
-    font-weight: 450;
-    }
-
-
-
-
-
-    .block{
-    margin-top: 50px;
-    margin-left: 5%;
-    width: 90%;
-    height: 80%;
-    display: grid;
-    grid-template-columns: 0.5fr 80%;
-    }
-
-
-    .namee{
-    margin-left: 20px;
-    width: 210px;
-    word-break: break-all;
-    text-align: left;
-    }
-
-    .priceDiv{
-    width: 210px;
-    margin-left: 20px;
-    word-break: break-all;
-    text-align: left;
-    }
-
-    .price{
-    font-size: 28px;
-    font-weight: 800;
-    color: #182128;
-    margin: 0;
-    margin-top: 20px;
-    }
-
-    a{
-    text-decoration: none;
-    }
-
-    .hrr{
-    width: 440px;
-    }
-
-
-
-    .category{
-    display: inline-block;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 30px;
-    background-color: #E3F3FF;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    }
-
-    .courseCategory{
-    font-size: 24px;
-    text-decoration: none;
-    color: #618DFF;
-    font-weight: 600;
-    }
-
-
-
-    .courseName{
-    text-decoration: none;
-    color: black;
-    font-size: 22px;
-    font-weight: 600;
-    }
-
-    .headerr{
-
-    width: 762px;
-
-    opacity: .8;
-    position: relative;
-    margin-left: 100px;
-    margin-top: 50px;
-
-    }
-
-    .imgItem{
-    width: 250px;
-    height: 220px;
-    background: #FFFFFF;
-    border-radius: 10px 10px 0 0;
-    }
-
-    .product-list{
-    width: 100%;
-    position: relative;
-
-    border-radius: 30px;
-    border: 2px solid transparent;
-    }
-
-
-    .item{
-    border-radius: 10px;
-    margin-right: auto;
-     float: left;
-     background: #FFFFFF;
-     background-color: #FFFFFF;
-     width: 250px;
-     height: 340px;
-     margin-right: 50px;
-     text-align: center;
-     margin-bottom: 55px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    }
-
-
-    .centerr{
-    width: 1500px;
-
-    position: relative;
-    margin: auto;
-
-    display: block;
-    }
-
-    @media screen and (max-width:1500px) {
-    .centerr{
-    width: 600px;
-    position: relative;
-    margin: auto;
-    border-radius: 30px;
-
-    }
-
-    .item{
-    margin-left: 55;
-    }
-}
-
-    .textt{
-    font-size: 20px;
-    font-weight: 600;
-    padding-left: 5%;
-
-    }
-
-    .overview{
-    font-size: 20px;
-    margin-left: 160px;
-    height: 60px;
-    width: 300px;
-
-    }
-
-    .titlee{
-    position: absolute;
-    top: 100px;
-    margin-left: 3%;
-
-    }
-
-    .title{
-    font-size: 20px;
-    margin-left: 160px;
-    height: 30px;
-    width: 300px;
-    }
-
-    .buttona{
-    width: 300px;
-    height: 50px;
-    margin-top: 30px;
-    margin-left: 40px;
-    color: #9F7100;
-    font-size: 23px;
-    font-weight: 600;
-    background-color: #FFF3E9;
-    border: 2px solid #C79C34;
-    border-radius: 20px;
-    }
-
-    .upload_image{
-    width: 180px;
-    position: absolute; pointer-events: none;
-    padding-left: 535px;
-    padding-top: 60px;
-    }
-
-    .imagecss{
-    width: 180px;
-    position: absolute;
-    padding-left: 535px;
-    padding-top: 60px;
-    }
-    .imagecss input[type=file] {
-    position: absolute;
-    background-color: #000000;
-     width: 180px;
-     height: 180px;
-     opacity: 0;
-    padding-top: -100px;
-
-
-</style>
-<style>
-.upload_video{
-width: 60px;
-position: absolute; pointer-events: none;
-padding-left: 250;
-}
-
-    .homework{
-    display: flex;
-     justify-content: center;
-     align-items: center;
-     flex-direction: column;
-     width: 60px;
-     height: 60px;
-     margin-top: -65px;
-     padding-left: 390;
-    }
-
-     .homework input[type=file] {
-     width: 60px;
-     height: 60px;
-     opacity: 0;
-     position: absolute;
-}
-
-    .videocss{
-    display: flex;
-     justify-content: center;
-     align-items: center;
-     flex-direction: column;
-     width: 60px;
-     height: 60px;
-     padding-left: 250;
-    }
-    .videocss input[type=file] {
-     width: 60px;
-     height: 60px;
-     opacity: 0;
-     position: absolute;
-
-}
-
-
-@media screen and (max-width:500px) {
-    .center{
-    width: 100%;
-    height: 800px;
-    }
-
-    .centerr1{
-    width: 100%;
-    height: 800px;
-    }
-
-    .buttona{
-    margin-top: 140px;
-    margin-left: 10px;
-    }
-
-    ._text3{
-    top: 620px;
-    padding-left: 20px;
-    }
-
-    .upload_image{
-    padding-left: 180px;
-    padding-top: 470px;
-    width: 100px;
-    }
-
-    .imagecss{
-    width: 80px;
-    margin-top: 450px;
-    left: 0;
-    margin-left: 180px;
-    }
-
-    .imagecss input[type=file] {
-    position: absolute;
-    background-color: #000000;
-    width: 100px;
-    height: 100px;
-    opacity: 0;
-    padding-top: 0px;
-}
-
-    ._text2{
-    padding-left: 20px;
-
-    }
-
-    .upload_homework{
-    padding-left: 150px;
-    padding-top: 50px;
-    }
-
-    #id_work{
-    left: 150px;
-    margin-top: 50px;
-    }
-
-    #open-popup-1{
-    margin-left: 280px;
-    width: 30px;
-    height: 30px;
-    }
-
-    #popup-1{
-    margin-left: 20px;
-    width: 300px;
-    }
-
-    .popup-content{
-    width: 200px;
-    }
-
-    .addCategory{
-    margin-left: -10px;
-    margin-top: -6px;
-    }
-
-
-
-    .chooseCategory{
-    margin-left: 180px;
-    }
-
-    .product-list{
-    width: 100%;
-    }
-
-    .headerr{
-    width:93%;
-    }
-
-    .centerr{
-    width: 100%;
-    }
-
-    .item{
-    width: 90%;
-    margin-left: 6px;
-    height: 240px;
-    margin-right: 0px;
-    }
-
-    .item1{
-    width: 90%;
-    margin-left: 6px;
-    height: 240px;
-    margin-right: 0px;
-    }
-
-    .imgItem{
-    width: 80%;
-    height: 45%;
-    }
-    .imgItem1{
-    width: 80%;
-    height: 45%;
-    }
-
-    .hrr{
-
-    width: 95%;
-    }
-
-    .courseName{
-    font-size: 24px;
-    }
-
-    .courseName1{
-    font-size: 24px;
-    }
-
-    .category{
-    margin-top: -20px;
-
-    }
-
-    .courseCategory{
-    font-size: 18px;
-
-    }
-
-    .priceDiv{
-
-    margin-top: -60px;
-    }
-
-    .namee{
-
-    margin-bottom: 15px;
-    }
-
-    ._text{
-    padding-left: 25px;
-    }
-
-    .padd{
-    margin-left: 90px;
-    }
-
-    .price{
-    font-size: 18px;
-    }
-}
-</style>
-
-
-
-
-</body>
-
-
-</body>
+<section class="listings">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12  search-bloc-result">
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="search-found"> Результаты поиска по запросу: {{ query }} {{ list|length }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <div class="card card-sidebar">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form method="post" enctype="multipart/form-data" id="search-form">
+                                            {% csrf_token %}
+
+                                            <div class="form-group box-form">
+                                                <span><h5>Тип объявления</h5></span>
+                                                <div class="nested_check_in checkbox-md"><input name="buy" value="buy" type="checkbox"> <label class="nested_label">Ищу</label></div>
+                                                <div class="nested_check_in checkbox-md"><input name="sell" value="sell" type="checkbox"> <label class="nested_label">Предлагаю</label></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <span><h5>Стоимость</h5></span>
+                                                <div class="box-form-horiz">
+                                                    <div class="min">
+                                                        <input type="number" name="from" class="form-control" placeholder="от">
+                                                    </div>
+                                                    <div class="max">
+                                                        <input type="number" name="to" class="form-control" placeholder="до, руб.">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group box-form">
+                                                <span><h5>Сортировать по</h5></span>
+                                                <div class="">
+                                                    <label class="nested_label">
+                                                        <input type="radio" name="exampleRadio" value="">
+                                                        <span class="form-check-label"> По умолчанию</span>
+                                                    </label>
+                                                    <label class="nested_label">
+                                                        <input type="radio" name="exampleRadio" value="">
+                                                        <span class="form-check-label">По дате</span>
+                                                    </label>
+                                                    <label class="nested_label">
+                                                        <input type="radio" name="exampleRadio" value="">
+                                                        <span class="form-check-label">Дешевле</span>
+                                                    </label>
+                                                    <label class="nested_label">
+                                                        <input type="radio" name="exampleRadio" value="">
+                                                        <span class="form-check-label">Дороже</span>
+                                                    </label>
+                                                    <label class="nested_label">
+                                                        <input type="radio" name="exampleRadio" value="">
+                                                        <span class="form-check-label">По удаленности</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="card_button">
+                                                <button type="Submit" value="Submit" class="btn btn-primary btnfilter">Применить фильтры</button>
+                                                <button type="button" value="" class="btn btn-primary btnfilter-clean">Сбросить фильтры</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                {% for product in list %}
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <a class="card_link" href="{{ product.get_absolute_url }}">
+                            <div class="card card-rightbar">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3 card_img">
+                                            <img class="search-result-img img-fluid" src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+                                        </div>
+                                        <div class="col-md-9  card-body">
+                                            <h4 class="card_title">{{ product.title }}</h4>
+
+                                            <span class="card_price">{{ product.price.normalize|intcomma }} ₽</span>
+                                            
+                                            <p class="card_descrip">
+                                                {{ product.overview }}
+                                            </p>
+                                            <span class="card_date">Yesterday 10:00 PM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="pagination">
+                            <li class="page-item disabled"><a class="page-link" href="#">Предыдущий</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Следующий</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
-</html>

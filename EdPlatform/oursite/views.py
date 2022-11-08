@@ -29,11 +29,16 @@ from pytils.translit import slugify
 from . import forms
 from django.db.models import Q, Count
 
+#import to use iframe
+from django.views.decorators.clickjacking import xframe_options_deny
+from django.views.decorators.clickjacking import xframe_options_sameorigin
+
 
 # Create your views here.
 def Search(request):
     query = request.GET.get('q')
-    object_list = Course.objects.filter(title__iregex=query)
+    # object_list = Course.objects.filter(title__iregex=query)
+    object_list = Course.objects.filter(title__iregex=query, available=True)
     cart_product_form = CartAddProductForm()
     type1 = ""
     type2 = ""
@@ -112,6 +117,7 @@ def courses(request):
 
 
 @login_required(login_url='/register')
+@xframe_options_sameorigin
 
 def profilee(request, category_slug=None):
     category = None
@@ -157,6 +163,7 @@ def profile_archive(request, category_slug=None):
                    })
 
 @login_required(login_url='/register')
+@xframe_options_sameorigin
 
 def profile_buying(request, category_slug=None):
     category = None
@@ -214,6 +221,8 @@ def profile_manage(request, category_slug=None):
         user.last_name = request.POST.get('last_name')
         user.email = request.POST.get('email')
         user.save()
+
+        #if image.first() == None:
         if not image:
             print('1')
             if form.is_valid():
@@ -471,7 +480,7 @@ def recommendations(request, category_slug=None):
 
         result.extend(result_buying)
     else:
-        result = Course.objects.all()
+        result = Course.objects.filter(available=True)
 
 
     cart_product_form = CartAddProductForm()
@@ -522,6 +531,7 @@ def product_list(request, category_slug=None):
                    'categories': categories,
                    'products': products,
                    'cart_product_form': cart_product_form})
+
 
 def product_list_buy(request, category_slug=None):
     category = None
@@ -639,6 +649,7 @@ def product_detail(request, id, slug):
     module = Module.objects.filter(course=product)
     cart_product_form = CartAddProductForm()
     neededUser = product.owner
+    print(neededUser)
     user_id = neededUser.id
     first_name = neededUser.first_name
     last_name = neededUser.last_name
@@ -687,7 +698,13 @@ class DialogsView(View):
                 messages.append(message.first())
         if messages:
             checkMessages = True
-        return render(request, 'oursite/dialogs.html', {'user_profile': request.user, 'chats': chats, 'checkMessages': checkMessages})
+        image = ImageForUser.objects.get(user=request.user)
+        # chat_member = chats.members.filter(~Q(username=request.user))
+
+        for chat in chats:
+            member = chat.members.filter(~Q(username=request.user))
+            images = ImageForUser.objects.all()
+        return render(request, 'oursite/dialogs.html', {'user_profile': request.user, 'chats': chats, 'checkMessages': checkMessages, 'member': member, 'image': image, 'images': images})
 
 
 class MessagesView(View):
@@ -703,11 +720,18 @@ class MessagesView(View):
                 chat = None
         except Chat.DoesNotExist:
             chat = None
+        chat_member = chat.members.get(~Q(username=request.user))
+        image = ImageForUser.objects.get(user=request.user)
+        chat_image = ImageForUser.objects.get(user=chat_member)
+        print(chat_image)
 
         return render(
             request,
             'oursite/messages.html',
             {
+                'image': image,
+                'chat_image': chat_image,
+                'chat_member': chat_member,
                 'user_profile': request.user,
                 'chat': chat,
                 'form': MessageForm()

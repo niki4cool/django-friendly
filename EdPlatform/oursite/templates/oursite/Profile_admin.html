@@ -1,7 +1,148 @@
 {% extends "oursite/index.html" %}
 {% load static %}
 {% block content %}
-<html lang="en">
+
+
+<div class="container">
+        <div class="profile-admin-content">
+            <div class="row">
+                    <div class="col-lg-1 col-md-1"></div>
+                    <div class="col-lg-10 col-md-10">
+                        <div class="card block-profil-admin">
+                            <!-- Form Name -->
+                            <div class="card-header title-add">
+                                <h5>Создание объявления</h5>
+                            </div>
+                            <form class="form-horizontal form-profil-admin" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+
+                            <!-- Text input-->
+                            <div class="card-body">
+                                <div class="col-md-12">
+                                <div class="form-group form-content">
+                                    <label class="col-md-2" for="product_name">Название</label>
+                                    <div class="col-md-10">
+                                        <!--<input id="product_id" name="product_id" class="form-control input-md" required="" type="text">
+                                        <input type="text" name="title" class="form-control input-md" required="" id="id_title">-->
+                                        {{ form.title }}
+                                    </div>                                     
+                                </div>
+    
+                            <!-- Text input-->
+                            <div class="form-group form-content">
+                                <label class="col-md-2 control-label" for="available_prix">Цена</label>  
+                                <div class="col-md-10 d-flex align-items-center">
+                                    <!--<input id="id_price" name="price" class="form-control input-md" required="" type="text">-->
+                                    {{ form.price }}
+                                    <span>₽</span>
+
+                                </div>
+                            </div>
+                            
+                            <!-- Text input-->
+                            <div class="form-group form-content">
+                              <label class="col-md-2 control-label" for="product_description">Описание</label>  
+                              <div class="col-md-10">
+                              <!--<textarea class="form-control" id="id_overview" name="overview"></textarea> -->
+                              {{ form.overview }}
+                              </div>
+                            </div>
+                            
+                            <!-- Select Basic -->
+                            <div class="form-group form-content">
+                              <label class="col-md-2 control-label" for="product_categorie">Категория</label>
+                              <div class="col-md-10">
+                                <!--<select class="form-control custom-select custom-select-lg mb-3">
+                                    <option value="{{ form.category }}"></option>
+                                </select>-->
+                                {{ form.category }}
+                              </div>
+                            </div>
+                            
+     
+                            
+                            <!-- Text input
+                            <div class="form-group form-content">
+                              <label class="col-md-2 control-label" for="product_address">Место.</label>  
+                              <div class="col-md-10">
+                              <input id="product_weight" name="product_weight" class="form-control input-md" required="" type="text">
+                                
+                              </div>
+                            </div>-->
+
+                            <!-- File Button --> 
+                            <div class="form-group form-content">
+                                <label class="col-md-2 control-label" for="filebutton">Фотографии</label>
+                                <div class="col-md-10">
+                                    <!--<input id="id_image" name="image" class="input-file" type="file">-->
+                                    {{ form.image }}
+                                </div>
+                            </div>
+                            <!-- File Button --> 
+                            <div class="form-group form-content">
+                                <label class="col-md-2 control-label" for="filebutton">Добавить дополнительные фото</label>
+                                <div class="col-md-4">
+                                     <!--<input id="id_video" name="video"  class="input-file" type="file">-->
+                                   {{ form_module.video }}
+                                </div>
+                            </div>
+                            
+                            
+                            
+                            
+                            
+                            <!-- Text input-->
+                            <div class="form-group form-content">
+                              <label class="col-md-2 control-label" for="product_phone">Телефон</label>  
+                              <div class="col-md-4">
+                              <!--<input id="id_number" name="number" class="form-control input-md" required="" type="text">-->
+                              {{ form.number }}
+                              </div>
+                            </div>
+
+                            <!--Label check -->
+                            <div class="form-group form-content">
+                                    <label class="col-sm-2 control-label" for="product_sell">Продаёте?</label>
+                                    <div class="col-sm-10">
+                                      <div class="form-check">
+                                        <!--<input class="form-check-input" name="selling" type="checkbox" id="id_selling">-->
+                                        {{ form.selling }}
+                                      </div>
+                                    </div>
+                                
+                            </div>
+                            <span>{{ error }}</span>
+                            <!-- Button -->
+                            <div class="form-group form-content">
+                              <div class="col-md-4"></div>
+                              <div class="col-md-4">
+                                <button id="singlebutton" type="submit" class="btn btn-primary btn_submit">Далее</button>
+                              </div>
+                              <div class="col-md-4"></div>
+                              </div>
+                            </div>
+                            </div>
+
+                            </form>
+                                <!--<div class="card-footer pb-3">
+                                    <h5>ok</h5>
+                                </div>-->
+                        </div>
+                    
+                    </div>
+                    <div class="col-lg-1 col-md-1"></div>
+            </div>
+        </div>
+</div>
+
+
+
+
+
+
+
+
+<!--<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Home</title>
@@ -44,53 +185,11 @@
 
 
     </div>
-</div>
-
-<!--<div id="main" class="product-list">-->
-<!--    <div class="headerr">-->
-<!--        <h1 class="products">Мои объявления</h1>-->
-<!--    </div>-->
-<!--</div>-->
-<!--{% for i in Item %}-->
-<!--                {% if Item|length == 1 %}-->
-<!--<div class="centerr1">-->
-<!--     <a href="{{ i.product.url_to_course }}">-->
-<!--                    <div class="item1" style="position: relative;">-->
-
-<!--                    <img class="imgItem1" src="{% if i.product.image %}{{ i.product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">-->
+</div>-->
 
 
-<!--                <hr class="hrr">-->
 
-<!--                <div class="namee1">-->
-<!--                <a class="courseName1" href="{{ i.product.url_to_course }}">{{ i.product.title }}</a>-->
-<!--                </div>-->
-
-<!--                <div class="category1">-->
-<!--                <a class="courseCategory1" href="{{ i.product.category.get_absolute_url }}">{{ i.product.category }}</a></h2>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--         </a>-->
-<!--                </div>-->
-<!-- {% else %}-->
-<!--<div class="centerr">-->
-<!--     <a href="{{ i.product.url_to_course }}">-->
-<!--            <div class="item" style="position: relative;">-->
-<!--                    <img class="imgItem" src="{% if i.product.image %}{{ i.product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">-->
-<!--                <hr class="hrr">-->
-<!--                <div class="namee">-->
-<!--                <a class="courseName" href="{{ i.product.url_to_course }}">{{ i.product.title }}</a>-->
-<!--                </div>-->
-<!--                <div class="category">-->
-<!--                <a class="courseCategory" href="{{ i.product.category.get_absolute_url }}">{{ i.product.category }}</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--          </a>-->
-<!--    {% endif %}-->
-<!--            {% endfor %}-->
-<!--</div>-->
-
-<script>
+<!--<script>
     var popup1 = document.getElementById("popup-1");
     var openPopup1 = document.getElementById("open-popup-1");
     var closePopup1 = document.getElementById('close-popup-1');
@@ -649,14 +748,14 @@ padding-left: 250;
     height: 45%;
     }
 }
-</style>
+</style>-->
 
 
 
 
-</body>
 
 
-</body>
 {% endblock %}
-</html>
+<!--</body>
+
+</html>-->

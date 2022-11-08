@@ -1,497 +1,208 @@
 {% extends "oursite/index.html" %}
 {% load static %}
 {% block title %}
-    {% if category %}{{ category.title }}{% else %}Products{% endif %}
+{% if category %}{{ category.title }}{% else %}Products{% endif %}
 {% endblock %}
 {% block content %}
-<div class="headerr">
+{% load humanize %}
+<!--<div class="headerr">
         <h1 class="products">{% if category %}{{ category.title }}{% else %}Объявление{% endif %}</h1>
+</div>-->
+<div class="currentLinkContainer">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Category</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ product.category }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
 </div>
-    <div class="product-detail">
-        {% if neededUser != request.user %}
-        <div>
-            <form class="s" method="get" style="display: inline; padding-bottom: 20px; margin-right: 30px;">
-                <input class="s" name="q" type="submit" value="Написать продавцу">
-            </form>
-        </div>
-        {% endif %}
-        <div class="titleee">
 
-        <a class="courseCategory" href="{{ product.url_to_catalog }}">
-            <h1 class="h11">{{ first_name|title }} {{ last_name.0|title }}. ({{ catalog|length }} объявлений)</h1>
-        </a>
+<div class="detailContainer">
+    <div class="card">
+        <div class="row">
+            <aside class="col-sm-6 border-right">
+                <article class="gallery-wrap">
+                    <div class="img-big-wrap">
+                        <div> <a href="" data-toggle="modal" data-target="#productModal"><img
+                                    src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
+                                    id="picture" class="img-fluid img-responsive"></a></div>
+                    </div>
+                    <div class="img-small-wrap">
+                        {% for photo in module %}
+                        <div class="item-gallery thumbnail"> <img
+                                src="{% if photo.video %}{{ photo.video.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
+                                {% if forloop.first %} class="small_active" {% endif %}> </div>
+                        {% endfor %}
+                    </div>
+                </article>
+            </aside>
+            <aside class="col-sm-6">
+                <article class="card-body p-5">
+                    <h3 class="price-detail">{{ product.price }} ₽</h3>
+                    <p class="price-detail-wrap">
+                        <span class="heading">
+                            {{ product.title }}
+                        </span>
+                    </p>
+                    <a href="#" class="btn btn-primary btnCategory"> Купить с доставкой </a>
+                    <hr>
+                    <div class="action-wrap">
+                        <div class="nameAvatar-wrap">
+                            <div class="nameAvatar-detail">{{ first_name.0 }}</div>
+                            <a href="{{ product.url_to_catalog }}">
+                                <span class="font-weight-bold">{{ first_name }} {{ last_name.0 }}. ({{ catalog|length }}
+                                    объявлений)</span>
+                            </a>
+                        </div>
+                        <!--<span class="font-style-normal btnwriteseller"> 
+                            <a href="#"><i class="fa-regular fa-comment"></i> Написать продавцу</a>-->
+                        {% if neededUser != request.user %}
+                        <form method="get">
+                            <div class="input-group btnwriteseller">
+                                <span class="font-style-normal">
+                                    <i class="fa-regular fa-comment"></i>
+                                    <input class="btn btn-primary btnCategory_seller" name="q" type="submit"
+                                        value="Написать продавцу">
+                                </span>
+                            </div>
 
+                        </form>
+                        {% endif %}
+                        <!--</span>
+                        <span class="font-style-normal btnwriteseller"> <a href="#"><i class="fa-regular fa-heart"></i> Добавить в избранное</a></span>-->
+                        {% if request.user.is_authenticated %}
+                        <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                            <div class="d-none">{{ cart_product_form }}</div>
+
+                            {% csrf_token %}
+                            <div class="input-group btnwriteseller">
+                                <span class="font-style-normal">
+                                    <i class="fa-regular fa-heart"></i>
+                                    <input class="btn btn-primary btnCategory_seller" type="submit"
+                                        value="Добавить в избранное">
+                                </span>
+                            </div>
+                        </form>
+                        {% endif %}
+                    </div>
+
+                </article>
+            </aside>
         </div>
-        <div class="titlee">
-        <h1 class="h11">{{ product.title }}</h1>
-        </div>
-        <img id="imgItemSrc" class="imgItem" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-         <div class="addd" id="parent">
-                <button id="up"></button>
-                <ul>
-                <li><button id="product-{{product.id}}" onclick="reply_click(1{{product.id}})"><img id="productImage-{{product.id}}" width="90px;" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}"></button></li>
-                {% for photo in module %}
-                <li><button id="side-{{photo.id}}" onclick="reply_click(2{{photo.id}})" ><img id="sideImage-{{photo.id}}" width="90px;" src="{% if photo.video %}{{ photo.video.url }}{% else %}{% static "img/no_image.png" %}{% endif %}"></button></li>
-                {% endfor %}
-                </ul>
-                <button id="down"></button>
+        <div class="row">
+            <div class="product-description">
+                <div class="col-md-8 mt-2">
+                    <span class="title-description">Описание</span>
+                    <p class="content-description"> {{ product.overview }} </p>
+                    <span class="title-description">Характеристики</span>
+                    <p class="content-description">The minimalist collaboration features chairs, lightening, Shelves,
+                        Sofas, Desks and various
+                        home accessories, all offering form and function at the same point.We use high-strength
+                        clamps and joinery techniques specially designed for engineered wood beds. Ergo, no irksome
+                        creaks - and you can sleep like a baby, well into adulthood!</p>
+
+                    <span class="title-description">Адрес</span>
+                    <p class="content-description">The minimalist collaboration features chairs, lightening, Shelves,
+                        Sofas, Desks and various
+                        home accessories, all offering form and function at the same point.We use high-strength
+                        clamps and joinery techniques specially designed for engineered wood beds. Ergo, no irksome
+                        creaks - and you can sleep like a baby, well into adulthood!</p>
+
+                    <div class="d-flex align-items-center">
+                        <span class="dot"></span>
+                        <span class="bullet-text font-weight-bold">В избранном: 9</span>
+                    </div>
+
+                </div>
             </div>
-        <img class="courseBack" src="{% static 'images/courseBack.jpg' %}" alt="">
-
-
-
-
-        <div class="category">
-        <a class="courseCategory" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a>
         </div>
-        <div class="overvieww">
-        <h1 class="h12">{{ product.overview }}</h1>
-            <h1 class="h12">{{ product.number }}</h1>
-        </div>
-
-
-
     </div>
 
-<div class="formCart">
-    <div class="pricee">
-    <p class="price">Стоимость: {{ product.price }} ₽</p>
-    </div>
-    {% if request.user.is_authenticated %}
-<form action="{% url "cart:cart_add" product.id %}" method="post">
-    {{ cart_product_form }}
-    {% csrf_token %}
-    <div class="button">
-    <input class="but" type="submit" value="Добавить в избранное">
-    </div>
-</form>
-    {% else %}
 
-    {% endif %}
 </div>
+
+<div class="card-similar mt-2">
+    <span class="card-similar-title">Похожие товары</span>
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="block-silimar no-border z-depth-2-top-similar z-depth-2-top-silimar-hover">
+                <div class="block-similar-image">
+                    <a href="{{ product.get_absolute_url }}">
+                        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
+                            class="card-img-top" height="238px">
+
+                    </a>
+                    <span class="wish-icon"><i class="fa-solid fa-heart"></i></span>
+                </div>
+                <div class="block-similar-body">
+                    <h3 class="silimar-price">{{ product.price.normalize|intcomma }} ₽</h3>
+                    <p class="productdes">{{ product.title }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- my image on Modal window -->
+<div class="col-lg-4 col-md-6 mb-4">
+
+    <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+
+            <div class="modal-content">
+
+
+                <div class="modal-body mb-0 p-0">
+
+                    <div class="imgs-zoom">
+                        <img class="img-fluid" id="modalImgageViewIMG"
+                            src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" />
+                    </div>
+
+                </div>
+
+                <div class="modal-footer d-block d-md-flex justify-content-center">
+                    <span class="mr-4">Продам футболку женскую синюю</span>
+                    <button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4"
+                        data-dismiss="modal">Закрыть</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!--Script to click and show image page detail-->
 
 <script>
 
-var upBtn = document.querySelector('#up');
-var downBtn = document.querySelector('#down');
+    picture = document.querySelector('#picture');
+    pictures = document.querySelector('.img-small-wrap').getElementsByTagName('img');
+    choices = pictures.length;
 
-upBtn.addEventListener('click', slide);
-downBtn.addEventListener('click', slide);
+    IndexOfActivePicture = 0;
 
-function slide(e) {
-  e.target.id === 'down' ? scroll(100) : scroll(-100);
-}
+    for (let i = 0; i < choices; i++) {
+        pictures[i].addEventListener('click', function () {
+            pictures[IndexOfActivePicture].classList.remove('small_active')
+            pictures[i].classList.add('small_active')
 
-function scroll(val) {
-  document.querySelector('ul').scrollBy({
-    top: val,
-    behavior: 'smooth'
-  });
-}
+            picture.src = pictures[i].src
 
-function reply_click(clicked_id){
-    strId = clicked_id.toString()
-    var chosenNumber = strId[0];
-    var id = strId.substr(1)
-    var search = "sideImage-" + id;
-    if (chosenNumber == 1){
-        var search = "productImage-" + id;
+            IndexOfActivePicture = i
+        })
+
     }
-    src = document.getElementById(search).src;
-    document.getElementById("imgItemSrc").src=src;
-  }
 
-
-    var popup1 = document.getElementById("popup-1");
-    var openPopup1 = document.getElementById("open-popup-1");
-    var closePopup1 = document.getElementById('close-popup-1');
-
-openPopup1.addEventListener('click', () => {
-	popup1.style.display = "block";
-})
-
-closePopup1.addEventListener('click', () => {
-	popup1.style.display = "none";
-})
 </script>
 
 
-<style>
 
-
-
-.addd {
-margin-right: 0;
-  height: 100%;
-  width: 200px;
-  display: grid;
-  grid-gap: 5rem;
-  grid-template-columns: 50px;
-  grid-template-rows: 60px 1fr 60px;
-}
-
-ul {
-width: 120px;
-  height: 100%;
-  display: grid;
-  grid-gap: 3rem;
-  grid-template-rows: repeat(20, 100px);
-  list-style: none;
-  overflow: hidden;
-  scroll-snap-type: y mandatory;
-}
-
-li {
-  scroll-snap-align: center;
-}
-
-#up{
-background-color: #212121;
-  border: none;
-  cursor: pointer;
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
-  transform: rotate(-90deg);
-}
-
-#down{
-clip-path: polygon(100% 0, 0 50%, 100% 100%);
-transform: rotate(270deg);
-background-color: #212121;
-  border: none;
-  cursor: pointer;
-}
-
-#open-popup-1{
-    border: 1px solid;
-    border-radius: 10px;
-    height: 90px;
-    width: 90px;
-    }
-
-#popup-1 {
-    z-index: 9;
-	display: none;
-	background-color: rgba(0,0,0,0.5);
-	position: absolute;
-	height: 295px;
-	width: 450px;
-}
-
-.formCart{
-    width: 99%;
-    position: absolute;
-    top: 400px;
-    margin-left: -14%;
-    font-size: 35px;
-    text-align: center;
-    margin-top: 1px;
-    }
-
-.price{
-    font-size: 30px;
-    font-weight: 800;
-    }
-
-.h11{
-font-size: 40px;
-}
-
-.h12{
-font-size: 40px;
-}
-
-#id_quantity{
-visibility: hidden;
-}
-
-pricee{
-width: 500px;
-text-align: center;
-margin-left: 12%;
-
-}
-
-    .but{
-    margin-bottom: 15px;
-    font-family: "Tahoma", serif;
-    font-size: 1.3rem;
-
-}
-input[placeholder].but{
-    width: 200px;
-    height: 5vh;
-    outline: none;
-    border: 3px solid rgba(11, 168, 35, 0.75);
-    background-color: #ffffff;
-    border-radius: 7px;
-    color: rgba(11, 168, 35, 0.75);
-}
-
-input[type="button"]{
-
-    border-radius: 6px;
-    border: 3px solid #fff;
-    background-color: rgba(11, 168, 35, 0.75);
-    color: #fff;
-
-    transition: 0.5s All ease;
-}
-input[type="button"]:hover{
-    border: 3px solid rgba(11, 168, 35, 0.75);
-    background-color: #fff;
-    color: rgba(11, 168, 35, 0.75);
-    border-radius: 10px;
-}
-
-
-
-    .headerr{
-    padding-left: 18px;
-    background: #FFFFFF;
-    width: 98,5%;
-    height: 75px;
-    margin-bottom: 20px;
-    border: 2px solid transparent;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .courseBack{
-    width: 99%;
-    height: 100%;
-    opacity: 30%;
-    }
-
-    .product-detail{
-    padding-top: 10px;
-     float: left;
-     background: #FFFFFF;
-     background-color: #FFFFFF;
-     width: 99%;
-     height: 70%;
-     margin-right: 35px;
-     text-align: center;
-     margin-bottom: 55px;
-     border: 8px solid transparent;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .imgItem{
-    width: 675px;
-    height: 330px;
-    position: absolute;
-    left: 1150px;
-    margin-top: 50px;
-    width: 660px;
-    background: #FFFFFF;
-    border: 8px solid transparent;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    }
-
- .courseCategory{
-    font-size: 24px;
-    text-decoration: none;
-    color: #618DFF;
-    font-weight: 600;
-    }
-
-.category{
-width: 200px;
-height: 50px;
-padding-top: 20px;
-    position: absolute;
-    top: 660px;
-    left: 73%;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 30px;
-    border: 2px solid transparent;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    background-color: #E3F3FF;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    }
-
-
-
-    .titlee{
-    width: 700px;
-    position: absolute;
-    top: 220px;
-    margin-left: 16%;
-    text-align: center;
-    z-index: 9;
-    margin-top: 50px;
-    }
-
-    .titleee{
-    width: 700px;
-    position: absolute;
-    top: 100px;
-    margin-left: 16%;
-    text-align: center;
-    z-index: 9;
-    margin-top: 50px;
-    }
-
-    .overvieww{
-        width: 700px;
-        position: absolute;
-        top: 550px;
-        margin-left: 16%;
-        text-align: center;
-    }
-
-
-
-    @media screen and (max-width:1900px) {
-    .imgItem{
-    left: 1000px;
-    height: 215px;
-    width: 438px;
-    }
-
-    .category{
-    top: 550px;
-    left: 1120px;;
-    }
-
-    }
-
-
-
-
-    @media screen and (max-width:1600px) {
-    .imgItem{
-    left: 800px;
-    height: 165px;
-    width: 337px;
-    }
-
-    .category{
-    top: 500px;
-    left: 880px;
-    }
-    .formCart{
-    margin-left: -25%;
-    }
-
-    .titlee{
-    margin-left: 0%;
-    }
-
-    .overvieww{
-    margin-left: 0%;
-    }
-    }
-
-    @media screen and (max-width:1200px) {
-    .imgItem{
-    left: 600px;
-    height: 165px;
-    width: 337px;
-    }
-    .category{
-    top: 500px;
-    left: 680px;
-    }
-    .formCart{
-    margin-left: 0%;
-    text-align: left;
-    }
-
-    .titlee{
-    margin-left: 0%;
-    text-align: left;
-    }
-
-    .overvieww{
-    margin-left: 0%;
-    text-align: left;
-    }
-    }
-}
-
-
-
-
-
-
-</style>
-
-<style>
-
-
-
-     @media screen and (max-width:500px) {
-     .product-detail{
-     width: 95%;
-     }
-
-     .h11{
-     font-size: 28px;
-     margin: 0 auto;
-
-     }
-
-    .imgItem{
-    left: 15%;
-    width: 200px;
-    height: 100px;
-    margin-top: 50px;
-    }
-    .category{
-    top: 450px;
-    left: 15%;
-    width: 60%;
-    height: 6%;
-    }
-    .formCart{
-    margin-left: 0%;
-    text-align: center;
-    margin-top: 105px;
-    }
-
-    .titlee{
-    margin-left: 0%;
-    text-align: left;
-    width: 100%;
-    }
-
-    .overvieww{
-    margin-left: 0%;
-    text-align: left;
-    width: 100%;
-    height: 100px;
-    font-size: 12px;
-    margin-top: 20px;
-    }
-
-
-
-
-    .courseCategory{
-    font-size: 18px;
-    margin-top: 20px;
-    }
-
-    .but{
-    margin-bottom: 15px;
-    margin-top: -40px;
-    font-size: 12px;
-}
-
-.h12{
-font-size: 18px;
-}
-
-.price{
-    font-size: 20px;
-    font-weight: 800;
-    }
-
-}
-
-
-</style>
 {% endblock %}

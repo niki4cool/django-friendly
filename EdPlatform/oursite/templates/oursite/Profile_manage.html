@@ -1,618 +1,116 @@
+
 {% extends "oursite/index.html" %}
 {% load static %}
-
 {% block content %}
 {% load humanize %}
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Home</title>
-  <link rel="stylesheet" href="{% static 'css/profile.css' %}">
-</head>
-<body class="bg">
+    <div class="container">
+        <div class="profile">
+            <div class="col-md-3">
+                <div class="profile-sidebar">
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name">
+                            {{ user.first_name }} {{ user.last_name.0 }}
+                        </div>
+                    </div>
+                    <div class="profile-userpic">
+                        <img src="{{ img.image.url }}" class="img-responsive" alt="">
+                    </div>
+                    <div class="profile-usermenu">
+                        <ul class="nav">
+                            <li><a class="dropdown-item" href="{% url 'oursite:profilee' %}">&nbsp;&nbsp;<i class="fa-solid fa-scroll"></i>&nbsp;&nbsp;Мои объявления</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:profile_buying' %}">&nbsp;&nbsp;<i class="fa-solid fa-file-image"></i>&nbsp;&nbsp;Мои заказы</a></li>
+                            <li><a class="dropdown-item" href="{% url 'cart:cart_detail' %}">&nbsp;&nbsp;<i class="fa-solid fa-bookmark"></i>&nbsp;&nbsp;Избранное</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:dialogs' %}">&nbsp;&nbsp;<i class="fa-regular fa-comment"></i>&nbsp;&nbsp;Сообщения</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:notifications' %}">&nbsp;&nbsp;<i class="fa-regular fa-bell"></i>&nbsp;&nbsp;Уведомления</a></li>
+                            <li class=" active"><a class="dropdown-item" href="{% url 'oursite:profile_manage' %}">&nbsp;&nbsp;<i class="fa-regular fa-id-card"></i>&nbsp;&nbsp;Профиль</a></li>
+                            <li><a class="dropdown-item" href="">&nbsp;&nbsp;<i class="fa-solid fa-gear"></i>&nbsp;&nbsp;Настройки</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="profile-content">
+                    <div class="row">
+                            <div class="col-lg-12 col-md-12 personal-info">
+                                <div class="card block-manage-profil">
+                                    <div class="card-header">
+                                        <h5>Настройки</h5>
+                                    </div>
+                                    <div class="card-content block_manage_form pb-2">
+                                        
+                                        <div class="col-lg-4 pb-5">
+                                                <div class="block_manage_img">
 
-<div class="block">
+                                                <div class="text-center">
+                                                    <img src="{{ img.image.url }}" class="avatar img-circle img-thumbnail" alt="avatar" width="180px" height="170px">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                             <!-- Profile Settings-->
+                                        <div class="col-lg-8 pb-5">
+                                            <div class="block_manage_form_item">
+                                            <form class="row" method="post" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="account-fn">Логин</label>
+                                                        <input class="form-control" type="text" name="username" size="25px" value="{{ username }}" placeholder="{{ username }}" required="True">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="account-fn">Имя</label>
+                                                        <input class="form-control" type="text" name="first_name" size="25px" value="{{ first_name }}" placeholder="Введите имя" required="True">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="account-fn">Фамилия</label>
+                                                        <input class="form-control" type="text" name="last_name" size="25px" value="{{ last_name }}" placeholder="Введите фамилию" required="True">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="account-email">Почта</label>
+                                                        <input class="form-control" type="email" name="email" size="30" value="{{ email }}" placeholder="Ваша почта">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-control">
+                                                        {{ form.image }}
+                                                    </div>
+                                                </div>
+                                              
+                                                <div class="col-12">
+                                                    <hr class="mt-2 mb-3">
+                                                    <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                                        <button class="btn btn-primary btn_upload" type="submit" data-toast="" data-toast-position="topRight" data-toast-type="success" data-toast-icon="fe-icon-check-circle" data-toast-title="Success!" data-toast-message="Your profile updated successfuly.">Update Profile</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        </div>
+                                        
+        
+                                        
+                                        
+                                    </div>
 
-    <div class="settings">
-        <div style="text-align: center">
-            <p class="username">{{ user.first_name }} {{ user.last_name.0 }}.</p>
+                                    <!--<div class="panel-footer pb-3">
+                                        <h5>ok</h5>
+                                    </div>-->
+                                    
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
-        <img class="profile_pic" src="{{ img.image.url }}" alt="" height="160px" style="margin-left: 75px;">
-        <a href="{% url "oursite:profilee" %}"><p class="side-menu">Мои объявления</p></a>
-        <a href="{% url "oursite:profile_buying" %}"><p class="side-menu">Мои заказы</p></a>
-        <a href="{% url "cart:cart_detail" %}"> <p class="side-menu">Избранное</p></a>
-        <a href="{% url "oursite:dialogs" %}"> <p class="side-menu">Мои сообщения</p></a>
-        <a href="{% url "oursite:notifications" %}"><p class="side-menu">Уведомления</p></a>
-        <a href="{% url "oursite:profile_manage" %}"><p class="side-menu-chosen">Управление профилем</p></a>
-        <p class="side-menu">Настройки</p>
-
     </div>
 
-    <div id="main" class="product-list">
-        <div class="headerr">
-            <p class="products">Настройки</p>
-        </div>
-
-
-        <div class="all-items">
-
-            <div class="center">
-            <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-                <p class="side-text">Ваш логин:</p>
-                <div class="form" style="display:inline-block">
-                    <input type="text" name="username" size="30" value="{{ username }}" placeholder="{{ username }}" required="True">
-                </div>
-                <p class="side-text">Ваше имя:</p>
-                <div class="form" style="display:inline-block">
-                    <input type="text" name="first_name" size="30" value="{{ first_name }}" placeholder="Введите имя" required="True">
-                </div>
-                <p class="side-text">Ваша фамилия:</p>
-                <div class="form" style="display:inline-block">
-                    <input type="text" name="last_name" size="30" value="{{ last_name }}" placeholder="Введите фамилию" required="True">
-                </div>
-                <p class="side-text">Ваша почта:</p>
-                <div class="form" style="display:inline-block">
-                    <input type="email" name="email" size="30" value="{{ email }}" placeholder="Ваша почта">
-                </div>
-                <br>
-                <p class="side-text">Смените аватарку:</p>
-                 <div class="form" style="display:inline-block">
-                    {{ form.image }}
-                 </div>
-                <button type="submit">Применить</button>
-                <br>
-                <br>
-
-            </form>
-    </div>
-
-        </div>
-    </div>
-
-</div>
-
-
-<script type="text/javascript" src={% static "js/price.js" %}></script>
-<script> doprice() </script>
-
-<script>
-
-
-    var colorArray = document.getElementsByClassName('category');
-    var color = document.getElementsByClassName('courseCategory');
-    var i = 10;
-    var t = 0;
-    while (t < 10){
-    if (i == 14){
-    i = 10
-    }
-    if (i % 10 == 0){
-    colorArray[t].style.backgroundColor = '#FDE8F2';
-    color[t].style.color = '#FF166A';
-    }
-    else if (i % 11 == 0){
-    colorArray[t].style.backgroundColor = '#F7ECFF';
-    color[t].style.color = '#FA00FF';
-    }
-
-    else if (i % 12 == 0){
-    colorArray[t].style.backgroundColor = '#E3F3FF';
-    color[t].style.color = '#618DFF';
-    }
-
-    else{
-    colorArray[t].style.backgroundColor = '#FFF3E9';
-    color[t].style.color = '#DF6B00';
-    }
-    i++
-    t++
-
-    }
-
-</script>
-
-<style>
-
-    .pic{
-    width: 762px;
-    height: 669px;
-    background: #182128;
-    opacity: .8;
-    position: relative;
-    text-align: center;
-    margin-left: 170px;
-    border-radius: 30px;
-    margin-top: 50px !important;
-    height: 600px !important;
-    }
-
-    .products{
-    font-size: 28px;
-    font-weight: 450;
-    }
-
-    .all-items{
-    margin-left: 120px;
-    }
-
-    .side-menu{
-    margin-left: 50px;
-    font-size: 24px;
-    font-weight: 450;
-    }
-
-    .side-menu-chosen{
-    margin-left: 50px;
-    font-size: 24px;
-    font-weight: 450;
-    color: #00B2B2;
-    }
-
-    .username{
-    font-size: 26px;
-    font-weight: 650;
-    }
-
-    .settings{
-    width: 309px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    background-color: #FFF;
-    }
-
-    .product1{
-    text-align: left;
-    width: 1000px;
-
-    position: relative;
-    margin: 20px auto;
-    margin-top: 10px;
-
-    margin-bottom: 27px;
-    }
-
-    a{
-    color: black;
-    }
-
-    .product{
-    margin-right: 200px;
-    width: 500px;
-    font-size: 24px;
-    margin-top: 27px;
-    font-weight: 450;
-    border-bottom: 4px solid #00D5D5;
-    }
-
-    .product-not{
-    margin-right: 200px;
-    width: 500px;
-    font-size: 24px;
-    margin-top: 27px;
-    color: #777C7D;
-    font-weight: 450;
-    }
-
-
-
-
-
-    .block{
-    margin-top: 50px;
-    margin-left: 5%;
-    width: 90%;
-    height: 80%;
-    display: grid;
-    grid-template-columns: 0.5fr 80%;
-    }
-
-
-    .namee{
-    margin-left: 20px;
-    width: 210px;
-    word-break: break-all;
-    text-align: left;
-    }
-
-    .priceDiv{
-    width: 210px;
-    margin-left: 20px;
-    word-break: break-all;
-    text-align: left;
-    }
-
-    .price{
-    font-size: 28px;
-    font-weight: 800;
-    color: #182128;
-    margin: 0;
-    margin-top: 20px;
-    }
-
-    a{
-    text-decoration: none;
-    }
-
-    .hrr{
-    width: 440px;
-    }
-
-
-
-    .category{
-    display: inline-block;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 30px;
-    background-color: #E3F3FF;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    }
-
-    .courseCategory{
-    font-size: 24px;
-    text-decoration: none;
-    color: #618DFF;
-    font-weight: 600;
-    }
-
-
-
-    .courseName{
-    text-decoration: none;
-    color: black;
-    font-size: 22px;
-    font-weight: 600;
-    }
-
-    .headerr{
-    text-align: center;
-    width: 762px;
-
-    opacity: .8;
-    position: relative;
-    margin: 20px auto;
-    margin-top: 10px;
-
-    }
-
-    .imgItem{
-    width: 250px;
-    height: 220px;
-    background: #FFFFFF;
-    border-radius: 10px 10px 0 0;
-    }
-
-    .product-list{
-    width: 100%;
-    position: relative;
-    margin: 20px auto;
-    margin-top: 10px;
-    border-radius: 30px;
-    border: 2px solid transparent;
-    }
-
-
-    .item{
-    border-radius: 10px;
-    margin-right: auto;
-     float: left;
-     background: #FFFFFF;
-     background-color: #FFFFFF;
-     width: 250px;
-     height: 340px;
-     margin-right: 50px;
-     text-align: center;
-     margin-bottom: 55px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    }
-
-
-    .centerr{
-    width: 1500px;
-
-    position: relative;
-    margin: auto;
-
-    display: block;
-    }
-
-    @media screen and (max-width:1500px) {
-    .centerr{
-    width: 600px;
-    position: relative;
-    margin: auto;
-    border-radius: 30px;
-
-    }
-
-    .item{
-    margin-left: 55;
-    }
-}
-
-    .textt{
-    font-size: 20px;
-    font-weight: 600;
-    padding-left: 5%;
-
-    }
-
-    .overview{
-    font-size: 20px;
-    margin-left: 160px;
-    height: 60px;
-    width: 300px;
-
-    }
-
-    .titlee{
-    position: absolute;
-    top: 100px;
-    margin-left: 3%;
-
-    }
-
-    .title{
-    font-size: 20px;
-    margin-left: 160px;
-    height: 30px;
-    width: 300px;
-    }
-
-    .buttona{
-    width: 300px;
-    height: 50px;
-    margin-top: 30px;
-    margin-left: 40px;
-    color: #9F7100;
-    font-size: 23px;
-    font-weight: 600;
-    background-color: #FFF3E9;
-    border: 2px solid #C79C34;
-    border-radius: 20px;
-    }
-
-    .upload_image{
-    width: 180px;
-    position: absolute; pointer-events: none;
-    padding-left: 535px;
-    padding-top: 60px;
-    }
-
-    .imagecss{
-    width: 180px;
-    position: absolute;
-    padding-left: 535px;
-    padding-top: 60px;
-    }
-    .imagecss input[type=file] {
-    position: absolute;
-    background-color: #000000;
-     width: 180px;
-     height: 180px;
-     opacity: 0;
-    padding-top: -100px;
-
-
-</style>
-<style>
-.upload_video{
-width: 60px;
-position: absolute; pointer-events: none;
-padding-left: 250;
-}
-
-    .homework{
-    display: flex;
-     justify-content: center;
-     align-items: center;
-     flex-direction: column;
-     width: 60px;
-     height: 60px;
-     margin-top: -65px;
-     padding-left: 390;
-    }
-
-     .homework input[type=file] {
-     width: 60px;
-     height: 60px;
-     opacity: 0;
-     position: absolute;
-}
-
-    .videocss{
-    display: flex;
-     justify-content: center;
-     align-items: center;
-     flex-direction: column;
-     width: 60px;
-     height: 60px;
-     padding-left: 250;
-    }
-    .videocss input[type=file] {
-     width: 60px;
-     height: 60px;
-     opacity: 0;
-     position: absolute;
-
-}
-
-
-@media screen and (max-width:500px) {
-    .center{
-    width: 100%;
-    height: 800px;
-    }
-
-    .centerr1{
-    width: 100%;
-    height: 800px;
-    }
-
-    .buttona{
-    margin-top: 140px;
-    margin-left: 10px;
-    }
-
-    ._text3{
-    top: 620px;
-    padding-left: 20px;
-    }
-
-    .upload_image{
-    padding-left: 180px;
-    padding-top: 470px;
-    width: 100px;
-    }
-
-    .imagecss{
-    width: 80px;
-    margin-top: 450px;
-    left: 0;
-    margin-left: 180px;
-    }
-
-    .imagecss input[type=file] {
-    position: absolute;
-    background-color: #000000;
-    width: 100px;
-    height: 100px;
-    opacity: 0;
-    padding-top: 0px;
-}
-
-    ._text2{
-    padding-left: 20px;
-
-    }
-
-    .upload_homework{
-    padding-left: 150px;
-    padding-top: 50px;
-    }
-
-    #id_work{
-    left: 150px;
-    margin-top: 50px;
-    }
-
-    #open-popup-1{
-    margin-left: 280px;
-    width: 30px;
-    height: 30px;
-    }
-
-    #popup-1{
-    margin-left: 20px;
-    width: 300px;
-    }
-
-    .popup-content{
-    width: 200px;
-    }
-
-    .addCategory{
-    margin-left: -10px;
-    margin-top: -6px;
-    }
-
-
-
-    .chooseCategory{
-    margin-left: 180px;
-    }
-
-    .product-list{
-    width: 100%;
-    }
-
-    .headerr{
-    width:93%;
-    }
-
-    .centerr{
-    width: 100%;
-    }
-
-    .item{
-    width: 90%;
-    margin-left: 6px;
-    height: 240px;
-    margin-right: 0px;
-    }
-
-    .item1{
-    width: 90%;
-    margin-left: 6px;
-    height: 240px;
-    margin-right: 0px;
-    }
-
-    .imgItem{
-    width: 80%;
-    height: 45%;
-    }
-    .imgItem1{
-    width: 80%;
-    height: 45%;
-    }
-
-    .hrr{
-
-    width: 95%;
-    }
-
-    .courseName{
-    font-size: 24px;
-    }
-
-    .courseName1{
-    font-size: 24px;
-    }
-
-    .category{
-    margin-top: -20px;
-
-    }
-
-    .courseCategory{
-    font-size: 18px;
-
-    }
-
-    .priceDiv{
-
-    margin-top: -60px;
-    }
-
-    .namee{
-
-    margin-bottom: 15px;
-    }
-
-    ._text{
-    padding-left: 25px;
-    }
-
-    .padd{
-    margin-left: 90px;
-    }
-
-    .price{
-    font-size: 18px;
-    }
-}
-</style>
-
-
-
-
-</body>
-
-
-</body>
 {% endblock %}
-</html>
+
+
