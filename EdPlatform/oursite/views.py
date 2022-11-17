@@ -37,6 +37,7 @@ from django.views.decorators.clickjacking import xframe_options_sameorigin
 # Create your views here.
 def Search(request):
     query = request.GET.get('q')
+    print("gdsgfdsgd")
     # object_list = Course.objects.filter(title__iregex=query)
     object_list = Course.objects.filter(title__iregex=query, available=True)
     cart_product_form = CartAddProductForm()
@@ -515,6 +516,7 @@ def recommendations(request, category_slug=None):
                    'cart_product_form': cart_product_form})
 
 def product_list(request, category_slug=None):
+
     category = None
     categories = Subject.objects.all()
     if not request.user.is_authenticated:
