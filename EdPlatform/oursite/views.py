@@ -11,13 +11,18 @@ from django.utils.http import urlquote
 from django.views import View
 from requests import Session
 from rest_framework.decorators import api_view
+from rest_framework import viewsets, generics, status
+
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from django.views.decorators.csrf import csrf_exempt
 from . import models
 from django.shortcuts import render, redirect
 from taggit.models import Tag
 from django.http import request, HttpResponse, Http404, HttpResponseRedirect
 from cart.forms import CartAddProductForm
-from .models import Course, Module, Homework, UrlCheck, Constructor, Chat, Message, ImageForUser, Notifications
+from .models import Course, Module, Homework, UrlCheck, Constructor, Chat, Message, ImageForUser, Notifications, Post
 from orders.models import Order, OrderItem
 from .models import Video, Subject, VideoForConstructor
 from django.contrib.auth.models import User
@@ -28,11 +33,81 @@ from .forms import CheckForm
 from pytils.translit import slugify
 from . import forms
 from django.db.models import Q, Count
+from django.utils.decorators import method_decorator
 
 #import to use iframe
 from django.views.decorators.clickjacking import xframe_options_deny
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 
+from .serializers import SubjectSerializer, UserSerializer, ConstructorSerializer, LoginSerializer, \
+    ShowImageUserSerializer, MessagesSerializer, CourseSerializer, ModuleSerializer, NotificationsSerializer, PostSerializer, \
+    ConstructorSerializerOfCurrentUser
+
+
+class Lol(generics.ListAPIView):
+    queryset = Course.objects.all()
+    serializer_class = SubjectSerializer
+
+class AllUsersView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class CreateUser(generics.CreateAPIView):
+    @csrf_exempt
+    def post(self, request):
+
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ShowConstructor(generics.ListAPIView):
+    queryset = Constructor.objects.all()
+    serializer_class = ConstructorSerializer
+    def post(self, request):
+        serializer = ConstructorSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class ShowConstructorOfOwner(generics.ListAPIView):
+    serializer_class = ConstructorSerializerOfCurrentUser
+    def get_queryset(self):
+        # value from body of request in serelize class
+        # username = self.response.data.get('username')
+        return Constructor.objects.filter( owner=self.request.user)
+
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class AuthView(APIView):
+    def post(self, request):
+        # disable csrf for this view
+        serializer = LoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+class ShowImageUser(generics.ListAPIView):
+    queryset = ImageForUser.objects.all()
+    serializer_class = ShowImageUserSerializer
+class ShowMessages(generics.ListAPIView):
+    queryset = Message.objects.all()
+    serializer_class = MessagesSerializer
+
+class ShowCourse(generics.ListAPIView):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+
+class ShowModule(generics.ListAPIView):
+    queryset = Module.objects.all()
+    serializer_class = ModuleSerializer
+
+class ShowNotifications(generics.ListAPIView):
+    queryset = Notifications.objects.all()
+    serializer_class = NotificationsSerializer
+class ShowPosts(generics.ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
 
 # Create your views here.
 def Search(request):

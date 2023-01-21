@@ -357,7 +357,7 @@ header {
 
 .headerBtnCategory .show-on-hover:hover>ul.dropdown-menu {
     display: block;
-    width: 200px;
+    width: 700px;
     padding-left: 10px;
     padding-right: 10px;
     background-color: #182128;

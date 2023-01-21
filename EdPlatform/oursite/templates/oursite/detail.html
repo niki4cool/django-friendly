@@ -33,11 +33,15 @@
                                     id="picture" class="img-fluid img-responsive"></a></div>
                     </div>
                     <div class="img-small-wrap">
+                        <img
+                                    src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
+                                    id="picture" class="small_active">
                         {% for photo in module %}
                         <div class="item-gallery thumbnail"> <img
                                 src="{% if photo.video %}{{ photo.video.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
-                                {% if forloop.first %} class="small_active" {% endif %}> </div>
+                                {% if forloop.first %} class="img-fluid img-responsive" {% endif %}> </div>
                         {% endfor %}
+
                     </div>
                 </article>
             </aside>
@@ -168,7 +172,7 @@
                 </div>
 
                 <div class="modal-footer d-block d-md-flex justify-content-center">
-                    <span class="mr-4">Продам футболку женскую синюю</span>
+
                     <button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4"
                         data-dismiss="modal">Закрыть</button>
                 </div>
