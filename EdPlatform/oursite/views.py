@@ -53,9 +53,9 @@ class AllUsersView(generics.ListAPIView):
     serializer_class = UserSerializer
 
 class CreateUser(generics.CreateAPIView):
+    serializer_class = UserSerializer
     @csrf_exempt
     def post(self, request):
-
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -87,6 +87,7 @@ class AuthView(APIView):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
 class ShowImageUser(generics.ListAPIView):
     queryset = ImageForUser.objects.all()
     serializer_class = ShowImageUserSerializer
