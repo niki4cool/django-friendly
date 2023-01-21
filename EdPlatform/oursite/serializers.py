@@ -77,3 +77,8 @@ class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ('id', 'title', 'slug', 'owner', 'overview', 'created', 'url_to_course', 'url_to_catalog', 'url_to_catalog_buy')
+
+class RecommendByUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = '__all__'

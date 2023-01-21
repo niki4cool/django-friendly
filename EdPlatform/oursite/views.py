@@ -34,6 +34,7 @@ from pytils.translit import slugify
 from . import forms
 from django.db.models import Q, Count
 from django.utils.decorators import method_decorator
+from itertools import chain
 
 #import to use iframe
 from django.views.decorators.clickjacking import xframe_options_deny
@@ -41,7 +42,7 @@ from django.views.decorators.clickjacking import xframe_options_sameorigin
 
 from .serializers import SubjectSerializer, UserSerializer, ConstructorSerializer, LoginSerializer, \
     ShowImageUserSerializer, MessagesSerializer, CourseSerializer, ModuleSerializer, NotificationsSerializer, PostSerializer, \
-    ConstructorSerializerOfCurrentUser
+    ConstructorSerializerOfCurrentUser, RecommendByUserSerializer
 
 
 class Lol(generics.ListAPIView):
@@ -78,6 +79,37 @@ class ShowConstructorOfOwner(generics.ListAPIView):
         # username = self.response.data.get('username')
         return Constructor.objects.filter( owner=self.request.user)
 
+class RecommendByUser(generics.ListAPIView):
+    serializer_class = RecommendByUserSerializer
+    def get_queryset(self):
+        category = None
+        categories = Subject.objects.all()
+        user_products_selling = Course.objects.filter(owner=self.request.user, selling=True)
+        user_products_buying = Course.objects.filter(owner=self.request.user, selling=False)
+        result1 = Course.objects.none()
+        result2 = Course.objects.none()
+
+        catts1 = []
+
+
+        for i in categories:
+            if user_products_buying.filter(category=i):
+                user_products_buying.filter(category=i)
+                catts1.append(i)
+        for g in catts1:
+            products_selling = Course.objects.filter(~Q(owner=self.request.user), selling=True).filter(category=g)
+            result1 = list(chain(products_selling))
+
+        catts2 = []
+        for i in categories:
+            if user_products_selling.filter(category=i):
+                user_products_selling.filter(category=i)
+                catts2.append(i)
+        for g in catts2:
+            products_buying = Course.objects.filter(~Q(owner=self.request.user), selling=False).filter(category=g)
+            result2 = list(chain(products_buying))
+        result = list(chain(result1, result2))
+        return result
 
 
 @method_decorator(csrf_exempt, name='dispatch')

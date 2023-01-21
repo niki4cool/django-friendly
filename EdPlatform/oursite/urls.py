@@ -19,6 +19,7 @@ urlpatterns = [
     path('api/posts/', views.ShowPosts.as_view()),
     path('api/courses/', views.ShowCourse.as_view()),
     path('api/modules/', views.ShowModule.as_view()),
+    path('api/recommend/', views.RecommendByUser.as_view()),
     path('api/login/', csrf_exempt(views.AuthView.as_view())),
 
     path('api/constructors/', views.ShowConstructor.as_view()),
