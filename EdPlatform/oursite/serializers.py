@@ -82,3 +82,8 @@ class RecommendByUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = '__all__'
+
+class SearchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = "__all__"

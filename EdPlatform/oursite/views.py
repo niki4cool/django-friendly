@@ -42,7 +42,7 @@ from django.views.decorators.clickjacking import xframe_options_sameorigin
 
 from .serializers import SubjectSerializer, UserSerializer, ConstructorSerializer, LoginSerializer, \
     ShowImageUserSerializer, MessagesSerializer, CourseSerializer, ModuleSerializer, NotificationsSerializer, PostSerializer, \
-    ConstructorSerializerOfCurrentUser, RecommendByUserSerializer
+    ConstructorSerializerOfCurrentUser, RecommendByUserSerializer, SearchSerializer
 
 
 class Lol(generics.ListAPIView):
@@ -62,6 +62,26 @@ class CreateUser(generics.CreateAPIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# class ShowSearchCourses(APIView):
+#     serializer_class = SearchSerializer
+#     @csrf_exempt
+#     def post(self, request):
+#         serializer = SearchSerializer(data=request.data)
+#         title = serializer.initial_data['title']
+#         print(title)
+#         object_list = Course.objects.all()
+#         print(object_list)
+#         if serializer.is_valid():
+#             return Response(object_list, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ShowSearchCourses(generics.ListAPIView):
+    serializer_class = SearchSerializer
+
+    def get_queryset(self):
+        title = self.kwargs['title']
+        return Course.objects.filter(title__iregex=title, available=True)
 
 class ShowConstructor(generics.ListAPIView):
     queryset = Constructor.objects.all()
@@ -141,6 +161,8 @@ class ShowNotifications(generics.ListAPIView):
 class ShowPosts(generics.ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+
 
 # Create your views here.
 def Search(request):

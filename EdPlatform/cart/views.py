@@ -5,12 +5,17 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from oursite.models import Course, Module, ImageForUser
+from rest_framework import generics
+
 from .cart import Cart
 from .forms import CartAddProductForm
 from orders.models import Order, OrderItem
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
+
+from .serializers import FavouriteShowSerializer
+from django.conf import settings
 
 #import to use iframe
 from django.views.decorators.clickjacking import xframe_options_deny
@@ -46,3 +51,13 @@ def cart_detail(request):
                                                 'image': image,
                                                 'user': user})
 
+# class FavouriteShow(generics.ListAPIView):
+#     serializer_class = FavouriteShowSerializer
+#
+#     def get_queryset(self):
+#         return cart_detail(self.request.user)
+#         # product_ids = self.cart.keys()
+#         # # получение объектов product и добавление их в корзину
+#         # products = Course.objects.filter(id__in=product_ids)
+#         # # cart = Cart(self.request)
+#         # return products

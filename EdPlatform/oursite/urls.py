@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.decorators.csrf import csrf_exempt
@@ -20,6 +20,7 @@ urlpatterns = [
     path('api/courses/', views.ShowCourse.as_view()),
     path('api/modules/', views.ShowModule.as_view()),
     path('api/recommend/', views.RecommendByUser.as_view()),
+    re_path('^api/search/(?P<title>.+)/$', views.ShowSearchCourses.as_view()),
     path('api/login/', csrf_exempt(views.AuthView.as_view())),
 
     path('api/constructors/', views.ShowConstructor.as_view()),
