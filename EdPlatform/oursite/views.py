@@ -129,6 +129,8 @@ class RecommendByUser(generics.ListAPIView):
             products_buying = Course.objects.filter(~Q(owner=self.request.user), selling=False).filter(category=g)
             result2 = list(chain(products_buying))
         result = list(chain(result1, result2))
+        if result == []:
+            result = Course.objects.all()
         return result
 
 
