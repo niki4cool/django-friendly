@@ -20,7 +20,7 @@ from django.views.decorators.csrf import csrf_exempt
 from . import models
 from django.shortcuts import render, redirect
 from taggit.models import Tag
-from django.http import request, HttpResponse, Http404, HttpResponseRedirect
+from django.http import request, HttpResponse, Http404, HttpResponseRedirect, StreamingHttpResponse
 from cart.forms import CartAddProductForm
 from .models import Course, Module, Homework, UrlCheck, Constructor, Chat, Message, ImageForUser, Notifications, Post
 from orders.models import Order, OrderItem
@@ -152,7 +152,28 @@ class ShowMessages(generics.ListAPIView):
 class ShowCourse(generics.ListAPIView):
     serializer_class = CourseSerializer
     def get_queryset(self):
+        # course = Course.objects.get(slug=slug)
+        # temp = 0
+        # tempImg = 0
         queryset = Course.objects.filter(~Q(owner=self.request.user))
+
+        # print(queryset)
+        # for course in queryset:
+            # print(course)
+
+            # print(dict)
+            # module = Module.objects.filter(course=course)
+            # queryset = chain(queryset, module)
+
+            # for mod in module:
+            #
+            #     tempImg = tempImg + 1
+            # tempImg = 0
+            # temp = temp + 1
+            # print(type(module))
+            # print(module)
+        # print("end!!")
+
         return queryset
 
 class ShowModule(generics.ListAPIView):

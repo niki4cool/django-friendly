@@ -26,7 +26,7 @@ class MessagesSerializer(serializers.ModelSerializer):
 
 class LoginSerializer(serializers.Serializer):
 
-
+    id = serializers.CharField(required=False)
     username = serializers.CharField()
     password = serializers.CharField()
 
@@ -38,9 +38,15 @@ class LoginSerializer(serializers.Serializer):
     def getSession(self, request):
         return request.session
 
-
-
         raise serializers.ValidationError("Incorrect Credentials")
+    def get_count(self,obj):
+        request = self.context.get("request")
+        user_id = request.user.id
+
+        return
+
+
+
 
 class CourseSerializer(serializers.ModelSerializer):
     # categoryTitle = serializers.CharField(source="category.title", read_only=True)
@@ -79,6 +85,8 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
 
         return user
+
+
 
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
