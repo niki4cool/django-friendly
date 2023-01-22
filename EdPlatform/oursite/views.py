@@ -150,8 +150,10 @@ class ShowMessages(generics.ListAPIView):
     serializer_class = MessagesSerializer
 
 class ShowCourse(generics.ListAPIView):
-    queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    def get_queryset(self):
+        queryset = Course.objects.filter(~Q(owner=self.request.user))
+        return queryset
 
 class ShowModule(generics.ListAPIView):
     queryset = Module.objects.all()
