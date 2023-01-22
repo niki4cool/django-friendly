@@ -86,9 +86,15 @@ class SubjectSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'slug', 'owner', 'overview', 'created', 'url_to_course', 'url_to_catalog', 'url_to_catalog_buy')
 
 class RecommendByUserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Course
         fields = '__all__'
+
+    def to_representation(self, instance):
+        rep = super(RecommendByUserSerializer, self).to_representation(instance)
+        rep['category'] = instance.category.subj
+        return rep
 
 class SearchSerializer(serializers.ModelSerializer):
     class Meta:
