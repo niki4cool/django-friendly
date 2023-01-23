@@ -162,7 +162,7 @@ class ShowCourse(generics.ListAPIView):
 
         # print(queryset)
         # for course in queryset:
-            # print(course)
+        #     print(course)
 
             # print(dict)
             # module = Module.objects.filter(course=course)

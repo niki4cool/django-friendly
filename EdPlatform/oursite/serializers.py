@@ -48,9 +48,16 @@ class LoginSerializer(serializers.Serializer):
 
 
 
+
+
+class ModuleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Module
+        fields = ('video',)
+
 class CourseSerializer(serializers.ModelSerializer):
     # categoryTitle = serializers.CharField(source="category.title", read_only=True)
-
+    modules = ModuleSerializer(many=True)
     class Meta:
         model = Course
         fields = '__all__'
@@ -59,11 +66,6 @@ class CourseSerializer(serializers.ModelSerializer):
         rep = super(CourseSerializer, self).to_representation(instance)
         rep['category'] = instance.category.subj
         return rep
-
-class ModuleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Module
-        fields = '__all__'
 
 class ShowImageUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -94,6 +96,7 @@ class SubjectSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'slug', 'owner', 'overview', 'created', 'url_to_course', 'url_to_catalog', 'url_to_catalog_buy')
 
 class RecommendByUserSerializer(serializers.ModelSerializer):
+    modules = ModuleSerializer(many=True)
 
     class Meta:
         model = Course
