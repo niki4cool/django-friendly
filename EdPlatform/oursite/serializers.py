@@ -77,7 +77,7 @@ class UserInfoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'full_name',)
+        fields = ('id', 'username', 'full_name', 'email')
 
 class ImageUserSerializer(serializers.ModelSerializer):
     user = UserInfoSerializer()
