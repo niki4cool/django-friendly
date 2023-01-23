@@ -119,7 +119,7 @@ class RecommendByUser(generics.ListAPIView):
                 user_products_buying.filter(category=i)
                 catts1.append(i)
         for g in catts1:
-            products_selling = Course.objects.filter(~Q(owner=userId), selling=True).filter(category=g)
+            products_selling = Course.objects.filter(~Q(owner=userId), selling=True, available=True).filter(category=g)
             result1 = list(chain(products_selling))
 
         catts2 = []
@@ -128,11 +128,11 @@ class RecommendByUser(generics.ListAPIView):
                 user_products_selling.filter(category=i)
                 catts2.append(i)
         for g in catts2:
-            products_buying = Course.objects.filter(~Q(owner=userId), selling=False).filter(category=g)
+            products_buying = Course.objects.filter(~Q(owner=userId), selling=False, available=True).filter(category=g)
             result2 = list(chain(products_buying))
         result = list(chain(result1, result2))
         if result == []:
-            result = Course.objects.all()
+            result = Course.objects.filter(available=True)
         return result
 
 
@@ -154,10 +154,11 @@ class ShowMessages(generics.ListAPIView):
 class ShowCourse(generics.ListAPIView):
     serializer_class = CourseSerializer
     def get_queryset(self):
+        userId = self.kwargs['userId']
         # course = Course.objects.get(slug=slug)
         # temp = 0
         # tempImg = 0
-        queryset = Course.objects.filter(~Q(owner=self.request.user))
+        queryset = Course.objects.filter(~Q(owner=userId), available=True)
 
         # print(queryset)
         # for course in queryset:
