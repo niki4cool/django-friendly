@@ -18,7 +18,7 @@ urlpatterns = [
     path('api/createuser/', views.CreateUser.as_view()),
     path('api/posts/', views.ShowPosts.as_view()),
     re_path('^api/courses/(?P<userId>.+)/$', views.ShowCourses.as_view()),
-    re_path('^api/course/(?P<userId>.+)/(?P<courseId>.+)/$', views.ShowCourse.as_view()),
+    re_path('^api/course/user=(?P<userId>.+)/course=(?P<courseId>.+)/$', views.ShowCourse.as_view()),
     path('api/modules/', views.ShowModule.as_view()),
     path('api/recommend/', views.RecommendByUser.as_view()),
     re_path('^api/search/(?P<title>.+)/$', views.ShowSearchCourses.as_view()),
