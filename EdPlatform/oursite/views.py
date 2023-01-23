@@ -41,8 +41,10 @@ from django.views.decorators.clickjacking import xframe_options_deny
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 
 from .serializers import SubjectSerializer, UserSerializer, ConstructorSerializer, LoginSerializer, \
-    ShowImageUserSerializer, MessagesSerializer, CourseSerializer, ModuleSerializer, NotificationsSerializer, PostSerializer, \
-    ConstructorSerializerOfCurrentUser, RecommendByUserSerializer, SearchSerializer
+    MessagesSerializer, CourseSerializer, ModuleSerializer, NotificationsSerializer, \
+    PostSerializer, \
+    ConstructorSerializerOfCurrentUser, RecommendByUserSerializer, SearchSerializer, UserInfoSerializer, \
+    ImageUserSerializer
 
 
 class Lol(generics.ListAPIView):
@@ -146,14 +148,13 @@ class AuthView(APIView):
 
 class ShowImageUser(generics.ListAPIView):
     queryset = ImageForUser.objects.all()
-    serializer_class = ShowImageUserSerializer
+    serializer_class = ImageUserSerializer
 class ShowMessages(generics.ListAPIView):
     queryset = Message.objects.all()
     serializer_class = MessagesSerializer
 
 class ShowCourse(generics.ListAPIView):
     serializer_class = CourseSerializer
-
     def get_queryset(self):
         userId = self.kwargs['userId']
         courseId = self.kwargs['courseId']
@@ -164,28 +165,14 @@ class ShowCourses(generics.ListAPIView):
     serializer_class = CourseSerializer
     def get_queryset(self):
         userId = self.kwargs['userId']
-        # course = Course.objects.get(slug=slug)
-        # temp = 0
-        # tempImg = 0
         queryset = Course.objects.filter(~Q(owner=userId), available=True)
+        return queryset
 
-        # print(queryset)
-        # for course in queryset:
-        #     print(course)
-
-            # print(dict)
-            # module = Module.objects.filter(course=course)
-            # queryset = chain(queryset, module)
-
-            # for mod in module:
-            #
-            #     tempImg = tempImg + 1
-            # tempImg = 0
-            # temp = temp + 1
-            # print(type(module))
-            # print(module)
-        # print("end!!")
-
+class ShowUserInfo(generics.ListAPIView):
+    serializer_class = ImageUserSerializer
+    def get_queryset(self):
+        userId = self.kwargs['userId']
+        queryset = ImageForUser.objects.filter(user=userId)
         return queryset
 
 class ShowModule(generics.ListAPIView):

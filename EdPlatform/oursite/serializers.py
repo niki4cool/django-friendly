@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 from .models import Course, Module, ImageForUser, Homework, User, Constructor, Content, Message,Notifications, Post
+from . import models
 
 class ConstructorSerializerOfCurrentUser(serializers.ModelSerializer):
     # username = serializers.CharField()
@@ -67,10 +68,23 @@ class CourseSerializer(serializers.ModelSerializer):
         rep['category'] = instance.category.subj
         return rep
 
-class ShowImageUserSerializer(serializers.ModelSerializer):
+
+class UserInfoSerializer(serializers.ModelSerializer):
+    full_name = serializers.SerializerMethodField()
+
+    def get_full_name(self, obj):
+        return '{} {}'.format(obj.first_name, obj.last_name)
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'full_name',)
+
+class ImageUserSerializer(serializers.ModelSerializer):
+    user = UserInfoSerializer()
     class Meta:
         model = ImageForUser
-        fields = ('image',)
+        fields = ('user', 'image',)
+
 
 class ConstructorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -106,6 +120,11 @@ class RecommendByUserSerializer(serializers.ModelSerializer):
         rep = super(RecommendByUserSerializer, self).to_representation(instance)
         rep['category'] = instance.category.subj
         return rep
+
+
+
+
+
 
 class SearchSerializer(serializers.ModelSerializer):
     class Meta:

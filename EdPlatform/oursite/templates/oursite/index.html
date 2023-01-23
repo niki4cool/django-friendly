@@ -29,8 +29,10 @@
     <title>proffer-home</title>
 
 
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/profavicon-16x16.png' %}"/>
+
     <link rel="stylesheet" href="{% static 'css/mystyle.css' %}">
-   <!-- <link rel="stylesheet" href="{% static 'css/profile.css' %}">-->
+    <link rel="stylesheet" href="{% static 'css/stylemobile.css' %}">
 </head>
 
 <body>
@@ -95,243 +97,243 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="{% url 'oursite:product_list' %}">Все объявления</a></li>
                         <p></p>
-<input type="radio" name="jobtype" id="jt-parts" />
-<label class="spisok" for="jt-parts">Запчасти</label>
-<br>
+            <input type="radio" name="jobtype" id="jt-parts" />
+            <label class="spisok" for="jt-parts">Запчасти</label>
+            <br>
 
-<input type="radio" name="jobtype" id="jt-wheels" />
-<label class="spisok" for="jt-wheels">Шины, диски и колеса</label>
-<br>
+            <input type="radio" name="jobtype" id="jt-wheels" />
+            <label class="spisok" for="jt-wheels">Шины, диски и колеса</label>
+            <br>
 
-{% for c in categories %}
-        {% if c.subj == "Аудио и видеотехника" %}
-<label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
-{% endif %}
-{% endfor %}
-<br>
+            {% for c in categories %}
+                    {% if c.subj == "Аудио и видеотехника" %}
+            <label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
+            {% endif %}
+            {% endfor %}
+            <br>
 
-{% for c in categories %}
-        {% if c.subj == "Аксессуары" %}
-<label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
-{% endif %}
-{% endfor %}
-<br>
+            {% for c in categories %}
+                    {% if c.subj == "Аксессуары" %}
+            <label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
+            {% endif %}
+            {% endfor %}
+            <br>
 
-{% for c in categories %}
-        {% if c.subj == "Тюнинг" %}
-<label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
-{% endif %}
-{% endfor %}
-<br>
+            {% for c in categories %}
+                    {% if c.subj == "Тюнинг" %}
+            <label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
+            {% endif %}
+            {% endfor %}
+            <br>
 
-{% for c in categories %}
-        {% if c.subj == "Багажники и фаркопы" %}
-<label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
-{% endif %}
-{% endfor %}
-<br>
+            {% for c in categories %}
+                    {% if c.subj == "Багажники и фаркопы" %}
+            <label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
+            {% endif %}
+            {% endfor %}
+            <br>
 
-{% for c in categories %}
-        {% if c.subj == "Инструменты" %}
-<label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
-{% endif %}
-{% endfor %}
-<br>
+            {% for c in categories %}
+                    {% if c.subj == "Инструменты" %}
+            <label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
+            {% endif %}
+            {% endfor %}
+            <br>
 
-{% for c in categories %}
-        {% if c.subj == "Прицепы" %}
-<label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
-{% endif %}
-{% endfor %}
-<br>
+            {% for c in categories %}
+                    {% if c.subj == "Прицепы" %}
+            <label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
+            {% endif %}
+            {% endfor %}
+            <br>
 
-{% for c in categories %}
-        {% if c.subj == "Экипировка" %}
-<label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
-{% endif %}
-{% endfor %}
-<br>
+            {% for c in categories %}
+                    {% if c.subj == "Экипировка" %}
+            <label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
+            {% endif %}
+            {% endfor %}
+            <br>
 
-{% for c in categories %}
-        {% if c.subj == "Автокосметика и автохимия" %}
-<label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
-{% endif %}
-{% endfor %}
-<br>
+            {% for c in categories %}
+                    {% if c.subj == "Автокосметика и автохимия" %}
+            <label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
+            {% endif %}
+            {% endfor %}
+            <br>
 
-{% for c in categories %}
-        {% if c.subj == "Противоугонные устройства" %}
-<label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
-{% endif %}
-{% endfor %}
-<br>
+            {% for c in categories %}
+                    {% if c.subj == "Противоугонные устройства" %}
+            <label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
+            {% endif %}
+            {% endfor %}
+            <br>
 
-{% for c in categories %}
-        {% if c.subj == "GPS-навигаторы" %}
-<label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
-{% endif %}
-{% endfor %}
-<br>
+            {% for c in categories %}
+                    {% if c.subj == "GPS-навигаторы" %}
+            <label class="spisok"><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></label>
+            {% endif %}
+            {% endfor %}
+            <br>
 
 
-<div class="text-for-jobtype" id="t-parts">
-    <ul>
-        {% for c in categories %}
-        {% if c.subj == "Для автомобилей" %}
-        <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
-        <p></p>
-        {% endif %}
-        {% if c.subj == "Для мототехники" %}
-        <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
-        <p></p>
-        {% endif %}
-        {% if c.subj == "Для грузовиков и спецтехники" %}
-        <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
-        <p></p>
-        {% endif %}
-        {% if c.subj == "Для водного транспорта" %}
-        <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
-        <p></p>
-        {% endif %}
-        {% endfor %}
-    </ul>
-</div>
-<div class="text-for-jobtype" id="t-wheels">
-    <ul>
-        {% for c in categories %}
-        {% if c.subj == "Легковые шины" %}
-        <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
-        <p></p>
-        {% endif %}
-        {% if c.subj == "Шины для грузовиков и спецтехники" %}
-        <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
-        <p></p>
-        {% endif %}
-        {% if c.subj == "Мотошины" %}
-        <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
-        <p></p>
-        {% endif %}
-        {% if c.subj == "Диски" %}
-        <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
-        <p></p>
-        {% endif %}
-        {% if c.subj == "Колёса" %}
-        <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
-        <p></p>
-        {% endif %}
-        {% if c.subj == "Колпаки" %}
-        <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
-        <p></p>
-        {% endif %}
-        {% endfor %}
-    </ul>
-</div>
-<div class="text-for-jobtype" id="t-audiovideo">Text for BRANDING</div>
-<div class="text-for-jobtype" id="t-accessories">accc</div>
-<div class="text-for-jobtype" id="t-tuning">Text gdsfgdsLE</div>
-<div class="text-for-jobtype" id="t-trunk">TexgfdsgsfdANDING</div>
-<div class="text-for-jobtype" id="t-instruments">Text for WEB-APP</div>
-<div class="text-for-jobtype" id="t-trailer">Text for MOBILE</div>
-<div class="text-for-jobtype" id="t-equipment">Text for BRANDING</div>
-<div class="text-for-jobtype" id="t-cosmetics">Text for WEB-APP</div>
-<div class="text-for-jobtype" id="t-antitheft">Text for MOBILE</div>
-<div class="text-for-jobtype" id="t-gps">Text for BRANDING</div>
-                    </ul>
-                </div>
+            <div class="text-for-jobtype" id="t-parts">
+                <ul>
+                    {% for c in categories %}
+                    {% if c.subj == "Для автомобилей" %}
+                    <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
+                    <p></p>
+                    {% endif %}
+                    {% if c.subj == "Для мототехники" %}
+                    <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
+                    <p></p>
+                    {% endif %}
+                    {% if c.subj == "Для грузовиков и спецтехники" %}
+                    <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
+                    <p></p>
+                    {% endif %}
+                    {% if c.subj == "Для водного транспорта" %}
+                    <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
+                    <p></p>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
             </div>
-<style>
-.spisok{
-color: white;
-}
+            <div class="text-for-jobtype" id="t-wheels">
+                <ul>
+                    {% for c in categories %}
+                    {% if c.subj == "Легковые шины" %}
+                    <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
+                    <p></p>
+                    {% endif %}
+                    {% if c.subj == "Шины для грузовиков и спецтехники" %}
+                    <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
+                    <p></p>
+                    {% endif %}
+                    {% if c.subj == "Мотошины" %}
+                    <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
+                    <p></p>
+                    {% endif %}
+                    {% if c.subj == "Диски" %}
+                    <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
+                    <p></p>
+                    {% endif %}
+                    {% if c.subj == "Колёса" %}
+                    <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
+                    <p></p>
+                    {% endif %}
+                    {% if c.subj == "Колпаки" %}
+                    <li><a class="nocolor" href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>
+                    <p></p>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="text-for-jobtype" id="t-audiovideo">Text for BRANDING</div>
+            <div class="text-for-jobtype" id="t-accessories">accc</div>
+            <div class="text-for-jobtype" id="t-tuning">Text gdsfgdsLE</div>
+            <div class="text-for-jobtype" id="t-trunk">TexgfdsgsfdANDING</div>
+            <div class="text-for-jobtype" id="t-instruments">Text for WEB-APP</div>
+            <div class="text-for-jobtype" id="t-trailer">Text for MOBILE</div>
+            <div class="text-for-jobtype" id="t-equipment">Text for BRANDING</div>
+            <div class="text-for-jobtype" id="t-cosmetics">Text for WEB-APP</div>
+            <div class="text-for-jobtype" id="t-antitheft">Text for MOBILE</div>
+            <div class="text-for-jobtype" id="t-gps">Text for BRANDING</div>
+                                </ul>
+                            </div>
+                        </div>
+            <style>
+            .spisok{
+            color: white;
+            }
 
-.text-for-jobtype{
-color: white;
-}
+            .text-for-jobtype{
+            color: white;
+            }
 
-.lbl-jobtype {
-}
+            .lbl-jobtype {
+            }
 
-ul{
-list-style: none;
-}
+            ul{
+            list-style: none;
+            }
 
-.nocolor{
-color: white;
-}
-.nocolor:hover{
-color: #00D5D5;
-cursor: pointer;
-text-decoration: none;
-}
+            .nocolor{
+            color: white;
+            }
+            .nocolor:hover{
+            color: #00D5D5;
+            cursor: pointer;
+            text-decoration: none;
+            }
 
-label:hover{
-color: #00D5D5;
-cursor: pointer;
-}
+            label:hover{
+            color: #00D5D5;
+            cursor: pointer;
+            }
 
-input[name='jobtype'] {
-  display: none;
-}
+            input[name='jobtype'] {
+            display: none;
+            }
 
-.text-for-jobtype {
-  display: none;
-  position: absolute;
-  top: 40px;
-  left: 350px;
-}
+            .text-for-jobtype {
+            display: none;
+            position: absolute;
+            top: 40px;
+            left: 350px;
+            }
 
-#jt-parts:checked~#t-parts {
-  display: block;
-}
+            #jt-parts:checked~#t-parts {
+            display: block;
+            }
 
-#jt-wheels:checked~#t-wheels {
-  display: block;
-}
+            #jt-wheels:checked~#t-wheels {
+            display: block;
+            }
 
-#jt-audiovideo:checked~#t-audiovideo {
-  display: block;
-}
+            #jt-audiovideo:checked~#t-audiovideo {
+            display: block;
+            }
 
-#jt-accessories:checked~#t-accessories {
-  display: block;
-}
+            #jt-accessories:checked~#t-accessories {
+            display: block;
+            }
 
-#jt-tuning:checked~#t-tuning {
-  display: block;
-}
+            #jt-tuning:checked~#t-tuning {
+            display: block;
+            }
 
-#jt-trunk:checked~#t-trunk {
-  display: block;
-}
+            #jt-trunk:checked~#t-trunk {
+            display: block;
+            }
 
-#jt-instruments:checked~#t-instruments {
-  display: block;
-}
+            #jt-instruments:checked~#t-instruments {
+            display: block;
+            }
 
-#jt-trailer:checked~#t-trailer {
-  display: block;
-}
+            #jt-trailer:checked~#t-trailer {
+            display: block;
+            }
 
-#jt-equipment:checked~#t-equipment {
-  display: block;
-}
+            #jt-equipment:checked~#t-equipment {
+            display: block;
+            }
 
-#jt-cosmetics:checked~#t-cosmetics {
-  display: block;
-}
+            #jt-cosmetics:checked~#t-cosmetics {
+            display: block;
+            }
 
-#jt-antitheft:checked~#t-antitheft {
-  display: block;
-}
+            #jt-antitheft:checked~#t-antitheft {
+            display: block;
+            }
 
-#jt-gps:checked~#t-gps {
-  display: block;
-}
-</style>
-<!--{% for c in categories %}-->
-<!--                        <li><a href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>-->
-<!--                        <li class="divider"></li>-->
-<!--                        {% endfor %}-->
+            #jt-gps:checked~#t-gps {
+            display: block;
+            }
+            </style>
+            <!--{% for c in categories %}-->
+            <!--                        <li><a href="{{ c.get_absolute_url }}">{{ c.subj }}</a></li>-->
+            <!--                        <li class="divider"></li>-->
+            <!--                        {% endfor %}-->
             <div class="headercd hBar">
 
                 <form class="searchbar" role="search" action="{% url 'oursite:search' %}" method="get">
@@ -387,6 +389,29 @@ input[name='jobtype'] {
 
     </header>
 
+        <!--Header mobile display-->
+
+        <div id="mobile-header-display">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-3">
+                        <form class="form-inline m-auto" role="search" action="{% url 'oursite:search' %}" method="get">
+                            <div class="search-box input-group mb-3 mt-3">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-outline-secondary" type="button" name="q"><i class="fa fa-search"></i></button>
+                                </div>
+                                <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Поиск по объявлениям" name="q">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-sliders"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
 
     <div class="homeContainer">
         {% block content %}
@@ -441,6 +466,29 @@ input[name='jobtype'] {
                     </div>
                 </div>
             </footer>
+
+            <!-- Footer for mobile -->
+            <div id="dpmenu-bottom">
+                <nav class="navbar navbar-expand navbar-dark text-white fixed-bottom">
+                    <ul class="navbar-nav nav-justified w-100">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link"><i class="fa fa-search"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link"><i class="fa-regular fa-heart"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link"><i class="fa-solid fa-plus"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link"><i class="fa-regular fa-comment"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link"><i class="fa-regular fa-user"></i></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
     </section>
 
 
