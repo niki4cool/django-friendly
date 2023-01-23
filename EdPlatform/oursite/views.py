@@ -101,11 +101,13 @@ class ShowConstructorOfOwner(generics.ListAPIView):
 
 class RecommendByUser(generics.ListAPIView):
     serializer_class = RecommendByUserSerializer
+
     def get_queryset(self):
+        userId = self.kwargs['userId']
         category = None
         categories = Subject.objects.all()
-        user_products_selling = Course.objects.filter(owner=self.request.user, selling=True)
-        user_products_buying = Course.objects.filter(owner=self.request.user, selling=False)
+        user_products_selling = Course.objects.filter(owner=userId, selling=True)
+        user_products_buying = Course.objects.filter(owner=userId, selling=False)
         result1 = Course.objects.none()
         result2 = Course.objects.none()
 
@@ -117,7 +119,7 @@ class RecommendByUser(generics.ListAPIView):
                 user_products_buying.filter(category=i)
                 catts1.append(i)
         for g in catts1:
-            products_selling = Course.objects.filter(~Q(owner=self.request.user), selling=True).filter(category=g)
+            products_selling = Course.objects.filter(~Q(owner=userId), selling=True).filter(category=g)
             result1 = list(chain(products_selling))
 
         catts2 = []
@@ -126,7 +128,7 @@ class RecommendByUser(generics.ListAPIView):
                 user_products_selling.filter(category=i)
                 catts2.append(i)
         for g in catts2:
-            products_buying = Course.objects.filter(~Q(owner=self.request.user), selling=False).filter(category=g)
+            products_buying = Course.objects.filter(~Q(owner=userId), selling=False).filter(category=g)
             result2 = list(chain(products_buying))
         result = list(chain(result1, result2))
         if result == []:
