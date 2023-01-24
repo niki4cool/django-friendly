@@ -83,7 +83,8 @@ class ShowSearchCourses(generics.ListAPIView):
 
     def get_queryset(self):
         title = self.kwargs['title']
-        return Course.objects.filter(title__iregex=title, available=True)
+        userId = self.kwargs['userId']
+        return Course.objects.filter(~Q(owner=userId), title__iregex=title, available=True)
 
 class ShowConstructor(generics.ListAPIView):
     queryset = Constructor.objects.all()
@@ -99,7 +100,7 @@ class ShowConstructorOfOwner(generics.ListAPIView):
     def get_queryset(self):
         # value from body of request in serelize class
         # username = self.response.data.get('username')
-        return Constructor.objects.filter( owner=self.request.user)
+        return Constructor.objects.filter(owner=self.request.user)
 
 class RecommendByUser(generics.ListAPIView):
     serializer_class = RecommendByUserSerializer

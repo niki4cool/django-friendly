@@ -22,7 +22,7 @@ urlpatterns = [
     re_path('^api/course/user=(?P<userId>.+)/course=(?P<courseId>.+)/$', views.ShowCourse.as_view()),
     path('api/modules/', views.ShowModule.as_view()),
     path('api/recommend/', views.RecommendByUser.as_view()),
-    re_path('^api/search/(?P<title>.+)/$', views.ShowSearchCourses.as_view()),
+    re_path('^api/search/q=(?P<title>.+)/user=(?P<userId>.+)/$', views.ShowSearchCourses.as_view()),
     path('api/login/', csrf_exempt(views.AuthView.as_view())),
     re_path('^api/recommended/(?P<userId>.+)/$', views.RecommendByUser.as_view()),
     path('api/constructors/', views.ShowConstructor.as_view()),
