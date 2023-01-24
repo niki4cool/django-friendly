@@ -36,6 +36,7 @@ class LoginSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Incorrect Credentials")
+
     def getSession(self, request):
         return request.session
 
@@ -47,14 +48,11 @@ class LoginSerializer(serializers.Serializer):
         return
 
 
-
-
-
-
 class ModuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Module
         fields = ('video',)
+
 
 class CourseSerializer(serializers.ModelSerializer):
     # categoryTitle = serializers.CharField(source="category.title", read_only=True)
@@ -130,3 +128,8 @@ class SearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = "__all__"
+
+    def to_representation(self, instance):
+        rep = super(SearchSerializer, self).to_representation(instance)
+        rep['category'] = instance.category.subj
+        return rep

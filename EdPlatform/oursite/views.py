@@ -135,7 +135,7 @@ class RecommendByUser(generics.ListAPIView):
             result2 = list(chain(products_buying))
         result = list(chain(result1, result2))
         if result == []:
-            result = Course.objects.filter(available=True)
+            result = Course.objects.filter(~Q(owner=userId), available=True)
         return result
 
 
