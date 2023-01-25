@@ -809,6 +809,7 @@ def show_course_playlist(request, slug):
 
 
 def product_detail(request, id, slug):
+
     product = get_object_or_404(Course,
                                 id=id,
                                 slug=slug,
@@ -822,7 +823,8 @@ def product_detail(request, id, slug):
     last_name = neededUser.last_name
     query = request.GET.get('q')
     catalog = Course.objects.filter(owner=user_id)
-
+    products_same = Course.objects.filter(~Q(slug=slug), category=product.category, )
+    print(products_same)
     if query:
         if request.user.id:
             CreateDialogView.get(request, request, user_id)
@@ -837,7 +839,8 @@ def product_detail(request, id, slug):
                                                    'neededUser':neededUser,
                                                    'catalog': catalog,
                                                    'first_name': first_name,
-                                                   'last_name': last_name})
+                                                   'last_name': last_name,
+                                                   'products_same': products_same})
 
 
 class DialogsView(View):

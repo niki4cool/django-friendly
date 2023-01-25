@@ -75,10 +75,10 @@ urlpatterns = [
 
     path('buy/', views.product_list_buy, name='product_list_buy'),
     path('buy/<category_slug>', views.product_list_buy, name='product_list_by_category_buy'),
-
-    url(r'^$', views.product_list, name='product_list'),
+    path('sell/', views.product_list, name='product_list'),
+    url(r'^$', views.recommendations, name='recommendations'),
     url(r'^(?P<category_slug>[-\w]+)/$',
-        views.product_list,
+        views.recommendations,
         name='product_list_by_category'),
 
     url(r'^(?P<id>\d+)/(?P<slug>[-\w]+)/$',

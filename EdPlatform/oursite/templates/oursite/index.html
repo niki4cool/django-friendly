@@ -82,7 +82,7 @@
 
         <div class="appBarContainer">
             <div class="headerLogo">
-                <a href="{% url 'oursite:product_list' %}" class="headerLogoImg"><img
+                <a href="{% url 'oursite:recommendations' %}" class="headerLogoImg"><img
                         src="{% static 'images/logo.png' %}" alt="logoproffer"></a>
             </div>
 
@@ -475,16 +475,16 @@
                             <a href="#" class="nav-link"><i class="fa fa-search"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link"><i class="fa-regular fa-heart"></i></a>
+                            <a href="{% url 'cart:cart_detail' %}" class="nav-link"><i class="fa-regular fa-heart"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link"><i class="fa-solid fa-plus"></i></a>
+                            <a href="{% url 'oursite:profile' %}" class="nav-link"><i class="fa-solid fa-plus"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link"><i class="fa-regular fa-comment"></i></a>
+                            <a href="{% url 'oursite:dialogs' %}" class="nav-link"><i class="fa-regular fa-comment"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link"><i class="fa-regular fa-user"></i></a>
+                            <a href="{% url 'oursite:profilee' %}" class="nav-link"><i class="fa-regular fa-user"></i></a>
                         </li>
                     </ul>
                 </nav>

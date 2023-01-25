@@ -27,9 +27,10 @@
                          <h4 class="section-title">Смотреть:</h4>
 
                             <div class="nav nav-tabs nav-fill">
+                                <a class="nav-item nav-link active" id="nav-contact-tab" href="{% url "oursite:recommendations" %}">Рекомендации</a>
                                 <a class="nav-item nav-link" id="nav-home-tab" href="{% url "oursite:product_list" %}">Товары и Услуги</a>
                                 <a  class="nav-item nav-link" id="nav-profile-tab" href="{% url "oursite:buy" %}">Заявки</a>
-                                <a class="nav-item nav-link active" id="nav-contact-tab" href="{% url "oursite:recommendations" %}">Рекомендации</a>
+
                             </div>
 
                         </div>
@@ -120,7 +121,41 @@
                 </div>
         </section>
 
+<!-- List product for mobile-->
 
+<div id="dpMobile">
+    <div class="container list_mobile mb-5">
+    <h4 class="section-title-mobile">Рекомендации</h4>
+    <div class="row">
+    {% for t in result %}
+        {% for k in t %}
+        <div class="col-6 col-sm-3">
+            <div class="block product no-border z-depth-2-top z-depth-2--hover">
+                <div class="block-image">
+                    <a href="{{ k.get_absolute_url }}">
+                        <img src="{% if k.image %}{{ k.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" height="138px">
+
+                      </a>
+                    <span class="wish-icon"><i class="fa-solid fa-heart"></i></span>
+                </div>
+                <div class="block-body">
+                    <h3 class="heading heading-5">{{ k.price.normalize|intcomma }} ₽</h3>
+                    <p class="product-description">{{ k.title }}</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+        {% endfor %}
+
+
+      <!-- Force next columns to break to new line
+      <div class="w-100"></div>
+
+      <div class="col-6 col-sm-3">.col-6 .col-sm-3</div>
+      <div class="col-6 col-sm-3">.col-6 .col-sm-3</div>-->
+    </div>
+    </div>
+</div>
 
 {% endblock %}
 

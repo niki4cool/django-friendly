@@ -26,13 +26,15 @@
             <aside class="col-sm-6 border-right">
                 <article class="gallery-wrap">
                     <div class="img-small-wrap">
-
-                        <img
+                        <div class="item-gallery thumbnail">
+                                <img
                                     src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
                                     class="small_active">
+                            </div>
+                        {% for photo in module %}
                         <div class="item-gallery thumbnail">
 
-                            {% for photo in module %}
+
                             <img
                                 src="{% if photo.video %}{{ photo.video.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
                                 {% if forloop.first %} class="small_active" {% endif %}> </div>
@@ -102,24 +104,13 @@
             <div class="product-description">
                 <div class="col-md-8 mt-2">
                     <span class="title-description">Описание</span>
+                    <br>
+                    <br>
                     <p class="content-description"> {{ product.overview }} </p>
-                    <span class="title-description">Характеристики</span>
-                    <p class="content-description">The minimalist collaboration features chairs, lightening, Shelves,
-                        Sofas, Desks and various
-                        home accessories, all offering form and function at the same point.We use high-strength
-                        clamps and joinery techniques specially designed for engineered wood beds. Ergo, no irksome
-                        creaks - and you can sleep like a baby, well into adulthood!</p>
-
-                    <span class="title-description">Адрес</span>
-                    <p class="content-description">The minimalist collaboration features chairs, lightening, Shelves,
-                        Sofas, Desks and various
-                        home accessories, all offering form and function at the same point.We use high-strength
-                        clamps and joinery techniques specially designed for engineered wood beds. Ergo, no irksome
-                        creaks - and you can sleep like a baby, well into adulthood!</p>
 
                     <div class="d-flex align-items-center">
                         <span class="dot"></span>
-                        <span class="bullet-text font-weight-bold">В избранном: 9</span>
+
                     </div>
 
                 </div>
@@ -133,9 +124,13 @@
 <div class="card-similar mt-2">
     <span class="card-similar-title">Похожие товары</span>
     <div class="row">
+
         <div class="col-lg-3 col-md-6">
+            {% for product in products_same %}
             <div class="block-silimar no-border z-depth-2-top-similar z-depth-2-top-silimar-hover">
-                <div class="block-similar-image">
+
+                    <div class="block-similar-image">
+
                     <a href="{{ product.get_absolute_url }}">
                         <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
                             class="card-img-top" height="238px">
@@ -147,6 +142,7 @@
                     <h3 class="silimar-price">{{ product.price.normalize|intcomma }} ₽</h3>
                     <p class="productdes">{{ product.title }}</p>
                 </div>
+                {% endfor %}
             </div>
         </div>
     </div>
