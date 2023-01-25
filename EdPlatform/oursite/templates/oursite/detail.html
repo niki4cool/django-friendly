@@ -5,16 +5,14 @@
 {% endblock %}
 {% block content %}
 {% load humanize %}
-<!--<div class="headerr">
-        <h1 class="products">{% if category %}{{ category.title }}{% else %}Объявление{% endif %}</h1>
-</div>-->
-<div class="currentLinkContainer">
+
+<div class="container currentLinkContainer">
     <div class="row">
         <div class="col">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Category</a></li>
+                    <li class="breadcrumb-item"><a href="#">Proffer</a></li>
+                    <li class="breadcrumb-item"><a href="#">Категории</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{ product.category }}</li>
                 </ol>
             </nav>
@@ -22,26 +20,28 @@
     </div>
 </div>
 
-<div class="detailContainer">
-    <div class="card">
+<div class="container">
+    <div class="card detail-card">
         <div class="row">
             <aside class="col-sm-6 border-right">
                 <article class="gallery-wrap">
+                    <div class="img-small-wrap">
+
+                        <img
+                                    src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
+                                    class="small_active">
+                        <div class="item-gallery thumbnail">
+
+                            {% for photo in module %}
+                            <img
+                                src="{% if photo.video %}{{ photo.video.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
+                                {% if forloop.first %} class="small_active" {% endif %}> </div>
+                        {% endfor %}
+                    </div>
                     <div class="img-big-wrap">
                         <div> <a href="" data-toggle="modal" data-target="#productModal"><img
                                     src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
                                     id="picture" class="img-fluid img-responsive"></a></div>
-                    </div>
-                    <div class="img-small-wrap">
-                        <img
-                                    src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
-                                    id="picture" class="small_active">
-                        {% for photo in module %}
-                        <div class="item-gallery thumbnail"> <img
-                                src="{% if photo.video %}{{ photo.video.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
-                                {% if forloop.first %} class="img-fluid img-responsive" {% endif %}> </div>
-                        {% endfor %}
-
                     </div>
                 </article>
             </aside>
@@ -63,7 +63,7 @@
                                     объявлений)</span>
                             </a>
                         </div>
-                        <!--<span class="font-style-normal btnwriteseller"> 
+                        <!--<span class="font-style-normal btnwriteseller">
                             <a href="#"><i class="fa-regular fa-comment"></i> Написать продавцу</a>-->
                         {% if neededUser != request.user %}
                         <form method="get">
@@ -129,7 +129,7 @@
 
 
 </div>
-
+<div class="container">
 <div class="card-similar mt-2">
     <span class="card-similar-title">Похожие товары</span>
     <div class="row">
@@ -150,6 +150,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <!-- my image on Modal window -->
@@ -172,7 +173,7 @@
                 </div>
 
                 <div class="modal-footer d-block d-md-flex justify-content-center">
-
+                    <span class="mr-4">Продам футболку женскую синюю</span>
                     <button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4"
                         data-dismiss="modal">Закрыть</button>
                 </div>

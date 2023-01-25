@@ -100,7 +100,33 @@ class UserSerializer(serializers.ModelSerializer):
         image = ImageForUser.objects.create(image="video/v20_51.png", user_id=user.id)
         return user
 
+class ModuleCreateSerializer(serializers.ModelSerializer):
+    # vid = serializers.ImageField()
+    class Meta:
+        model = Module
+        fields = ('video',)
 
+    # def create(self, validated_data):
+    #     modules = Module.objects.create(**validated_data)
+    #     return modules
+
+class CreateCourseSerializer(serializers.ModelSerializer):
+    modules = ModuleCreateSerializer()
+    owner_id = serializers.CharField()
+    class Meta:
+        model = Course
+        fields = ('owner_id', 'title', 'price', 'overview', 'category', 'image', 'number', 'modules')
+
+
+
+    def create(self, validated_data):
+        # userId = self.userId
+        modules_data = validated_data.pop('modules')
+        course = Course.objects.create(**validated_data)
+        Module.objects.create(title="title", course_id=course.id, **modules_data)
+        # modules.set()
+        # modules = Module.objects.create(video=modules)
+        return course
 
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:

@@ -44,7 +44,7 @@ from .serializers import SubjectSerializer, UserSerializer, ConstructorSerialize
     MessagesSerializer, CourseSerializer, ModuleSerializer, NotificationsSerializer, \
     PostSerializer, \
     ConstructorSerializerOfCurrentUser, RecommendByUserSerializer, SearchSerializer, UserInfoSerializer, \
-    ImageUserSerializer
+    ImageUserSerializer, CreateCourseSerializer
 
 
 class Lol(generics.ListAPIView):
@@ -161,6 +161,16 @@ class ShowCourse(generics.ListAPIView):
         courseId = self.kwargs['courseId']
         queryset = Course.objects.filter(~Q(owner=userId), id=courseId, available=True)
         return queryset
+
+class CreateCourse(generics.CreateAPIView):
+    serializer_class = CreateCourseSerializer
+
+    def post(self, request, userId):
+        serializer = CreateCourseSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ShowCourses(generics.ListAPIView):
     serializer_class = CourseSerializer
@@ -838,6 +848,20 @@ class DialogsView(View):
         members = []
         messages = []
         checkMessages = False
+        if not chats:
+            image = ImageForUser.objects.get(user=request.user)
+            member = ImageForUser.objects.get(user=request.user)
+            images = ImageForUser.objects.all()
+            data={
+                'user_profile': request.user,
+                'chats': chats,
+                'checkMessages': checkMessages,
+                'member': member,
+                'image': image,
+                'images': images
+            }
+            return render(request, 'oursite/dialogs.html',
+                          data)
         for chat in chats:
 
             first = chat.members.all().first()

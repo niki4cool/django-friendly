@@ -21,6 +21,8 @@ urlpatterns = [
     re_path('^api/users/(?P<userId>.+)/$', views.ShowUserInfo.as_view()),
     re_path('^api/course/user=(?P<userId>.+)/course=(?P<courseId>.+)/$', views.ShowCourse.as_view()),
     path('api/modules/', views.ShowModule.as_view()),
+    re_path('^api/createcourse/(?P<userId>.+)/$', views.CreateCourse.as_view()),
+    # path('api/createcourse/', views.CreateCourse.as_view()),
     re_path('^api/search/q=(?P<title>.+)/user=(?P<userId>.+)/$', views.ShowSearchCourses.as_view()),
     path('api/login/', csrf_exempt(views.AuthView.as_view())),
     re_path('^api/recommended/(?P<userId>.+)/$', views.RecommendByUser.as_view()),
