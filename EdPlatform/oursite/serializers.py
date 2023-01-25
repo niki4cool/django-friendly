@@ -97,7 +97,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
-
+        image = ImageForUser.objects.create(image="video/v20_51.png", user_id=user.id)
         return user
 
 
