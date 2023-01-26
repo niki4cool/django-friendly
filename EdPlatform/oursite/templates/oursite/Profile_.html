@@ -3,27 +3,54 @@
 {% block content %}
 {% load humanize %}
     <div class="container">
-        <div class="profile">
-            <div class="col-md-3">
-                <div class="profile-sidebar">
-                    <div class="profile-usertitle">
-                        <div class="profile-usertitle-name">
-                            {{ user.first_name }} {{ user.last_name.0 }}
+
+                        <!--Header mobile display-->
+                        <div id="mobile-header-display">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12 col-sm-3">
+                                        <div class="form-inline m-auto" role="search" action="" method="">
+                                            <div class="search-box input-group mb-3 mt-3">
+                                                <div class="input-group-prepend">
+                                                    <a class="btn btn-outline-secondary" type="button" href="{% url 'oursite:recommendations' %}"><i class="fa-solid fa-arrow-left"></i></a>
+                                                </div>
+                                                <div class="form-control"><h5 class="mb-0 text-center">Мои объявления</h5></div>
+                                                <div class="input-group-prepend">
+                                                    <a class="btn btn-outline-secondary" type="button" href=""></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>
-                    </div>
-                    <div class="profile-userpic">
-                        <img src="{{ image.image.url }}" class="img-responsive" alt="">
-                    </div>
-                    <div class="profile-usermenu">
-                        <ul class="nav">
-                            <li class=" active"><a class="dropdown-item" href="{% url 'oursite:profilee' %}">&nbsp;&nbsp;<i class="fa-solid fa-scroll"></i>&nbsp;&nbsp;Мои объявления</a></li>
-                            <li><a class="dropdown-item" href="{% url 'oursite:profile_buying' %}">&nbsp;&nbsp;<i class="fa-solid fa-file-image"></i>&nbsp;&nbsp;Мои заказы</a></li>
-                            <li><a class="dropdown-item" href="{% url 'cart:cart_detail' %}">&nbsp;&nbsp;<i class="fa-solid fa-bookmark"></i>&nbsp;&nbsp;Избранное</a></li>
-                            <li><a class="dropdown-item" href="{% url 'oursite:dialogs' %}">&nbsp;&nbsp;<i class="fa-regular fa-comment"></i>&nbsp;&nbsp;Сообщения</a></li>
-                            <li><a class="dropdown-item" href="{% url 'oursite:notifications' %}">&nbsp;&nbsp;<i class="fa-regular fa-bell"></i>&nbsp;&nbsp;Уведомления</a></li>
-                            <li><a class="dropdown-item" href="{% url 'oursite:profile_manage' %}">&nbsp;&nbsp;<i class="fa-regular fa-id-card"></i>&nbsp;&nbsp;Профиль</a></li>
-                            <li><a class="dropdown-item" href="">&nbsp;&nbsp;<i class="fa-solid fa-gear"></i>&nbsp;&nbsp;Настройки</a></li>
-                        </ul>
+        
+                        <!--End Header mobile display-->
+
+        <div class="profile">
+            <div class="hide-for-mobile">
+                <div class="col-md-3">
+                    <div class="profile-sidebar">
+                        <div class="profile-usertitle">
+                            <div class="profile-usertitle-name">
+                                {{ user.first_name }} {{ user.last_name.0 }}
+                            </div>
+                        </div>
+                        <div class="profile-userpic">
+                            <img src="{{ image.image.url }}" class="img-responsive" alt="">
+                        </div>
+                        <div class="profile-usermenu">
+                            <ul class="nav">
+                                <li class=" active"><a class="dropdown-item" href="{% url 'oursite:profilee' %}">&nbsp;&nbsp;<i class="fa-solid fa-scroll"></i>&nbsp;&nbsp;Мои объявления</a></li>
+                                <li><a class="dropdown-item" href="{% url 'oursite:profile_buying' %}">&nbsp;&nbsp;<i class="fa-solid fa-file-image"></i>&nbsp;&nbsp;Мои заказы</a></li>
+                                <li><a class="dropdown-item" href="{% url 'cart:cart_detail' %}">&nbsp;&nbsp;<i class="fa-solid fa-bookmark"></i>&nbsp;&nbsp;Избранное</a></li>
+                                <li><a class="dropdown-item" href="{% url 'oursite:dialogs' %}">&nbsp;&nbsp;<i class="fa-regular fa-comment"></i>&nbsp;&nbsp;Сообщения</a></li>
+                                <li><a class="dropdown-item" href="{% url 'oursite:notifications' %}">&nbsp;&nbsp;<i class="fa-regular fa-bell"></i>&nbsp;&nbsp;Уведомления</a></li>
+                                <li><a class="dropdown-item" href="{% url 'oursite:profile_manage' %}">&nbsp;&nbsp;<i class="fa-regular fa-id-card"></i>&nbsp;&nbsp;Профиль</a></li>
+                                <li><a class="dropdown-item" href="">&nbsp;&nbsp;<i class="fa-solid fa-gear"></i>&nbsp;&nbsp;Настройки</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -32,6 +59,8 @@
                     <section id="tabs-profile">
                         <div class="row">
                             <div class="col-sm-12 ">
+
+
                                 <div class="navTabFlex-profile">
                                  <h4 class="section-title">Мои объявления</h4>
                                 <nav>
@@ -90,424 +119,6 @@
         </div>
     </div>
 
-<!--<div class="block">
-    <div class="settings">
-        <div style="text-align: center">
-            <p class="username">{{ user.first_name }} {{ user.last_name.0 }}.</p>
-        </div>
+    <!--Profile for mobile-->
 
-        <img class="profile_pic" src="{{ image.image.url }}" alt="" height="160px" style="margin-left: 75px;">
-        <a href="{% url "oursite:profilee" %}"><p class="side-menu-chosen">Мои объявления</p></a>
-        <a href="{% url "oursite:profile_buying" %}"><p class="side-menu">Мои заказы</p></a>
-        <a href="{% url "cart:cart_detail" %}"> <p class="side-menu">Избранное</p></a>
-        <a href="{% url "oursite:dialogs" %}"> <p class="side-menu">Мои сообщения</p></a>
-        <p class="side-menu">Уведомления</p>
-        <a href="{% url "oursite:profile_manage" %}"><p class="side-menu">Управление профилем</p></a>
-        <p class="side-menu">Настройки</p>
-
-    </div>
-
-    <div id="main" class="product-list">
-        <div class="headerr">
-            <p class="products">Мои объявления</p>
-        </div>
-
-        <div class="product1">
-            <a href="{% url "oursite:profilee" %}" class="product">Активные</a>
-            <a href="{% url "oursite:profile_archive" %}" class="product-not">Архив</a>
-        </div>
-        <div class="all-items">
-        {% for product in products %}
-
-                <div class="item" style="position: relative;">
-                    <a class="noPadd" href="{{ product.get_absolute_url }}">
-                        <img class="imgItem" width="150px" height="200px" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-
-                    <div class="priceDiv">
-                    <p class="price">{{ product.price.normalize|intcomma }} ₽</p>
-                    </div>
-                    <div class="namee">
-                    <a class="courseName" href="{{ product.get_absolute_url }}">{{ product.title }}</a>
-                    </div>
-
-                    <br>
-
-                        </a>
-                </div>
-            {% empty %}
-            <div class="pic">
-                <div class="pic_center">
-                    <h1 style="color: #FFFFFF; padding-top: 20px;">Упс...</h1>
-                    <h1 style="color: #FFFFFF">Упс! Вы еще не разместили ни одного объявления</h1>
-                    <img src="{% static 'images/404.png' %}" style="width: 80%;"  >
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-
-</div>-->
-
-
-<!--<script type="text/javascript" src={% static "js/price.js" %}></script>
-<script> doprice() </script>-->
-
-<!--<script>
-
-
-    var colorArray = document.getElementsByClassName('category');
-    var color = document.getElementsByClassName('courseCategory');
-    var i = 10;
-    var t = 0;
-    while (t < 10){
-    if (i == 14){
-    i = 10
-    }
-    if (i % 10 == 0){
-    colorArray[t].style.backgroundColor = '#FDE8F2';
-    color[t].style.color = '#FF166A';
-    }
-    else if (i % 11 == 0){
-    colorArray[t].style.backgroundColor = '#F7ECFF';
-    color[t].style.color = '#FA00FF';
-    }
-
-    else if (i % 12 == 0){
-    colorArray[t].style.backgroundColor = '#E3F3FF';
-    color[t].style.color = '#618DFF';
-    }
-
-    else{
-    colorArray[t].style.backgroundColor = '#FFF3E9';
-    color[t].style.color = '#DF6B00';
-    }
-    i++
-    t++
-
-    }
-
-</script> -->
-
-<!--<style>
-
-    .pic{
-    width: 762px;
-    height: 669px;
-    background: #182128;
-    opacity: .8;
-    position: relative;
-    text-align: center;
-    margin-left: 170px;
-    border-radius: 30px;
-    margin-top: 50px !important;
-    height: 600px !important;
-    }
-
-    .products{
-    font-size: 28px;
-    font-weight: 450;
-    }
-
-    .all-items{
-    margin-left: 120px;
-    }
-
-    .side-menu{
-    margin-left: 50px;
-    font-size: 24px;
-    font-weight: 450;
-    }
-
-    .side-menu-chosen{
-    margin-left: 50px;
-    font-size: 24px;
-    font-weight: 450;
-    color: #00B2B2;
-    }
-
-    .username{
-    font-size: 26px;
-    font-weight: 650;
-    }
-
-    .settings{
-    width: 309px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    background-color: #FFF;
-    }
-
-    .product1{
-    text-align: left;
-
-    position: relative;
-    margin: 20px auto;
-    margin-top: 10px;
-
-    margin-bottom: 27px;
-    }
-
-    a{
-    color: black;
-    }
-
-    .product{
-    margin-right: 200px;
-    width: 500px;
-    font-size: 24px;
-    margin-top: 27px;
-    font-weight: 450;
-    border-bottom: 4px solid #00D5D5;
-    }
-
-    .product-not{
-    margin-right: 200px;
-    width: 500px;
-    font-size: 24px;
-    margin-top: 27px;
-    color: #777C7D;
-    font-weight: 450;
-    }
-
-
-
-
-
-    .block{
-    margin-top: 50px;
-    margin-left: 5%;
-    width: 90%;
-    height: 80%;
-    /*display: grid;*/
-    grid-template-columns: 0.5fr 80%;
-    }
-
-
-    .namee{
-    margin-left: 20px;
-    width: 210px;
-    word-break: break-all;
-    text-align: left;
-    }
-
-    .priceDiv{
-    width: 210px;
-    margin-left: 20px;
-    word-break: break-all;
-    text-align: left;
-    }
-
-    .price{
-    font-size: 28px;
-    font-weight: 800;
-    color: #182128;
-    margin: 0;
-    margin-top: 20px;
-    }
-
-    a{
-    text-decoration: none;
-    }
-
-    .hrr{
-    width: 440px;
-    }
-
-
-
-    .category{
-    display: inline-block;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 30px;
-    background-color: #E3F3FF;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    }
-
-    .courseCategory{
-    font-size: 24px;
-    text-decoration: none;
-    color: #618DFF;
-    font-weight: 600;
-    }
-
-
-
-    .courseName{
-    text-decoration: none;
-    color: black;
-    font-size: 22px;
-    font-weight: 600;
-    }
-
-    .headerr{
-    text-align: center;
-    width: 762px;
-
-    opacity: .8;
-    position: relative;
-    margin: 20px auto;
-    margin-top: 10px;
-
-    }
-
-    .imgItem{
-    width: 250px;
-    height: 220px;
-    background: #FFFFFF;
-    border-radius: 10px 10px 0 0;
-    }
-
-    .product-list{
-    width: 100%;
-    position: relative;
-    margin: 20px auto;
-    margin-top: 10px;
-    border-radius: 30px;
-    border: 2px solid transparent;
-    }
-
-
-    .item{
-    border-radius: 10px;
-    margin-right: auto;
-     float: left;
-     background: #FFFFFF;
-     background-color: #FFFFFF;
-     width: 250px;
-     height: 340px;
-     margin-right: 50px;
-     text-align: center;
-     margin-bottom: 55px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    }
-
-
-    .centerr{
-    width: 100%;
-
-    position: relative;
-    margin: auto;
-
-    display: block;
-    }
-
-
-    .textt{
-    font-size: 20px;
-    font-weight: 600;
-    padding-left: 5%;
-
-    }
-
-    .overview{
-    font-size: 20px;
-    margin-left: 160px;
-    height: 60px;
-    width: 300px;
-
-    }
-
-    .titlee{
-    position: absolute;
-    top: 100px;
-    margin-left: 3%;
-
-    }
-
-    .title{
-    font-size: 20px;
-    margin-left: 160px;
-    height: 30px;
-    width: 300px;
-    }
-
-    .buttona{
-    width: 300px;
-    height: 50px;
-    margin-top: 30px;
-    margin-left: 40px;
-    color: #9F7100;
-    font-size: 23px;
-    font-weight: 600;
-    background-color: #FFF3E9;
-    border: 2px solid #C79C34;
-    border-radius: 20px;
-    }
-
-    .upload_image{
-    width: 180px;
-    position: absolute; pointer-events: none;
-    padding-left: 535px;
-    padding-top: 60px;
-    }
-
-    .imagecss{
-    width: 180px;
-    position: absolute;
-    padding-left: 535px;
-    padding-top: 60px;
-    }
-    .imagecss input[type=file] {
-    position: absolute;
-    background-color: #000000;
-     width: 180px;
-     height: 180px;
-     opacity: 0;
-    padding-top: -100px; }
-
-
-</style>
-<style>
-.upload_video{
-width: 60px;
-position: absolute; pointer-events: none;
-padding-left: 250;
-}
-
-    .homework{
-    display: flex;
-     justify-content: center;
-     align-items: center;
-     flex-direction: column;
-     width: 60px;
-     height: 60px;
-     margin-top: -65px;
-     padding-left: 390;
-    }
-
-     .homework input[type=file] {
-     width: 60px;
-     height: 60px;
-     opacity: 0;
-     position: absolute;
-}
-
-    .videocss{
-    display: flex;
-     justify-content: center;
-     align-items: center;
-     flex-direction: column;
-     width: 60px;
-     height: 60px;
-     padding-left: 250;
-    }
-    .videocss input[type=file] {
-     width: 60px;
-     height: 60px;
-     opacity: 0;
-     position: absolute;
-
-}
-
-</style>
-
-
-
-
-</body>
-
-</html>-->
 {% endblock %}

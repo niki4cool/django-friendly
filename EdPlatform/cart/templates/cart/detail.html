@@ -4,7 +4,32 @@
 {% block content %}
 {% load humanize %}
     <div class="container">
+        <!--Header mobile display-->
+        <div id="mobile-header-display">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-3">
+                        <div class="form-inline m-auto" role="search" action="" method="">
+                            <div class="search-box input-group mb-3 mt-3">
+                                <div class="input-group-prepend">
+                                    <a class="btn btn-outline-secondary" type="button" href="{% url 'oursite:recommendations' %}"><i class="fa-solid fa-arrow-left"></i></a>
+                                </div>
+                                <div class="form-control"><h5 class="mb-0 text-center">Закладки</h5></div>
+                                <div class="input-group-prepend">
+                                    <a class="btn btn-outline-secondary" type="button" href=""></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!--End Header mobile display-->
+
         <div class="profile">
+            <div class="hide-for-mobile">
             <div class="col-md-3">
                 <div class="profile-sidebar">
                     <div class="profile-usertitle">
@@ -29,6 +54,7 @@
                     </div>
                 </div>
             </div>
+        </div>
             <div class="col-md-9">
                 <div class="profile-content">
                     <section id="tabs-profile">

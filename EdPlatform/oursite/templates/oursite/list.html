@@ -6,7 +6,30 @@
 {% block content %}
 {% load humanize %}
 
+            <!--Header mobile display-->
 
+            <div id="mobile-header-display">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-sm-3">
+                            <form class="form-inline m-auto" role="search" action="{% url 'oursite:search' %}" method="get">
+                                <div class="search-box input-group mb-3 mt-3">
+                                    <div class="input-group-prepend">
+                                        <button class="btn btn-outline-secondary" type="button" name="q"><i class="fa fa-search"></i></button>
+                                    </div>
+                                    <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Поиск по объявлениям" name="q">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-sliders"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            
         <div class="sliderContainer">
             <div id="home-slider" class="wrapper">
                     <div class="carousel">

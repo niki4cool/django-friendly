@@ -6,6 +6,26 @@
 {% block content %}
 {% load humanize %}
 
+        <!--Header mobile display-->
+
+        <div id="mobile-header-display">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-3">
+                        <div class="form-inline m-auto" role="search" action="" method="">
+                            <div class="search-box input-group mb-3 mt-3">
+                                <div class="input-group-prepend">
+                                    <a class="btn btn-outline-secondary" type="button" href="{% url 'oursite:recommendations' %}"><i class="fa-solid fa-arrow-left"></i></a>
+                                </div>
+                                <div class="form-control"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
 <div class="container currentLinkContainer">
     <div class="row">
         <div class="col">
@@ -37,7 +57,7 @@
 
                             <img
                                 src="{% if photo.video %}{{ photo.video.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
-                                {% if forloop.first %} class="small_active" {% endif %}> </div>
+                                {% if forloop.first %} class="small_activee" {% endif %}> </div>
                         {% endfor %}
                     </div>
                     <div class="img-big-wrap">
@@ -121,33 +141,36 @@
 
 </div>
 <div class="container">
-<div class="card-similar mt-2">
-    <span class="card-similar-title">Похожие товары</span>
-    <div class="row">
-
-        <div class="col-lg-3 col-md-6">
+    <div class="card-similar mt-2">
+        <span class="card-similar-title">Похожие товары</span>
+        <div class="row">
+            
             {% for product in products_same %}
-            <div class="block-silimar no-border z-depth-2-top-similar z-depth-2-top-silimar-hover">
+            <div class="col-lg-3 col-md-6">
+                
+                <div class="block-silimar no-border z-depth-2-top-similar z-depth-2-top-silimar-hover">
 
-                    <div class="block-similar-image">
-
-                    <a href="{{ product.get_absolute_url }}">
-                        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
-                            class="card-img-top" height="238px">
-
-                    </a>
-                    <span class="wish-icon"><i class="fa-solid fa-heart"></i></span>
+                        <div class="block-similar-image">
+    
+                        <a href="{{ product.get_absolute_url }}">
+                            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
+                                class="card-img-top" height="238px">
+    
+                        </a>
+                        <span class="wish-icon"><i class="fa-solid fa-heart"></i></span>
+                    </div>
+                    <div class="block-similar-body">
+                        <h3 class="silimar-price">{{ product.price.normalize|intcomma }} ₽</h3>
+                        <p class="productdes">{{ product.title }}</p>
+                    </div>
+                    
                 </div>
-                <div class="block-similar-body">
-                    <h3 class="silimar-price">{{ product.price.normalize|intcomma }} ₽</h3>
-                    <p class="productdes">{{ product.title }}</p>
-                </div>
-                {% endfor %}
             </div>
+            {% endfor %}
+
         </div>
     </div>
-</div>
-</div>
+    </div>
 
 <!-- my image on Modal window -->
 <div class="col-lg-4 col-md-6 mb-4">

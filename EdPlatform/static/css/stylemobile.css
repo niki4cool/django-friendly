@@ -64,6 +64,27 @@
     #dpmenu-bottom .navbar {
         background-color: #182128 !important;
     }
+
+
+    .gallery-wrap .img-big-wrap img {
+        min-height: 270px;
+    }
+
+    .btnCategory_seller {
+        font-size: 12px;
+    }
+
+    .hide-for-mobile {
+        display: none;
+    }
+    #tabs-profile .navTabFlex-profile .active {
+        font-size: 16px;
+        width: 110px;
+    }
+
+    .navTabFlex-profile .section-title {
+        display: none;
+    }
 }
 
 /*Tablet*/
@@ -142,6 +163,18 @@
     #dpmenu-bottom .navbar {
         background-color: #182128 !important;
     }
+
+    .hide-for-mobile {
+        display: none;
+    }
+    #tabs-profile .navTabFlex-profile .active {
+        font-size: 16px;
+        width: 110px;
+    }
+
+    .navTabFlex-profile .section-title {
+        display: none;
+    }
 }
 
 
@@ -170,4 +203,5 @@
     border-radius: 0.25rem;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
+
 

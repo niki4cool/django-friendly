@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-!m^s$vwoebm%k9zy*s8v)27b*0rwv6kc=p%4$&js444_5bmodj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 LOGOUT_REDIRECT_URL = "oursite:product_list"
 

@@ -647,7 +647,12 @@ def recommendations(request, category_slug=None):
         result.extend(result_buying)
     else:
         result = Course.objects.filter(available=True)
-
+        return render(request,
+                      'oursite/recommendations.html',
+                      {'category': category,
+                       'result': result,
+                       'categories': categories,
+})
 
     cart_product_form = CartAddProductForm()
     if not request.user.is_authenticated:
@@ -823,7 +828,10 @@ def product_detail(request, id, slug):
     last_name = neededUser.last_name
     query = request.GET.get('q')
     catalog = Course.objects.filter(owner=user_id)
-    products_same = Course.objects.filter(~Q(slug=slug), category=product.category, )
+    if request.user.is_authenticated:
+        products_same = Course.objects.filter(~Q(slug=slug), (~Q(owner=request.user)), category=product.category)
+    else:
+        products_same = Course.objects.filter(~Q(slug=slug), category=product.category)
     print(products_same)
     if query:
         if request.user.id:

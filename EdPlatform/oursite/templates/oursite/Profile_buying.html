@@ -5,28 +5,56 @@
 {% load humanize %}
 
 <div class="container">
-    <div class="profile">
-        <div class="col-md-3">
-            <div class="profile-sidebar">
-                <div class="profile-usertitle">
-                    <div class="profile-usertitle-name">
-                        {{ user.first_name }} {{ user.last_name.0 }}
+
+
+    <!--Header mobile display-->
+    <div id="mobile-header-display">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-3">
+                    <div class="form-inline m-auto" role="search" action="" method="">
+                        <div class="search-box input-group mb-3 mt-3">
+                            <div class="input-group-prepend">
+                                <a class="btn btn-outline-secondary" type="button" href="{% url 'oursite:recommendations' %}"><i class="fa-solid fa-arrow-left"></i></a>
+                            </div>
+                            <div class="form-control"><h5 class="mb-0 text-center">Мои заказы</h5></div>
+                            <div class="input-group-prepend">
+                                <a class="btn btn-outline-secondary" type="button" href=""></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="profile-userpic">
-                    <img src="{{ image.image.url }}" class="img-responsive" alt="">
-                </div>
-                <div class="profile-usermenu">
-                    <ul class="nav">
-                        <li><a class="dropdown-item" href="{% url 'oursite:profilee' %}">&nbsp;&nbsp;<i class="fa-solid fa-scroll"></i>&nbsp;&nbsp;Мои объявления</a></li>
-                        <li class=" active"><a class="dropdown-item" href="{% url 'oursite:profile_buying' %}">&nbsp;&nbsp;<i class="fa-solid fa-file-image"></i>&nbsp;&nbsp;Мои заказы</a></li>
-                    <!--<li><a class="dropdown-item" href="{% url 'cart:cart_detail' %}">&nbsp;&nbsp;<i class="fa-solid fa-comments"></i>&nbsp;&nbsp;Мои отзывы</a></li>--> 
-                        <li><a class="dropdown-item" href="{% url 'cart:cart_detail' %}">&nbsp;&nbsp;<i class="fa-solid fa-bookmark"></i>&nbsp;&nbsp;Избранное</a></li>
-                        <li><a class="dropdown-item" href="{% url 'oursite:dialogs' %}">&nbsp;&nbsp;<i class="fa-regular fa-comment"></i>&nbsp;&nbsp;Сообщения</a></li>
-                        <li><a class="dropdown-item" href="{% url 'oursite:notifications' %}">&nbsp;&nbsp;<i class="fa-regular fa-bell"></i>&nbsp;&nbsp;Уведомления</a></li>
-                        <li><a class="dropdown-item" href="{% url 'oursite:profile_manage' %}">&nbsp;&nbsp;<i class="fa-regular fa-id-card"></i>&nbsp;&nbsp;Профиль</a></li>
-                        <li><a class="dropdown-item" href="">&nbsp;&nbsp;<i class="fa-solid fa-gear"></i>&nbsp;&nbsp;Настройки</a></li>
-                    </ul>
+            </div>
+        </div>
+        
+    </div>
+
+    <!--End Header mobile display-->
+
+    <div class="profile">
+        <div class="hide-for-mobile">
+            <div class="col-md-3">
+                <div class="profile-sidebar">
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name">
+                            {{ user.first_name }} {{ user.last_name.0 }}
+                        </div>
+                    </div>
+                    <div class="profile-userpic">
+                        <img src="{{ image.image.url }}" class="img-responsive" alt="">
+                    </div>
+                    <div class="profile-usermenu">
+                        <ul class="nav">
+                            <li><a class="dropdown-item" href="{% url 'oursite:profilee' %}">&nbsp;&nbsp;<i class="fa-solid fa-scroll"></i>&nbsp;&nbsp;Мои объявления</a></li>
+                            <li class=" active"><a class="dropdown-item" href="{% url 'oursite:profile_buying' %}">&nbsp;&nbsp;<i class="fa-solid fa-file-image"></i>&nbsp;&nbsp;Мои заказы</a></li>
+                        <!--<li><a class="dropdown-item" href="{% url 'cart:cart_detail' %}">&nbsp;&nbsp;<i class="fa-solid fa-comments"></i>&nbsp;&nbsp;Мои отзывы</a></li>--> 
+                            <li><a class="dropdown-item" href="{% url 'cart:cart_detail' %}">&nbsp;&nbsp;<i class="fa-solid fa-bookmark"></i>&nbsp;&nbsp;Избранное</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:dialogs' %}">&nbsp;&nbsp;<i class="fa-regular fa-comment"></i>&nbsp;&nbsp;Сообщения</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:notifications' %}">&nbsp;&nbsp;<i class="fa-regular fa-bell"></i>&nbsp;&nbsp;Уведомления</a></li>
+                            <li><a class="dropdown-item" href="{% url 'oursite:profile_manage' %}">&nbsp;&nbsp;<i class="fa-regular fa-id-card"></i>&nbsp;&nbsp;Профиль</a></li>
+                            <li><a class="dropdown-item" href="">&nbsp;&nbsp;<i class="fa-solid fa-gear"></i>&nbsp;&nbsp;Настройки</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
